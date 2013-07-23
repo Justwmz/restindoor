@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Рестораны
+{% endblock title %}
+
+{% block navbar %}
+    <li><a href="/">Главная</a></li>
+    <li><a href="/client/">Клиенты</a></li>
+    <li class="active"><a href="/restaurant/">Рестораны</a></li>
+    <li><a href="/analytics/">Отчетность</a></li>
+{% endblock navbar %}
+{% block content %}
+    <div class="container" style="padding-top: 20px">
+        <div class="row">
+            <div class="span3">
+                <div class="well pull-left" style="min-width: 210px; margin: 5px; padding: 8px 0;">
+                    <ul class="nav nav-list">
+                        <li class="nav-header">Сеть ресторанов</li>
+                        <li {% if not chain_act %}class="active"{% endif %}><a href="?">Все</a></li>
+                        {% for restaurant in restaurants_all %}
+                            <li {% ifequal chain_act restaurant.chain_name_rus %}class="active"{% endifequal %}><a href="?chain_name_rus={{ restaurant.chain_name_rus }}">{{ restaurant.chain_name_rus }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="span9">
+                {% for message in messages %}
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Выполнено!</strong> {{ message }}
+                    </div>
+                {% endfor %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Ресторан</th>
+                            <th>Сеть ресторанов</th>
+                            <th>Сайт</th>
+                            <th>Дата</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for restaurant in restaurants %}
+                            <tr>
+                                <td>{{ restaurant.name_rus }}</td>
+                                <td>{{ restaurant.chain_name_rus }}</td>
+                                <td><a href="{{ restaurant.site }}">{{ restaurant.site }}</a></td>
+                                <td>{{ restaurant.add_date }}</td>
+                                <td>
+                                    <a href="{{ restaurant.id }}/" class="btn btn-warning btn-mini"><i class="icon-edit icon-white"></i></a>
+                                    <a href="#myModal_{{ restaurant.id }}" role="button" class="btn btn-danger btn-mini" data-toggle="modal"><i class="icon-remove icon-white"></i></a>
+                                </td>
+                            </tr>
+                            <div class="modal hide fade" id="myModal_{{ restaurant.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ restaurant.id }}" aria-hidden="true">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h3 id="myModalLabel_{{ restaurant.id }}">Удалиение "{{ restaurant }}"</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Вы уверены, что хотите удалить всю информацию о ресторане?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Отменить</button>
+                                    <a href="{{ restaurant.id }}/delete/" class="btn btn-danger">Удалить</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

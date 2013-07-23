@@ -1,0 +1,45 @@
+{% extends "registration/login.html" %}
+
+{% block title %}
+    Смена пароля
+{% endblock title %}
+
+{% block content %}
+<div class="container" style="padding-top: 60px">
+    <form class="form-signin" method="post" action="">
+        {% csrf_token %}
+        <h3 class="form-signin-heading">Смена пароля</h3>
+        {% if pass_changed %}
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Пароль успешно изменен!</strong>
+            </div>
+        {% endif %}
+        {% if errors.old_pass or errors.new_pass or errors.pass_confirm %}
+            <div class="alert">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Все поля должны быть заполнены!</strong>
+            </div>
+        {% endif %}
+        {% if errors.wrong_pass %}
+            <div class="alert alert-error">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Неправильно введен старый пароль!</strong>
+            </div>
+        {% endif %}
+        {% if errors.wrong_confirm %}
+            <div class="alert alert-error">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Новый пароль и его подтверждение не совпадают!</strong>
+            </div>
+        {% endif %}
+        <input type="password" class="input-block-level" placeholder="Старый пароль" name="old_pass" id="old_pass">
+        <input type="password" class="input-block-level" placeholder="Новый пароль" name="new_pass">
+        <input type="password" class="input-block-level" placeholder="Подтверждение пароля" name="pass_confirmed">
+        <button class="btn btn-primary" type="submit">Сменить</button>
+    </form>
+    <script type="text/javascript">
+        document.getElementById('old_pass').focus()
+    </script>
+</div>
+{% endblock %}

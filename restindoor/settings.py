@@ -33,7 +33,7 @@ TIME_ZONE = 'Europe/Kiev'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 SITE_ID = 1
 
@@ -124,6 +124,7 @@ INSTALLED_APPS = (
     'index',
     'client',
     'restaurant',
+    'analytics',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -154,3 +155,6 @@ LOGGING = {
         },
     }
 }
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'

@@ -1,0 +1,345 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    Рестораны
+{% endblock title %}
+
+{% block head %}
+    <link href="{% static 'css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen">
+{% endblock head %}
+
+{% block navbar %}
+    <li><a href="/">Главная</a></li>
+    <li><a href="/client/">Клиенты</a></li>
+    <li class="active"><a href="/restaurant/">Рестораны</a></li>
+    <li><a href="/analytics/">Отчетность</a></li>
+{% endblock navbar %}
+
+{% block content %}
+    <div class="container" style="padding-top: 20px">
+        <div class="row">
+            <div class="span3">
+            </div>
+            <div class="span9">
+                <form action="" method="post" class="form-horizontal" id="grew_form">
+                    {% csrf_token %}
+                    <div class="control-group">
+                        {{ formRest.name_rus.errors }}
+                        <label class="control-label" for="id_name_rus">{{ formRest.name_rus.label }}</label>
+                        <div class="controls">
+                            {{ formRest.name_rus }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.name_eng.errors }}
+                        <label class="control-label" for="id_name_eng">{{ formRest.name_eng.label }}</label>
+                        <div class="controls">
+                            {{ formRest.name_eng }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.form_coop.errors }}
+                        <label class="control-label" for="id_form_coop">{{ formRest.form_coop.label }}</label>
+                        <div class="controls">
+                            {{ formRest.form_coop }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.chain_name_rus.errors }}
+                        <label class="control-label" for="id_chain_name_rus">{{ formRest.chain_name_rus.label }}</label>
+                        <div class="controls">
+                            {{ formRest.chain_name_rus }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.chain_name_eng.errors }}
+                        <label class="control-label" for="id_chain_name_eng">{{ formRest.chain_name_eng.label }}</label>
+                        <div class="controls">
+                            {{ formRest.chain_name_eng }}
+                        </div>
+                    </div>
+                    <div class="control-group" id="div_city">
+                        {{ formRest.city.errors }}
+                        <label class="control-label" for="id_city">{{ formRest.city.label }}</label>
+                        <div class="controls">
+                            {{ formRest.city }}
+                        </div>
+                    </div>
+                    <div class="control-group" id="div_city_sec">
+                        {{ formRest.city_sec.errors }}
+                        <label class="control-label" for="id_city_sec"></label>
+                        <div class="controls">
+                            {{ formRest.city_sec }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.add_date.errors }}
+                        <label class="control-label" for="id_add_date">{{ formRest.add_date.label }}</label>
+                        <div class="controls">
+                            <div id="datetimepicker" class="input-append date">
+                                {{ formRest.add_date }}
+                                <span class="add-on"><i class="icon-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.status.errors }}
+                        <label class="control-label" for="id_status">{{ formRest.status.label }}</label>
+                        <div class="controls">
+                            {{ formRest.status }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.site.errors }}
+                        <label class="control-label" for="id_site">{{ formRest.site.label }}</label>
+                        <div class="controls">
+                            {{ formRest.site }}
+                        </div>
+                    </div>
+                    <div class="control-group" id="div_org_form">
+                        {{ formRest.org_form.errors }}
+                        <label class="control-label" for="id_org_form">{{ formRest.org_form.label }}</label>
+                        <div class="controls">
+                            {{ formRest.org_form }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.details.errors }}
+                        <label class="control-label" for="id_details">{{ formRest.details.label }}</label>
+                        <div class="controls">
+                            {{ formRest.details }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.contact.errors }}
+                        <label class="control-label" for="id_contact">{{ formRest.contact.label }}</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                {{ formRest.contact }}<a href="#myModal_contact" data-toggle="modal"><span class="add-on"><i class="icon-plus"></i></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.payment_term.errors }}
+                        <label class="control-label" for="id_payment_term">{{ formRest.payment_term.label }}</label>
+                        <div class="controls">
+                            {{ formRest.payment_term }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.pay_term_com.errors }}
+                        <label class="control-label" for="id_pay_term_com">{{ formRest.pay_term_com.label }}</label>
+                        <div class="controls">
+                            {{ formRest.pay_term_com }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.sum_payment.errors }}
+                        <label class="control-label" for="id_sum_payment">{{ formRest.sum_payment.label }}</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                {{ formRest.sum_payment }}<span class="add-on">грн.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.chain_avail.errors }}
+                        <label class="control-label" for="id_chain_avail">{{ formRest.chain_avail.label }}</label>
+                        <div class="controls">
+                            {{ formRest.chain_avail }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.equipment.errors }}
+                        <label class="control-label" for="id_equipment">{{ formRest.equipment.label }}</label>
+                        <div class="controls">
+                            {{ formRest.equipment }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.plasma_all.errors }}
+                        <label class="control-label" for="id_plasma_all">{{ formRest.plasma_all.label }}</label>
+                        <div class="controls">
+                            {{ formRest.plasma_all }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.plasma_work.errors }}
+                        <label class="control-label" for="id_plasma_work">{{ formRest.plasma_work.label }}</label>
+                        <div class="controls">
+                            {{ formRest.plasma_work }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.contract.errors }}
+                        <label class="control-label" for="id_contract">{{ formRest.contract.label }}</label>
+                        <div class="controls">
+                            {{ formRest.contract }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.act_rec_trans.errors }}
+                        <label class="control-label" for="id_act_rec_trans">{{ formRest.act_rec_trans.label }}</label>
+                        <div class="controls">
+                            {{ formRest.act_rec_trans }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.list_restrict.errors }}
+                        <label class="control-label" for="id_list_restrict">{{ formRest.list_restrict.label }}</label>
+                        <div class="controls">
+                            {{ formRest.list_restrict }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.restriction.errors }}
+                        <label class="control-label" for="id_restriction">{{ formRest.restriction.label }}</label>
+                        <div class="controls">
+                            {{ formRest.restriction }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.video.errors }}
+                        <label class="control-label" for="id_video">{{ formRest.video.label }}</label>
+                        <div class="controls">
+                            {{ formRest.video }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.warranty_mail.errors }}
+                        <label class="control-label" for="id_warranty_mail">{{ formRest.warranty_mail.label }}</label>
+                        <div class="controls">
+                            {{ formRest.warranty_mail }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.stat_doc_1.errors }}
+                        <label class="control-label" for="id_stat_doc_1" id="stat_doc_1_1">Виписка та/або витяг з єдиного держ. реєстру юридичних та фіз. осіб</label>
+                        <label class="control-label" for="id_stat_doc_1" id="stat_doc_1_2">Свідоцтво платника єдиного податку</label>
+                        <div class="controls">
+                            {{ formRest.stat_doc_1 }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.stat_doc_2.errors }}
+                        <label class="control-label" for="id_stat_doc_2" id="stat_doc_2_1">Довідка з єдиного держ. реєстру підприємств та організацій України</label>
+                        <label class="control-label" for="id_stat_doc_2" id="stat_doc_2_2">Виписка з єдиного держ. реєстру юр. осіб та фіз. осіб-підприємців</label>
+                        <div class="controls">
+                            {{ formRest.stat_doc_2 }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.stat_doc_3.errors }}
+                        <label class="control-label" for="id_stat_doc_3" id="stat_doc_3_1">Свідоцтво про сплату єдиного податку</label>
+                        <label class="control-label" for="id_stat_doc_3" id="stat_doc_3_2">Витяг з єдиного держ. реєстру юр. осіб та фіз. осіб-підприємців</label>
+                        <div class="controls">
+                            {{ formRest.stat_doc_3 }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ formRest.stat_doc_4.errors }}
+                        <label class="control-label" for="id_stat_doc_4" id="stat_doc_4_1">Свідоцтво платника ПДВ</label>
+                        <label class="control-label" for="id_stat_doc_4" id="stat_doc_4_2">Платіжне доручення про сплату єдиного податку</label>
+                        <div class="controls">
+                            {{ formRest.stat_doc_4 }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="submit" class="btn">Сохранить</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="modal hide fade" id="myModal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_contact" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3 id="myModalLabel_contact">Добавление нового контакта</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-horizontal">
+                        <div class="control-group">
+                            {{ formCont.name.errors }}
+                            <label class="control-label" for="id_name">{{ formCont.name.label }}</label>
+                            <div class="controls">
+                                {{ formCont.name }}
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            {{ formCont.lvl.errors }}
+                            <label class="control-label" for="id_lvl">{{ formCont.lvl.label }}</label>
+                            <div class="controls">
+                                {{ formCont.lvl }}
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            {{ formCont.phone_work.errors }}
+                            <label class="control-label" for="id_phone_work">{{ formCont.phone_work.label }}</label>
+                            <div class="controls">
+                                {{ formCont.phone_work }}
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            {{ formCont.phone_cell.errors }}
+                            <label class="control-label" for="id_phone_cell">{{ formCont.phone_cell.label }}</label>
+                            <div class="controls">
+                                {{ formCont.phone_cell }}
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            {{ formCont.email.errors }}
+                            <label class="control-label" for="id_email">{{ formCont.email.label }}</label>
+                            <div class="controls">
+                                {{ formCont.email }}
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            {{ formCont.icq.errors }}
+                            <label class="control-label" for="id_icq">{{ formCont.icq.label }}</label>
+                            <div class="controls">
+                                {{ formCont.icq }}
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            {{ formCont.skype.errors }}
+                            <label class="control-label" for="id_skype">{{ formCont.skype.label }}</label>
+                            <div class="controls">
+                                {{ formCont.skype }}
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Отменить</button>
+                        <a href="" class="btn btn-success">Добавить</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datetimepicker.ru.js' %}"></script>
+    <script src="{% static 'js/jquery.grewform.min.js' %}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('#div_city_sec, #stat_doc_1_1, #stat_doc_1_2, #stat_doc_2_1, #stat_doc_2_2, #stat_doc_3_1, #stat_doc_3_2, #stat_doc_4_1, #stat_doc_4_2').hide()
+            $('#grew_form').grewform({
+                '#div_city option[value=о]:selected':{show:'#div_city_sec'},
+                '#div_org_form option[value=о]:selected':{show:'#stat_doc_1_1, #stat_doc_2_1, #stat_doc_3_1, #stat_doc_4_1'},
+                '#div_org_form option[value=ф]:selected':{show:'#stat_doc_1_2, #stat_doc_2_2, #stat_doc_3_2, #stat_doc_4_2'}
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function(){
+            $('#datetimepicker').datetimepicker({
+                format: 'dd.MM.yyyy',
+                language: 'ru',
+                pickTime: false
+            });
+        });
+    </script>
+{% endblock script %}
