@@ -1,0 +1,131 @@
+{% extends "add/base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    Добавление ролика
+{% endblock title %}
+
+{% block head %}
+    <link href="{% static 'css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen">
+    <script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+{% endblock head %}
+
+{% block content %}
+    <h3>Добавить новый ролик</h3>
+    <form method="post" action="/add/{{ field }}" class="form-horizontal">{% csrf_token %}
+        <div class="control-group">
+            {% if form.name.errors %}
+                <div class="alert alert-error">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {% for error in form.name.errors %}
+                        <strong>Ошибка!</strong> {{ error|escape }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <label class="control-label" for="id_name">{{ form.name.label }}</label>
+            <div class="controls">
+                {{ form.name }}
+            </div>
+        </div>
+        <div class="control-group">
+            {% if form.address.errors %}
+                <div class="alert alert-error">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {% for error in form.address.errors %}
+                        <strong>Ошибка!</strong> {{ error|escape }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <label class="control-label" for="id_address">{{ form.address.label }}</label>
+            <div class="controls">
+                {{ form.address }}
+            </div>
+        </div>
+        <div class="control-group">
+            {% if form.start_date.errors %}
+                <div class="alert alert-error">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {% for error in form.start_date.errors %}
+                        <strong>Ошибка!</strong> {{ error|escape }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <label class="control-label" for="id_start_date">{{ form.start_date.label }}</label>
+            <div class="controls">
+                <div id="datetimepicker1" class="input-append date">
+                    {{ form.start_date }}
+                    <span class="add-on"><i class="icon-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            {% if form.end_date.errors %}
+                <div class="alert alert-error">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {% for error in form.end_date.errors %}
+                        <strong>Ошибка!</strong> {{ error|escape }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <label class="control-label" for="id_end_date">{{ form.end_date.label }}</label>
+            <div class="controls">
+                <div id="datetimepicker2" class="input-append date">
+                    {{ form.end_date }}
+                    <span class="add-on"><i class="icon-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            {% if form.periodicity.errors %}
+                <div class="alert alert-error">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {% for error in form.periodicity.errors %}
+                        <strong>Ошибка!</strong> {{ error|escape }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <label class="control-label" for="id_periodicity">{{ form.periodicity.label }}</label>
+            <div class="controls">
+                {{ form.periodicity }}
+            </div>
+        </div>
+        <div class="control-group">
+            {% if form.moder_launch.errors %}
+                <div class="alert alert-error">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {% for error in form.moder_launch.errors %}
+                        <strong>Ошибка!</strong> {{ error|escape }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <label class="control-label" for="id_moder_launch">{{ form.moder_launch.label }}</label>
+            <div class="controls">
+                {{ form.moder_launch }}
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <a href="javascript:window.close()" class="btn">Отменить</a> <button type="submit" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </form>
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datetimepicker.ru.js' %}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('#datetimepicker1').datetimepicker({
+                format: 'dd.MM.yyyy',
+                language: 'ru',
+                pickTime: false
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: 'dd.MM.yyyy',
+                language: 'ru',
+                pickTime: false
+            });
+        });
+    </script>
+{% endblock script %}

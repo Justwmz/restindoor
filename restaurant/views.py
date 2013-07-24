@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*- 
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages import error
+from django.utils.html import escape
 from restaurant.models import Restaurant
 from restaurant.forms import RestaurantForm, ContactForm
 
@@ -39,3 +41,28 @@ def delete(request, id):
     error(request, 'Информация о ресторане успешно удалена.')
 
     return redirect('restaurant-index')
+
+
+@login_required
+def handlePopAdd(request, addForm, field, templ):
+    if request.method == "POST":
+        form = addForm(request.POST)
+        if form.is_valid():
+            try:
+                newObject = form.save()
+            except forms.ValidationError, error:
+                newObject = None
+            if newObject:
+                return HttpResponse('''<script type="text/javascript">
+                                            opener.dismissAddAnotherPopup(window, "%s", "%s");
+                                        </script>''' % (escape(newObject._get_pk_val()), escape(newObject)))
+    else:
+        form = addForm()
+
+    pageContext = {'form': form, 'field': field}
+    return render_to_response("add/%s" % templ, pageContext, context_instance=RequestContext(request))
+
+
+@login_required
+def newContact(request):
+    return handlePopAdd(request, ContactForm, 'contact', 'popaddcontact.html')

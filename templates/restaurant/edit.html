@@ -116,7 +116,7 @@
                         <label class="control-label" for="id_contact">{{ formRest.contact.label }}</label>
                         <div class="controls">
                             <div class="input-append">
-                                {{ formRest.contact }}<a href="#myModal_contact" data-toggle="modal"><span class="add-on"><i class="icon-plus"></i></span></a>
+                                {{ formRest.contact }}
                             </div>
                         </div>
                     </div>
@@ -196,14 +196,18 @@
                         {{ formRest.restriction.errors }}
                         <label class="control-label" for="id_restriction">{{ formRest.restriction.label }}</label>
                         <div class="controls">
-                            {{ formRest.restriction }}
+                            <div class="input-append">
+                                {{ formRest.restriction }}
+                            </div>
                         </div>
                     </div>
                     <div class="control-group">
                         {{ formRest.video.errors }}
                         <label class="control-label" for="id_video">{{ formRest.video.label }}</label>
                         <div class="controls">
-                            {{ formRest.video }}
+                            <div class="input-append">
+                                {{ formRest.video }}
+                            </div>
                         </div>
                     </div>
                     <div class="control-group">
@@ -251,69 +255,6 @@
                         </div>
                     </div>
                 </form>
-                <div class="modal hide fade" id="myModal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_contact" aria-hidden="true">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h3 id="myModalLabel_contact">Добавление нового контакта</h3>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-horizontal">
-                        <div class="control-group">
-                            {{ formCont.name.errors }}
-                            <label class="control-label" for="id_name">{{ formCont.name.label }}</label>
-                            <div class="controls">
-                                {{ formCont.name }}
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            {{ formCont.lvl.errors }}
-                            <label class="control-label" for="id_lvl">{{ formCont.lvl.label }}</label>
-                            <div class="controls">
-                                {{ formCont.lvl }}
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            {{ formCont.phone_work.errors }}
-                            <label class="control-label" for="id_phone_work">{{ formCont.phone_work.label }}</label>
-                            <div class="controls">
-                                {{ formCont.phone_work }}
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            {{ formCont.phone_cell.errors }}
-                            <label class="control-label" for="id_phone_cell">{{ formCont.phone_cell.label }}</label>
-                            <div class="controls">
-                                {{ formCont.phone_cell }}
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            {{ formCont.email.errors }}
-                            <label class="control-label" for="id_email">{{ formCont.email.label }}</label>
-                            <div class="controls">
-                                {{ formCont.email }}
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            {{ formCont.icq.errors }}
-                            <label class="control-label" for="id_icq">{{ formCont.icq.label }}</label>
-                            <div class="controls">
-                                {{ formCont.icq }}
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            {{ formCont.skype.errors }}
-                            <label class="control-label" for="id_skype">{{ formCont.skype.label }}</label>
-                            <div class="controls">
-                                {{ formCont.skype }}
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Отменить</button>
-                        <a href="" class="btn btn-success">Добавить</a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

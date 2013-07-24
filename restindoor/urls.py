@@ -13,4 +13,7 @@ urlpatterns = patterns('',
     url(r'^restaurant/(?P<id>\d+)/$', 'restaurant.views.edit'),
     url(r'^restaurant/(?P<id>\d+)/delete/$', 'restaurant.views.delete'),
     url(r'^analytics/$', 'analytics.views.index'),
+    url(r'^add/contact/?$', 'restaurant.views.newContact'),
+    url(r'^add/restriction/?$', 'client.views.newBranch'),
+    url(r'^add/video/?$', 'client.views.newVideo'),
 )
