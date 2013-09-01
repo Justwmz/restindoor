@@ -1,11 +1,12 @@
 {% extends "add/base.html" %}
+{% load staticfiles %}
 
 {% block title %}
     Добавление контакта
 {% endblock title %}
 
 {% block head %}
-    <script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+    <link href="{% static 'css/bootstrap-formhelpers.css' %}" rel="stylesheet" media="screen">
 {% endblock head %}
 
 {% block content %}
@@ -116,3 +117,9 @@
         </div>
     </form>
 {% endblock content %}
+
+{% block script %}
+    <script src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+    <script src="{% static 'js/bootstrap-formhelpers-phone.format.js' %}"></script>
+    <script src="{% static 'js/bootstrap-formhelpers-phone.js' %}"></script>
+{% endblock script %}

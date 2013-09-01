@@ -5,22 +5,63 @@
 {% endblock title %}
 
 {% block navbar %}
-    <li><a href="/">Главная</a></li>
-    <li class="active"><a href="/client/">Клиенты</a></li>
-    <li><a href="/restaurant/">Рестораны</a></li>
-    <li><a href="/analytics/">Отчетность</a></li>
+    <li><a href="{% url 'index' %}">Главная</a></li>
+    <li class="active"><a href="{% url 'client-index' %}">Клиенты</a></li>
+    <li><a href="{% url 'restaurant-index' %}">Рестораны</a></li>
+    <li><a href="{% url 'analytics-index' %}">Отчетность</a></li>
 {% endblock navbar %}
 {% block content %}
     <div class="container" style="padding-top: 20px">
         <div class="row">
-            <div class="span2">
-                <!--Sidebar content-->
-                Menues
+            <div class="span3">
+                <div class="well pull-left" style="min-width: 210px; margin: 5px; padding: 8px 0;">
+                    <ul class="nav nav-list">
+                        <li class="nav-header"></li>
+                        <li class="active"><a href="#"><i class="icon-home"></i> Клиенты</a></li>
+                        <li><a href="{% url 'client-contact-index' %}"><i class="icon-user"></i> Контакты</a></li>
+                        <!--<li><a href="#"><i class="icon-user"></i> Отрасли</a></li>-->
+                        <li><a href="{% url 'client-ac-index' %}"><i class="icon-facetime-video"></i> Запуск РК</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="span10">
-                <!--Body content-->
-                Content
+            <div class="span9">
+                {% for message in messages %}
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Выполнено!</strong> {{ message }}
+                    </div>
+                {% endfor %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Клиент</th>
+                            <th>Статус</th>
+                            <th>Сайт</th>
+                            <th>Дата</th>
+                            <th style="width:92px"><a href="{% url 'client-new' %}" class="btn btn-success btn-mini" style="width:78px"><i class="icon-plus icon-white"></i></a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for client in clients %}
+                            <tr>
+                                <td>{{ client.name_rus }}</td>
+                                <td>{{ client.status_verbose }}</td>
+                                <td><a href="{{ client.site }}">{{ client.site }}</a></td>
+                                <td>{{ client.add_date }}</td>
+                                <td>
+                                    <a href="#myModal_{{ client.id }}_browse" role="button" class="btn btn-info btn-mini" data-toggle="modal"><i class="icon-zoom-in icon-white"></i></a>
+                                    <a href="{% url 'client-edit' client.id %}" class="btn btn-warning btn-mini"><i class="icon-edit icon-white"></i></a>
+                                    <a href="#myModal_{{ client.id }}_delete" role="button" class="btn btn-danger btn-mini" data-toggle="modal"><i class="icon-remove icon-white"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
+        {% for client in clients %}
+            {% include "client/client/browse.html" %}
+            {% include "client/client/delete.html" %}
+        {% endfor %}
     </div>
 {% endblock content %}

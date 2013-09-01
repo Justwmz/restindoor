@@ -1,0 +1,99 @@
+{% extends "floppyforms/layouts/bootstrap.html" %}{% load floppyforms %}
+
+{% block rows %}
+    <div id="rest1">
+        <h4>Общая информация</h4>
+        {% formrow form.name_rus form.name_eng using 'floppyforms/rows/restaurant/name.html' with label='Ресторан' %}
+        {% formrow form.chain_avail %}
+        {% formrow form.chain_name_rus form.chain_name_eng using 'floppyforms/rows/restaurant/name.html' with label='Сеть ресторанов' %}
+        {% formrow form.site using 'floppyforms/rows/restaurant/site.html' %}
+        {% formrow form.city form.city_sec using 'floppyforms/rows/restaurant/city.html' %}
+        {% formrow form.add_date using 'floppyforms/rows/restaurant/add_date.html' %}
+    </div>
+    <div id="rest2">
+        <h4>Информация о контакте</h4>
+        {% formrow form.contact using 'floppyforms/rows/restaurant/contact.html' %}
+        {% formrow form.form_coop with style_div="margin-left:220px" style_label="width:200px" %}
+        {% formrow form.status with style_div="margin-left:220px" style_label="width:200px" %}
+        {% formrow form.sum_payment using 'floppyforms/rows/restaurant/contact.html' with add_on="грн." %}
+        {% formrow form.payment_term with style_div="margin-left:220px" style_label="width:200px" %}
+        {% formrow form.pay_term_com with style_div="margin-left:220px" style_label="width:200px" %}
+    </div>
+    <div id="rest3">
+        <h4>Организационная форма</h4>
+        {% formrow form.org_form with div_id='div_org_form' style_div="margin-left:220px" style_label="width:200px" %}
+        {% formrow form.details with style_div="margin-left:220px" style_label="width:200px" %}
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:618px">Уставные документы</th>
+                    <th style="text-align:center">да / нет</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% formrow form.stat_doc_1 using 'floppyforms/rows/restaurant/stat_doc.html' with label_1='Виписка та/або витяг з єдиного держ. реєстру юридичних та фіз. осіб' label_2='Свідоцтво платника єдиного податку' %}
+                {% formrow form.stat_doc_2 using 'floppyforms/rows/restaurant/stat_doc.html' with label_1='Довідка з єдиного держ. реєстру підприємств та організацій України' label_2='Виписка з єдиного держ. реєстру юр. осіб та фіз. осіб-підприємців' %}
+                {% formrow form.stat_doc_3 using 'floppyforms/rows/restaurant/stat_doc.html' with label_1='Свідоцтво про сплату єдиного податку' label_2='Витяг з єдиного держ. реєстру юр. осіб та фіз. осіб-підприємців' %}
+                {% formrow form.stat_doc_4 using 'floppyforms/rows/restaurant/stat_doc.html' with label_1='Свідоцтво платника ПДВ' label_2='Платіжне доручення про сплату єдиного податку' %}
+            </tbody>
+        </table>
+    </div>
+    <div id="rest4">
+        <h4>Документация</h4>
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:450px"></th>
+                    <th style="text-align:center">подписан / не подписан</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% formrow form.contract form.act_rec_trans form.warranty_mail using 'floppyforms/rows/restaurant/docs.html' %}
+            </tbody>
+        </table>
+    </div>
+    <div id="rest5">
+        <h4>Ограничения</h4>
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:450px"></th>
+                    <th style="text-align:center">подписан / не подписан</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% formrow form.list_restrict using 'floppyforms/rows/restaurant/docs.html' %}
+            </tbody>
+        </table>
+        {% formrow form.restriction using 'floppyforms/rows/restaurant/multiselect.html' %}
+    </div>
+    <div id="rest6">
+        <h4>Оборудование</h4>
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:450px"></th>
+                    <th style="text-align:center">подключено / не подключено</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% formrow form.equipment using 'floppyforms/rows/restaurant/docs.html' %}
+            </tbody>
+        </table>
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:450px"></th>
+                    <th style="text-align:center">подключенных / общее</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% formrow form.plasma_work form.plasma_all using 'floppyforms/rows/restaurant/plasma.html' %}
+            </tbody>
+        </table>
+    </div>
+    <div id="rest7">
+        <h4>Видеоролики</h4>
+        {% formrow form.video using 'floppyforms/rows/restaurant/multiselect.html' %}
+    </div>
+{% endblock %}

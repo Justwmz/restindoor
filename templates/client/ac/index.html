@@ -1,0 +1,61 @@
+{% extends "client/index.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    Рекламная кампания | Клиенты
+{% endblock title %}
+
+{% block content %}
+    <div class="container" style="padding-top: 20px">
+        <div class="row">
+            <div class="span3">
+                <div class="well pull-left" style="min-width: 210px; margin: 5px; padding: 8px 0;">
+                    <ul class="nav nav-list">
+                        <li class="nav-header"></li>
+                        <li><a href="{% url 'client-index' %}"><i class="icon-home"></i> Клиенты</a></li>
+                        <li><a href="{% url 'client-contact-index' %}"><i class="icon-user"></i> Контакты</a></li>
+                        <li class="active"><a href="#"><i class="icon-facetime-video"></i> Запуск РК</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="span9">
+                {% for message in messages %}
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Выполнено!</strong> {{ message }}
+                    </div>
+                {% endfor %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Клиент</th>
+                            <th>Сюжет</th>
+                            <th>Количество дней</th>
+                            <th>Ролик</th>
+                            <th style="width:92px"><a href="{% url 'client-ac-new' %}" class="btn btn-success btn-mini" style="width:78px"><i class="icon-plus icon-white"></i></a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ac in acs %}
+                            <tr>
+                                <td>{{ ac.client }}</td>
+                                <td>{{ ac.subject }}</td>
+                                <td>{{ ac.days }}</td>
+                                <td>{{ ac.video }}</td>
+                                <td>
+                                    <a href="#myModal_{{ ac.id }}_browse" role="button" class="btn btn-info btn-mini" data-toggle="modal"><i class="icon-zoom-in icon-white"></i></a>
+                                    <a href="{% url 'client-ac-edit' ac.id %}" class="btn btn-warning btn-mini"><i class="icon-edit icon-white"></i></a>
+                                    <a href="#myModal_{{ ac.id }}_delete" role="button" class="btn btn-danger btn-mini" data-toggle="modal"><i class="icon-remove icon-white"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% for ac in acs %}
+            {% include "client/ac/browse.html" %}
+            {% include "client/ac/delete.html" %}
+        {% endfor %}
+    </div>
+{% endblock content %}

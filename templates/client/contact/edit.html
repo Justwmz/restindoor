@@ -1,0 +1,33 @@
+{% extends "client/contact/index.html" %}
+{% load floppyforms %}
+
+{% block title %}
+    {% if contact %}{{ contact }}{% else %}Новый контакт{% endif %} | Контакты | Клиенты
+{% endblock title %}
+
+{% block content %}
+    <div class="container" style="padding-top: 20px">
+        <div class="row">
+            <div class="span3">
+                <div class="well pull-left" style="margin: 5px; padding: 8px 0;">
+                    <ul class="nav nav-list">
+                        <li class="nav-header">{% if contact %}{{ contact.name }}{% else %}Новый контакт{% endif %}</li>
+                        <li id="nav1" class="active"><a href="#">Общая информация</a></li>
+                        <li class="divider"></li>
+                        <div style="text-align:center;">
+                            <a href="{% url 'client-contact-index' %}" class="btn btn-small">Отменить</a>
+                            <button type="submit" class="btn btn-primary btn-small" form="cont_form">Сохранить</button>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <div class="span9">
+                <form action="" method="post" class="form-horizontal" id="cont_form">
+                    {% csrf_token %}
+                    <h4>Общая информация</h4>
+                    {% form formCont using "floppyforms/layouts/bootstrap.html" with style_div="margin-left:220px" style_label="width:200px"  %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages import error
 from django.utils.html import escape
-from restaurant.models import Restaurant
+from restaurant.models import Restaurant, Contact
 from restaurant.forms import RestaurantForm, ContactForm
 
 
@@ -22,25 +22,80 @@ def index(request):
 
 
 @login_required
-def edit(request, id):
-    restaurant = Restaurant.objects.get(id=id)
-    formRest = RestaurantForm(request.POST or None, instance=restaurant)
-    formCont = ContactForm()
+def newRestaurant(request):
+    formRest = RestaurantForm(request.POST or None)
     if formRest.is_valid():
         formRest.save()
+        error(request, 'Информация о ресторане успешно добавлена.')
         return redirect('restaurant-index')
-    var = {'restaurant': restaurant, 'formRest': formRest, 'formCont': formCont}
+    var = {'formRest': formRest}
 
-    return render_to_response('restaurant/edit.html', var, context_instance=RequestContext(request))
+    return render_to_response('restaurant/restaurant/edit.html', var, context_instance=RequestContext(request))
+
 
 
 @login_required
-def delete(request, id):
-#    restaurant = Restaurant.objects.get(id=id)
-#    restaurant.delete()
+def editRestaurant(request, id):
+    restaurant = Restaurant.objects.get(id=id)
+    formRest = RestaurantForm(request.POST or None, instance=restaurant)
+    if formRest.is_valid():
+        formRest.save()
+        error(request, 'Информация о ресторане успешно изменена.')
+        return redirect('restaurant-index')
+    var = {'restaurant': restaurant, 'formRest': formRest}
+
+    return render_to_response('restaurant/restaurant/edit.html', var, context_instance=RequestContext(request))
+
+
+@login_required
+def deleteRestaurant(request, id):
+    restaurant = Restaurant.objects.get(id=id)
+    restaurant.delete()
     error(request, 'Информация о ресторане успешно удалена.')
 
     return redirect('restaurant-index')
+
+
+@login_required
+def indexContact(request):
+    contacts = Contact.objects.all()
+
+    return render_to_response('restaurant/contact/index.html', locals(), context_instance=RequestContext(request))
+
+
+@login_required
+def newContact(request):
+    formCont = ContactForm(request.POST or None)
+    if formCont.is_valid():
+        formCont.save()
+        error(request, 'Информация о контакте успешно добавлена.')
+        return redirect('contact-index')
+    var = {'formCont': formCont}
+
+    return render_to_response('restaurant/contact/edit.html', var, context_instance=RequestContext(request))
+
+
+
+@login_required
+def editContact(request, id):
+    contact = Contact.objects.get(id=id)
+    formCont = ContactForm(request.POST or None, instance=contact)
+    if formCont.is_valid():
+        formCont.save()
+        error(request, 'Информация о контакте успешно изменена.')
+        return redirect('contact-index')
+    var = {'contact': contact, 'formCont': formCont}
+
+    return render_to_response('restaurant/contact/edit.html', var, context_instance=RequestContext(request))
+
+
+@login_required
+def deleteContact(request, id):
+    contact = Contact.objects.get(id=id)
+    contact.delete()
+    error(request, 'Информация о контакте успешно удалена.')
+
+    return redirect('contact-index')
 
 
 @login_required
@@ -64,5 +119,5 @@ def handlePopAdd(request, addForm, field, templ):
 
 
 @login_required
-def newContact(request):
+def newCont(request):
     return handlePopAdd(request, ContactForm, 'contact', 'popaddcontact.html')

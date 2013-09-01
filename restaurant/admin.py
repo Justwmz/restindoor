@@ -1,21 +1,10 @@
 from django.contrib import admin
-from restaurant.models import Contact, Branch, Video, Restaurant
+from restaurant.models import Contact, Restaurant
 
 
 class ContactAdmin(admin.ModelAdmin):
     search_fields = ('name', )
     list_display = ('name', 'phone_work', 'email')
-
-
-class BranchAdmin(admin.ModelAdmin):
-    search_fields = ('name', )
-    list_display = ('name', )
-
-
-class VideoAdmin(admin.ModelAdmin):
-    search_fields = ('name', 'address')
-    list_display = ('name', 'address', 'start_date', 'end_date')
-    readonly_fields = ('periodicity', )
 
 
 class RestaurantAdmin(admin.ModelAdmin):
@@ -25,6 +14,4 @@ class RestaurantAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Contact, ContactAdmin)
-admin.site.register(Branch, BranchAdmin)
-admin.site.register(Video, VideoAdmin)
 admin.site.register(Restaurant, RestaurantAdmin)

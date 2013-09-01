@@ -1,0 +1,13 @@
+<div class="modal hide fade" id="myModal_{{ contact.id }}_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ contact.id }}_delete" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 id="myModalLabel_{{ contact.id }}_delete">Удалиение "{{ contact }}"</h3>
+    </div>
+    <div class="modal-body">
+        <p>Вы уверены, что хотите удалить всю информацию о контакте?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Отменить</button>
+        <a href="{% url 'client-contact-delete' contact.id %}" class="btn btn-danger">Удалить</a>
+    </div>
+</div>

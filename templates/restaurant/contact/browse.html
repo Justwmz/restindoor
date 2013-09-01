@@ -1,0 +1,51 @@
+<div class="modal hide fade" id="myModal_{{ contact.id }}_browse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ contact.id }}_browse" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 id="myModalLabel_{{ contact.id }}_browse">Просмотр "{{ contact }}"</h3>
+    </div>
+    <div class="modal-body">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th style="width:220px">Общая информация</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Ф.И.О.</td>
+                    <td>{{ contact.name }}</td>
+                </tr>
+                <tr>
+                    <td>Уровень контакта</td>
+                    <td>{{ contact.lvl_verbose }}</td>
+                </tr>
+                <tr>
+                    <td>Номер телефона (раб.)</td>
+                    <td>{{ contact.phone_work }}</td>
+                </tr>
+                <tr>
+                    <td>Номер телефона (моб.)</td>
+                    <td>{{ contact.phone_cell }}</td>
+                </tr>
+                <tr>
+                    <td>E-mail</td>
+                    <td>{{ contact.email }}</td>
+                </tr>
+                <tr>
+                    <td>ICQ</td>
+                    <td>{{ contact.icq }}</td>
+                </tr>
+                <tr>
+                    <td>Skype</td>
+                    <td>{{ contact.skype }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Закрыть</button>
+        <a href="{% url 'contact-edit' contact.id %}" class="btn btn-warning">Редактировать</a>
+        <a href="#myModal_{{ contact.id }}_delete" role="button" class="btn btn-danger" data-toggle="modal" data-dismiss="modal" aria-hidden="true">Удалить</a>
+    </div>
+</div>

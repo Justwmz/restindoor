@@ -1,0 +1,63 @@
+<div class="modal hide fade" id="myModal_{{ ac.id }}_browse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ ac.id }}_browse" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 id="myModalLabel_{{ ac.id }}_browse">Просмотр "{{ ac }}"</h3>
+    </div>
+    <div class="modal-body">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th style="width:220px">Общая информация</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Клиент</td>
+                    <td>{{ ac.client }}</td>
+                </tr>
+                <tr>
+                    <td>Сюжет</td>
+                    <td>{{ ac.subject }}</td>
+                </tr>
+                <tr>
+                    <td>Даты размещения</td>
+                    <td>{{ ac.start_date }} - {{ ac.end_date }}</td>
+                </tr>
+                <tr>
+                    <td>Количество дней</td>
+                    <td>{{ ac.days }}</td>
+                </tr>
+                <tr>
+                    <td>Ролик</td>
+                    <td>{{ ac.video }}</td>
+                </tr>
+                <tr>
+                    <td>Вид оплаты</td>
+                    <td>{{ ac.type_payment_verbose }}</td>
+                </tr>
+                <tr>
+                    <td>Скидка</td>
+                    <td>{{ ac.discount }}</td>
+                </tr>
+                <tr>
+                    <td>Сумма к оплате</td>
+                    <td>{{ ac.amount_paid }} грн.</td>
+                </tr>
+                <tr>
+                    <td>Дата проплаты</td>
+                    <td>{{ ac.pay_date }}</td>
+                </tr>
+                <tr>
+                    <td>Рестораны</td>
+                    <td>{% for item in ac.restaurant.all %}{{ item }}<br>{% endfor %}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Закрыть</button>
+        <a href="{% url 'client-ac-edit' ac.id %}" class="btn btn-warning">Редактировать</a>
+        <a href="#myModal_{{ ac.id }}_delete" role="button" class="btn btn-danger" data-toggle="modal" data-dismiss="modal" aria-hidden="true">Удалить</a>
+    </div>
+</div>

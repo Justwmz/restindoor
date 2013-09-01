@@ -1,0 +1,33 @@
+{% extends "floppyforms/layouts/bootstrap.html" %}{% load floppyforms %}
+
+{% block rows %}
+    <div id="rest1">
+        <h4>Общая информация</h4>
+        {% formrow form.name_rus form.name_eng using 'floppyforms/rows/restaurant/name.html' with label='Клиент' %}
+        {% formrow form.ra %}
+        {% formrow form.site using 'floppyforms/rows/restaurant/site.html' %}
+        {% formrow form.control %}
+    </div>
+    <div id="rest2">
+        <h4>Юридическая информация</h4>
+        {% formrow form.branch %}
+        {% formrow form.notes %}
+        {% formrow form.tags %}
+        {% formrow form.details %}
+    </div>
+    <div id="rest3">
+        <h4>О контакте</h4>
+        {% formrow form.contact_lvl with style_div="margin-left:220px" style_label="width:200px" %}
+        {% formrow form.status with style_div="margin-left:220px" style_label="width:200px" %}
+        {% formrow form.next_date using 'floppyforms/rows/restaurant/add_date.html' with style_div="margin-left:220px" style_label="width:200px" %}
+        {% formrow form.contact_type with style_div="margin-left:220px" style_label="width:200px" %}
+        {% formrow form.contact_result with style_div="margin-left:220px" style_label="width:200px" %}
+        {% formrow form.last_date using 'floppyforms/rows/restaurant/add_date.html' with style_div="margin-left:220px" style_label="width:200px" %}
+    </div>
+    <div id="rest4">
+        <h4>Контакты</h4>
+        {% formrow form.contact_1 %}
+        {% formrow form.contact_2 %}
+        {% formrow form.contact_3 %}
+    </div>
+{% endblock %}

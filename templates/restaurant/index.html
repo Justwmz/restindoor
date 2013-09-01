@@ -5,10 +5,10 @@
 {% endblock title %}
 
 {% block navbar %}
-    <li><a href="/">Главная</a></li>
-    <li><a href="/client/">Клиенты</a></li>
-    <li class="active"><a href="/restaurant/">Рестораны</a></li>
-    <li><a href="/analytics/">Отчетность</a></li>
+    <li><a href="{% url 'index' %}">Главная</a></li>
+    <li><a href="{% url 'client-index' %}">Клиенты</a></li>
+    <li class="active"><a href="{% url 'restaurant-index' %}">Рестораны</a></li>
+    <li><a href="{% url 'analytics-index' %}">Отчетность</a></li>
 {% endblock navbar %}
 {% block content %}
     <div class="container" style="padding-top: 20px">
@@ -16,11 +16,15 @@
             <div class="span3">
                 <div class="well pull-left" style="min-width: 210px; margin: 5px; padding: 8px 0;">
                     <ul class="nav nav-list">
+                        <li class="nav-header"></li>
+                        <li class="active"><a href="#"><i class="icon-home"></i> Рестораны</a></li>
+                        <li><a href="{% url 'contact-index' %}"><i class="icon-user"></i> Контакты</a></li>
+<!--                        <li class="divider"></li>
                         <li class="nav-header">Сеть ресторанов</li>
                         <li {% if not chain_act %}class="active"{% endif %}><a href="?">Все</a></li>
                         {% for restaurant in restaurants_all %}
                             <li {% ifequal chain_act restaurant.chain_name_rus %}class="active"{% endifequal %}><a href="?chain_name_rus={{ restaurant.chain_name_rus }}">{{ restaurant.chain_name_rus }}</a></li>
-                        {% endfor %}
+                        {% endfor %} -->
                     </ul>
                 </div>
             </div>
@@ -38,7 +42,7 @@
                             <th>Сеть ресторанов</th>
                             <th>Сайт</th>
                             <th>Дата</th>
-                            <th></th>
+                            <th style="width:92px"><a href="{% url 'restaurant-new' %}" class="btn btn-success btn-mini" style="width:78px"><i class="icon-plus icon-white"></i></a></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,27 +53,19 @@
                                 <td><a href="{{ restaurant.site }}">{{ restaurant.site }}</a></td>
                                 <td>{{ restaurant.add_date }}</td>
                                 <td>
-                                    <a href="{{ restaurant.id }}/" class="btn btn-warning btn-mini"><i class="icon-edit icon-white"></i></a>
-                                    <a href="#myModal_{{ restaurant.id }}" role="button" class="btn btn-danger btn-mini" data-toggle="modal"><i class="icon-remove icon-white"></i></a>
+                                    <a href="#myModal_{{ restaurant.id }}_browse" role="button" class="btn btn-info btn-mini" data-toggle="modal"><i class="icon-zoom-in icon-white"></i></a>
+                                    <a href="{% url 'restaurant-edit' restaurant.id %}" class="btn btn-warning btn-mini"><i class="icon-edit icon-white"></i></a>
+                                    <a href="#myModal_{{ restaurant.id }}_delete" role="button" class="btn btn-danger btn-mini" data-toggle="modal"><i class="icon-remove icon-white"></i></a>
                                 </td>
                             </tr>
-                            <div class="modal hide fade" id="myModal_{{ restaurant.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ restaurant.id }}" aria-hidden="true">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    <h3 id="myModalLabel_{{ restaurant.id }}">Удалиение "{{ restaurant }}"</h3>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Вы уверены, что хотите удалить всю информацию о ресторане?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Отменить</button>
-                                    <a href="{{ restaurant.id }}/delete/" class="btn btn-danger">Удалить</a>
-                                </div>
-                            </div>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
+        {% for restaurant in restaurants %}
+            {% include "restaurant/restaurant/browse.html" %}
+            {% include "restaurant/restaurant/delete.html" %}
+        {% endfor %}
     </div>
 {% endblock content %}

@@ -1,0 +1,107 @@
+<div class="modal hide fade" id="myModal_{{ client.id }}_browse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ client.id }}_browse" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 id="myModalLabel_{{ client.id }}_browse">Просмотр "{{ client }}"</h3>
+    </div>
+    <div class="modal-body">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th style="width:220px">Общая информация</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Клиент</td>
+                    <td>{{ client.name_rus }} / {{ client.name_eng }}</td>
+                </tr>
+                <tr>
+                    <td>Рекламное агенство</td>
+                    <td>{{ client.ra }}</td>
+                </tr>
+                <tr>
+                    <td>Сайт</td>
+                    <td><a href="{{ client.site }}" target="_blank">{{ client.site }}</a></td>
+                </tr>
+                <tr>
+                    <td>На контроле</td>
+                    <td>{{ client.control }}</td>
+                </tr>
+                <tr>
+                    <td>Дата создания</td>
+                    <td>{{ client.add_date }}</td>
+                </tr>
+                <tr>
+                    <th>Юридическая информация</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Отрасль</td>
+                    <td>{{ client.branch }}</td>
+                </tr>
+                <tr>
+                    <td>Заметки</td>
+                    <td>{{ client.notes }}</td>
+                </tr>
+                <tr>
+                    <td>Тэги</td>
+                    <td>{{ client.tags }}</td>
+                </tr>
+                <tr>
+                    <td>Юр. название</td>
+                    <td>{{ client.details }}</td>
+                </tr>
+                <tr>
+                    <th>О контакте</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Уровень контакта</td>
+                    <td>{{ client.contact_lvl_verbose }}</td>
+                </tr>
+                <tr>
+                    <td>Дата следующего контакта</td>
+                    <td>{{ client.next_date }}</td>
+                </tr>
+                <tr>
+                    <td>Тип следующего контакта</td>
+                    <td>{{ client.contact_type_verbose }}</td>
+                </tr>
+                <tr>
+                    <td>Результаты контактов</td>
+                    <td>{{ client.contact_result }}</td>
+                </tr>
+                <tr>
+                    <td>Дата последнего контакта</td>
+                    <td>{{ client.last_date }}</td>
+                </tr>
+                <tr>
+                    <th>Контакты</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Контакт</td>
+                    <td>{{ client.contact_1 }}</td>
+                </tr>
+                {% if client.contact_2 %}
+                <tr>
+                    <td></td>
+                    <td>{{ client.contact_2 }}</td>
+                </tr>
+                {% endif %}
+                {% if client.contact_3 %}
+                <tr>
+                    <td></td>
+                    <td>{{ client.contact_3 }}</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Закрыть</button>
+        <a href="{% url 'client-edit' client.id %}" class="btn btn-warning">Редактировать</a>
+        <a href="#myModal_{{ client.id }}_delete" role="button" class="btn btn-danger" data-toggle="modal" data-dismiss="modal" aria-hidden="true">Удалить</a>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+{% load floppyforms %}{% block row %}{% for field in fields %}
+<table class="table table-hover table-condensed">
+    {% with classes=field.css_classes label=label|default:field.label help_text=help_text|default:field.help_text %}
+    <thead>
+        <tr>
+            <th style="width:450px">{% block label %}{% if field|id %}{{ label }}{% if field.field.required %} <span class="required">*</span>{% endif %}{% endif %}{% endblock %}</th>
+            <th style="text-align:center">да / нет</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% block field %}
+        {% block widget %}{% formfield field %}{% endblock %}
+        {% block errors %}{% include "floppyforms/errors.html" with errors=field.errors %}{% endblock %}
+    {% endblock %}
+    </tbody>
+    {% endwith %}
+</table>
+{% endfor %}{% endblock %}

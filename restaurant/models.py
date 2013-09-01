@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*- 
 from django.db import models
-from client.models import Branch, Video
+from index.models import Video, Branch
 
 
 def get_display(key, list):
@@ -12,10 +12,10 @@ def get_display(key, list):
 
 class Contact(models.Model):
     LVL = (
-        (u'в', 'Владелец'),
-        (u'д', 'Директор'),
-        (u'а', 'Администратор'),
-        (u'м', 'Менеджер'),
+        (u'1', 'Владелец'),
+        (u'2', 'Директор'),
+        (u'3', 'Администратор'),
+        (u'4', 'Менеджер'),
     )
     name = models.CharField(max_length=150, verbose_name=u'Ф.И.О.')
     lvl = models.CharField(max_length=1, choices=LVL, verbose_name=u'Уровень контакта')
@@ -35,36 +35,36 @@ class Contact(models.Model):
 
 class Restaurant(models.Model):
     FORM_COOP = (
-        (u's', 'Standart'),
-        (u'b', 'Buying'),
+        (u'1', 'Standart'),
+        (u'2', 'Buying'),
     )
     CITY = (
-        (u'к', 'Киев'),
-        (u'о', 'Киевская обл.'),
+        (u'1', 'Киев'),
+        (u'2', 'Киевская обл.'),
     )
     STATUS = (
-        (u'б', 'Бизнес'),
-        (u'п', 'Премиум'),
+        (u'1', 'Бизнес'),
+        (u'2', 'Премиум'),
     )
     ORG_FORM = (
-        (u'о', 'ООО'),
-        (u'ф', 'ФОП'),
+        (u'1', 'ООО'),
+        (u'2', 'ФОП'),
     )
     PAYMENT_TERM = (
-        (u'п', '100% предоплаты'),
-        (u'ч', '50%/50% в поточном месяце'),
-        (u'н', 'Оплата постфактум'),
+        (u'1', '100% предоплаты'),
+        (u'2', '50%/50% в поточном месяце'),
+        (u'3', 'Оплата постфактум'),
     )
     WARRANTY_MAIL = (
-        (u'Н', 'Не требуется'),
-        (u'п', 'Подписано'),
-        (u'н', 'Не подписано'),
+        (u'1', 'Не требуется'),
+        (u'2', 'Подписано'),
+        (u'3', 'Не подписано'),
     )
-    name_rus = models.CharField(max_length=100, verbose_name=u'Ресторан (рус.)')
-    name_eng = models.CharField(max_length=100, blank=True, verbose_name=u'Ресторан (англ.)')
+    name_rus = models.CharField(max_length=150, verbose_name=u'Ресторан (рус.)')
+    name_eng = models.CharField(max_length=150, blank=True, verbose_name=u'Ресторан (англ.)')
     form_coop = models.CharField(max_length=1, choices=FORM_COOP, verbose_name=u'Форма сотрудничества')
-    chain_name_rus = models.CharField(max_length=100, verbose_name=u'Сеть ресторанов (рус.)')
-    chain_name_eng = models.CharField(max_length=100, blank=True, verbose_name=u'Сеть ресторанов (англ.)')
+    chain_name_rus = models.CharField(max_length=150, blank=True, verbose_name=u'Сеть ресторанов (рус.)')
+    chain_name_eng = models.CharField(max_length=150, blank=True, verbose_name=u'Сеть ресторанов (англ.)')
     city = models.CharField(max_length=1, choices=CITY, verbose_name=u'Адрес')
     city_sec = models.CharField(max_length=50, blank=True)
     add_date = models.DateField(verbose_name=u'Дата создания')
@@ -72,19 +72,19 @@ class Restaurant(models.Model):
     site = models.URLField(blank=True, verbose_name=u'Сайт ресторана')
     org_form = models.CharField(max_length=1, choices=ORG_FORM, verbose_name=u'Организационная форма')
     details = models.TextField(verbose_name=u'Реквизиты')
-    contact = models.ForeignKey(Contact, verbose_name=u'Контакт')
+    contact = models.ForeignKey(Contact, verbose_name=u'Ф.И.О. контакта')
     payment_term = models.CharField(max_length=1, choices=PAYMENT_TERM, verbose_name=u'Условия оплаты')
     pay_term_com = models.TextField(blank=True, verbose_name=u'Комментарии к оплате')
     sum_payment = models.FloatField(verbose_name=u'Сумма оплаты')
     chain_avail = models.BooleanField(verbose_name=u'Наличие своей сети')
     equipment = models.BooleanField(verbose_name=u'Оборудование')
-    plasma_all = models.IntegerField(blank=True, verbose_name=u'Общее количество плазм')
-    plasma_work = models.IntegerField(blank=True, verbose_name=u'Количество подключенных плазм')
+    plasma_all = models.IntegerField(blank=True, default=0, verbose_name=u'Общее количество плазм')
+    plasma_work = models.IntegerField(blank=True, default=0, verbose_name=u'Количество подключенных плазм')
     contract = models.BooleanField(verbose_name=u'Договор')
     act_rec_trans = models.BooleanField(verbose_name=u'Акт приема передачи')
     list_restrict = models.BooleanField(verbose_name=u'Список ограничений')
-    restriction = models.ManyToManyField(Branch, verbose_name=u'Ограничения')
-    video = models.ManyToManyField(Video, verbose_name=u'Ролик')
+    restriction = models.ManyToManyField(Branch, blank=True, verbose_name=u'Отрасль')
+    video = models.ManyToManyField(Video, blank=True, verbose_name=u'Ролик')
     warranty_mail = models.CharField(max_length=1, choices=WARRANTY_MAIL, verbose_name=u'Гарантийное письмо на изображение физ. лица')
     stat_doc_1 = models.BooleanField()
     stat_doc_2 = models.BooleanField()

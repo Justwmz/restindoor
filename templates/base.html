@@ -11,7 +11,7 @@
     <div class="navbar navbar-static-top">
         <div class="navbar-inner">
             <div class="container">
-                <a class="brand" href="/">RESTindoor CPM</a>
+                <a class="brand" href="/">RESTindoor CRM</a>
                 <div class="nav-collapse collapse">
                     {% if user.is_authenticated %}
                         <div class="pull-right">
@@ -26,10 +26,10 @@
                         </div>
                         <ul class="nav">
                             {% block navbar %}
-                                <li><a href="/">Главная</a></li>
-                                <li><a href="/client/">Клиенты</a></li>
-                                <li><a href="/restaurant/">Рестораны</a></li>
-                                <li><a href="/analytics/">Отчетность</a></li>
+                                <li><a href="{% url 'index' %}">Главная</a></li>
+                                <li><a href="{% url 'client-index' %}">Клиенты</a></li>
+                                <li><a href="{% url 'restaurant-index' %}">Рестораны</a></li>
+                                <li><a href="{% url 'analytics-index' %}">Отчетность</a></li>
                             {% endblock navbar %}
                         </ul>
                     {% endif %}

@@ -1,0 +1,137 @@
+<div class="modal hide fade" id="myModal_{{ restaurant.id }}_browse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ restaurant.id }}_browse" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 id="myModalLabel_{{ restaurant.id }}_browse">Просмотр "{{ restaurant }}"</h3>
+    </div>
+    <div class="modal-body">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th style="width:220px">Общая информация</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Ресторан</td>
+                    <td>{{ restaurant.name_rus }} / {{ restaurant.name_eng }}</td>
+                </tr>
+                <tr>
+                    <td>Наличие своей сети</td>
+                    <td>{% if restaurant.chain_avail %}<i class="icon-plus-sign"></i>{% else %}<i class="icon-minus-sign"></i>{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Сеть ресторанов</td>
+                    <td>{{ restaurant.chain_name_rus }} / {{ restaurant.chain_name_eng }}</td>
+                </tr>
+                <tr>
+                    <td>Сайт</td>
+                    <td><a href="{{ restaurant.site }}" target="_blank">{{ restaurant.site }}</a></td>
+                </tr>
+                <tr>
+                    <td>Адрес</td>
+                    <td>{{ restaurant.city_verbose }}{% if restaurant.city_sec != '' %} / {{ restaurant.city_sec }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Дата создания</td>
+                    <td>{{ restaurant.add_date }}</td>
+                </tr>
+                <tr>
+                    <th>Информация о контакте</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Ф.И.О. контакта</td>
+                    <td>{{ restaurant.contact }}</td>
+                </tr>
+                <tr>
+                    <td>Форма сотрудничества</td>
+                    <td>{{ restaurant.form_coop_verbose }}</td>
+                </tr>
+                <tr>
+                    <td>Статус</td>
+                    <td>{{ restaurant.status_verbose }}</td>
+                </tr>
+                <tr>
+                    <td>Сумма оплаты</td>
+                    <td>{{ restaurant.sum_payment }} грн.</td>
+                </tr>
+                <tr>
+                    <td>Условия оплаты</td>
+                    <td>{{ restaurant.payment_term_verbose }}</td>
+                </tr>
+                {% if restaurant.pay_term_com != '' %}
+                <tr>
+                    <td>Комментарии к оплате</td>
+                    <td>{{ restaurant.pay_term_com }}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <th>Организационная форма</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Организационная форма</td>
+                    <td>{{ restaurant.org_form_verbose }}</td>
+                </tr>
+                <tr>
+                    <td>Реквизиты</td>
+                    <td>{{ restaurant.details }}</td>
+                </tr>
+                <tr>
+                    <th>Документация</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Договор</td>
+                    <td>{% if restaurant.contract %}Подписан{% else %}Не подписан{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Акт приема/передачи</td>
+                    <td>{% if restaurant.act_rec_trans %}Подписан{% else %}Не подписан{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Гарантийное письмо на изображение физ. лица</td>
+                    <td>{{ restaurant.warranty_mail_verbose }}</td>
+                </tr>
+                <tr>
+                    <th>Ограничения</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Список ограничений</td>
+                    <td>{% if restaurant.list_restrict %}Подписан{% else %}Не подписан{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Ограничения</td>
+                    <td>{% for item in restaurant.restriction.all %}{{ item }}<br>{% endfor %}</td>
+                </tr>
+                <tr>
+                    <th>Оборудование</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Оборудование</td>
+                    <td>{% if restaurant.equipment %}Подключено{% else %}Не подключено{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Количество плазм</td>
+                    <td>{{ restaurant.plasma_work }}/{{ restaurant.plasma_all }}</td>
+                </tr>
+                <tr>
+                    <th>Видеоролики</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Ограничения</td>
+                    <td>{% for item in restaurant.video.all %}{{ item }}<br>{% endfor %}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Закрыть</button>
+        <a href="{% url 'restaurant-edit' restaurant.id %}" class="btn btn-warning">Редактировать</a>
+        <a href="#myModal_{{ restaurant.id }}_delete" role="button" class="btn btn-danger" data-toggle="modal" data-dismiss="modal" aria-hidden="true">Удалить</a>
+    </div>
+</div>

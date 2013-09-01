@@ -1,0 +1,113 @@
+{% extends "restaurant/index.html" %}
+{% load staticfiles %}
+{% load floppyforms %}
+
+{% block title %}
+    {% if restaurant %}{{ restaurant }}{% else %}Новый ресторан{% endif %} | Рестораны
+{% endblock title %}
+
+{% block head %}
+    <link href="{% static 'css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen">
+{% endblock head %}
+
+{% block content %}
+    <div class="container" style="padding-top: 20px">
+        <div class="row">
+            <div class="span3">
+                <div class="well pull-left" style="margin: 5px; padding: 8px 0;">
+                    <ul class="nav nav-list">
+                        <li class="nav-header">{% if restaurant %}{{ restaurant.name_rus }}{% else %}Новый ресторан{% endif %}</li>
+                        <li id="nav1" class="active"><a href="#">Общая информация</a></li>
+                        <li id="nav2"><a href="#">Информация о контакте</a></li>
+                        <li id="nav3"><a href="#">Организационная форма</a></li>
+                        <li id="nav4"><a href="#">Документация</a></li>
+                        <li id="nav5"><a href="#">Ограничения</a></li>
+                        <li id="nav6"><a href="#">Оборудование</a></li>
+                        <li id="nav7"><a href="#">Видеоролики</a></li>
+                        <li class="divider"></li>
+                        <div style="text-align:center;">
+                            <a href="{% url 'restaurant-index' %}" class="btn btn-small">Отменить</a>
+                            <button type="submit" class="btn btn-primary btn-small" form="grew_form">Сохранить</button>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <div class="span9">
+                <form action="" method="post" class="form-horizontal" id="grew_form">
+                    {% csrf_token %}
+                    {% form formRest using "floppyforms/layouts/restaurant.html" %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datetimepicker.ru.js' %}"></script>
+    <script src="{% static 'js/jquery.grewform.min.js' %}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('#datetimepicker').datetimepicker({
+                format: 'dd.MM.yyyy',
+                language: 'ru',
+                pickTime: false
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function(){
+            $('#rest2,#rest3,#rest4,#rest5,#rest6,#rest7').hide();
+            $('#div_city_sec, #stat_doc_1_1, #stat_doc_1_2, #stat_doc_2_1, #stat_doc_2_2, #stat_doc_3_1, #stat_doc_3_2, #stat_doc_4_1, #stat_doc_4_2').hide()
+            $('#grew_form').grewform({
+                '#div_city option[value=2]:selected':{show:'#div_city_sec'},
+            });
+            $('#nav1').click(function() {
+                $('#nav2,#nav3,#nav4,#nav5,#nav6,#nav7').removeClass('active');
+                $(this).addClass('active');
+                $('#rest2,#rest3,#rest4,#rest5,#rest6,#rest7').hide();
+                $('#rest1').show();
+            });
+            $('#nav2').click(function() {
+                $('#nav1,#nav3,#nav4,#nav5,#nav6,#nav7').removeClass('active');
+                $(this).addClass('active');
+                $('#rest1,#rest3,#rest4,#rest5,#rest6,#rest7').hide();
+                $('#rest2').show();
+            });
+            $('#nav3').click(function() {
+                $('#nav1,#nav2,#nav4,#nav5,#nav6,#nav7').removeClass('active');
+                $(this).addClass('active');
+                $('#rest1,#rest2,#rest4,#rest5,#rest6,#rest7').hide();
+                $('#rest3').show();
+                $('#grew_form').grewform({
+                    '#div_org_form option[value=1]:selected':{show:'#stat_doc_1_1, #stat_doc_2_1, #stat_doc_3_1, #stat_doc_4_1'},
+                    '#div_org_form option[value=2]:selected':{show:'#stat_doc_1_2, #stat_doc_2_2, #stat_doc_3_2, #stat_doc_4_2'}
+                });
+            });
+            $('#nav4').click(function() {
+                $('#nav1,#nav2,#nav3,#nav5,#nav6,#nav7').removeClass('active');
+                $(this).addClass('active');
+                $('#rest1,#rest2,#rest3,#rest5,#rest6,#rest7').hide();
+                $('#rest4').show();
+            });
+            $('#nav5').click(function() {
+                $('#nav1,#nav2,#nav3,#nav4,#nav6,#nav7').removeClass('active');
+                $(this).addClass('active');
+                $('#rest1,#rest2,#rest3,#rest4,#rest6,#rest7').hide();
+                $('#rest5').show();
+            });
+            $('#nav6').click(function() {
+                $('#nav1,#nav2,#nav3,#nav4,#nav5,#nav7').removeClass('active');
+                $(this).addClass('active');
+                $('#rest1,#rest2,#rest3,#rest4,#rest5,#rest7').hide();
+                $('#rest6').show();
+            });
+            $('#nav7').click(function() {
+                $('#nav1,#nav2,#nav3,#nav4,#nav5,#nav6').removeClass('active');
+                $(this).addClass('active');
+                $('#rest1,#rest2,#rest3,#rest4,#rest5,#rest6').hide();
+                $('#rest7').show();
+            });
+        });
+    </script>
+{% endblock script %}
