@@ -2,7 +2,7 @@ from django.forms import ModelForm
 #from django import forms
 import floppyforms as forms
 from restaurant.widgets import SelectWithPop, PhoneInput
-from client.models import Contact, Client, AdvertisingCampaign
+from client.models import Contact, Client, AdvertisingCampaign, Branch
 
 class ContactForm(ModelForm):
     class Meta:
@@ -14,21 +14,30 @@ class ContactForm(ModelForm):
             'phone_cell': PhoneInput(attrs={'class': 'bfh-phone', 'data-format': '(0dd) ddd-dd-dd'}),
             'address': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
             'additional': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
+            'username': forms.HiddenInput(),
+        }
+
+class BranchForm(ModelForm):
+    class Meta:
+        model = Branch
+        widgets = {
         }
 
 class ClientForm(ModelForm):
     class Meta:
         model = Client
         widgets = {
-            'contact_lvl': forms.Select(attrs={'style': 'width:247px'}),
+            'name': forms.TextInput(attrs={'style': 'width:233px'}),
+            'adv_ag': forms.Select(attrs={'style': 'width:247px'}),
+            'payer': forms.TextInput(attrs={'style': 'width:233px'}),
+            'branch': forms.Select(attrs={'style': 'width:247px'}),
+            'notes': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
             'status': forms.Select(attrs={'style': 'width:247px'}),
-            'contact_type': forms.Select(attrs={'style': 'width:247px'}),
-            'ra': forms.TextInput(attrs={'style': 'width:233px'}),
-            'control': forms.Select(attrs={'style': 'width:247px'}),
-            'notes': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
-            'tags': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
-            'details': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
-            'contact_result': forms.Textarea(attrs={'style': 'resize:none; width:233px; height:80px'}),
+            'payer_vat': forms.Select(attrs={'style': 'width:247px'}),
+            'details': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
+            'negot_res': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
+            'contact_plan': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
+            'username': forms.HiddenInput(),
         }
 
 class AdvertisingCampaignForm(ModelForm):

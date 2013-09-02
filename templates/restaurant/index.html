@@ -19,12 +19,22 @@
                         <li class="nav-header"></li>
                         <li class="active"><a href="#"><i class="icon-home"></i> Рестораны</a></li>
                         <li><a href="{% url 'contact-index' %}"><i class="icon-user"></i> Контакты</a></li>
-<!--                        <li class="divider"></li>
-                        <li class="nav-header">Сеть ресторанов</li>
-                        <li {% if not chain_act %}class="active"{% endif %}><a href="?">Все</a></li>
-                        {% for restaurant in restaurants_all %}
-                            <li {% ifequal chain_act restaurant.chain_name_rus %}class="active"{% endifequal %}><a href="?chain_name_rus={{ restaurant.chain_name_rus }}">{{ restaurant.chain_name_rus }}</a></li>
-                        {% endfor %} -->
+                        <li><a href="{% url 'restriction-index' %}"><i class="icon-user"></i> Ограничения</a></li>
+                    </ul>
+                </div>
+                <div class="well pull-left" style="min-width: 210px; margin: 5px; padding: 8px 0;">
+                    <ul class="nav nav-list">
+                        <li class="nav-header">Фильтры</li>
+                        <li class="divider"></li>
+                        <form action="" method="get">
+                            <select name="manager" style="width:180px">
+                                <option value="">Менеджер</option>
+                                {% for manager in managers %}
+                                    <option {% ifequal manager_act manager.id %}selected{% endifequal %} value="{{ manager.id }}">{{ manager.last_name }} {{ manager.first_name }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-small">Продолжить</button>
+                        </form>
                     </ul>
                 </div>
             </div>

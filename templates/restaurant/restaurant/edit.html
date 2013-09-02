@@ -24,6 +24,7 @@
                         <li id="nav5"><a href="#">Ограничения</a></li>
                         <li id="nav6"><a href="#">Оборудование</a></li>
                         <li id="nav7"><a href="#">Видеоролики</a></li>
+                        <li id="nav8"><a href="#">Контакты</a></li>
                         <li class="divider"></li>
                         <div style="text-align:center;">
                             <a href="{% url 'restaurant-index' %}" class="btn btn-small">Отменить</a>
@@ -45,39 +46,47 @@
 {% block script %}
     <script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
     <script src="{% static 'js/bootstrap-datetimepicker.ru.js' %}"></script>
+    <script src="{% static 'js/bootstrap-formhelpers-phone.format.js' %}"></script>
+    <script src="{% static 'js/bootstrap-formhelpers-phone.js' %}"></script>
     <script src="{% static 'js/jquery.grewform.min.js' %}"></script>
     <script type="text/javascript">
         $(function(){
-            $('#datetimepicker').datetimepicker({
-                format: 'dd.MM.yyyy',
+            $('#datetimepicker_1').datetimepicker({
+                format: 'hh:mm',
                 language: 'ru',
-                pickTime: false
+                pickDate: false
+            });
+        });
+    </script>
+     <script type="text/javascript">
+        $(function(){
+            $('#datetimepicker_2').datetimepicker({
+                format: 'hh:mm',
+                language: 'ru',
+                pickDate: false
             });
         });
     </script>
     <script type="text/javascript">
         $(function(){
-            $('#rest2,#rest3,#rest4,#rest5,#rest6,#rest7').hide();
-            $('#div_city_sec, #stat_doc_1_1, #stat_doc_1_2, #stat_doc_2_1, #stat_doc_2_2, #stat_doc_3_1, #stat_doc_3_2, #stat_doc_4_1, #stat_doc_4_2').hide()
-            $('#grew_form').grewform({
-                '#div_city option[value=2]:selected':{show:'#div_city_sec'},
-            });
+            $('#rest2,#rest3,#rest4,#rest5,#rest6,#rest7,#rest8').hide();
+            $('#stat_doc_1_1, #stat_doc_1_2, #stat_doc_2_1, #stat_doc_2_2, #stat_doc_3_1, #stat_doc_3_2, #stat_doc_4_1, #stat_doc_4_2').hide()
             $('#nav1').click(function() {
-                $('#nav2,#nav3,#nav4,#nav5,#nav6,#nav7').removeClass('active');
+                $('#nav2,#nav3,#nav4,#nav5,#nav6,#nav7,#nav8').removeClass('active');
                 $(this).addClass('active');
-                $('#rest2,#rest3,#rest4,#rest5,#rest6,#rest7').hide();
+                $('#rest2,#rest3,#rest4,#rest5,#rest6,#rest7,#test8').hide();
                 $('#rest1').show();
             });
             $('#nav2').click(function() {
-                $('#nav1,#nav3,#nav4,#nav5,#nav6,#nav7').removeClass('active');
+                $('#nav1,#nav3,#nav4,#nav5,#nav6,#nav7,#nav8').removeClass('active');
                 $(this).addClass('active');
-                $('#rest1,#rest3,#rest4,#rest5,#rest6,#rest7').hide();
+                $('#rest1,#rest3,#rest4,#rest5,#rest6,#rest7,#rest8').hide();
                 $('#rest2').show();
             });
             $('#nav3').click(function() {
-                $('#nav1,#nav2,#nav4,#nav5,#nav6,#nav7').removeClass('active');
+                $('#nav1,#nav2,#nav4,#nav5,#nav6,#nav7,#nav8').removeClass('active');
                 $(this).addClass('active');
-                $('#rest1,#rest2,#rest4,#rest5,#rest6,#rest7').hide();
+                $('#rest1,#rest2,#rest4,#rest5,#rest6,#rest7,#rest8').hide();
                 $('#rest3').show();
                 $('#grew_form').grewform({
                     '#div_org_form option[value=1]:selected':{show:'#stat_doc_1_1, #stat_doc_2_1, #stat_doc_3_1, #stat_doc_4_1'},
@@ -85,28 +94,34 @@
                 });
             });
             $('#nav4').click(function() {
-                $('#nav1,#nav2,#nav3,#nav5,#nav6,#nav7').removeClass('active');
+                $('#nav1,#nav2,#nav3,#nav5,#nav6,#nav7,#nav8').removeClass('active');
                 $(this).addClass('active');
-                $('#rest1,#rest2,#rest3,#rest5,#rest6,#rest7').hide();
+                $('#rest1,#rest2,#rest3,#rest5,#rest6,#rest7,#rest8').hide();
                 $('#rest4').show();
             });
             $('#nav5').click(function() {
-                $('#nav1,#nav2,#nav3,#nav4,#nav6,#nav7').removeClass('active');
+                $('#nav1,#nav2,#nav3,#nav4,#nav6,#nav7,#nav8').removeClass('active');
                 $(this).addClass('active');
-                $('#rest1,#rest2,#rest3,#rest4,#rest6,#rest7').hide();
+                $('#rest1,#rest2,#rest3,#rest4,#rest6,#rest7,#rest8').hide();
                 $('#rest5').show();
             });
             $('#nav6').click(function() {
-                $('#nav1,#nav2,#nav3,#nav4,#nav5,#nav7').removeClass('active');
+                $('#nav1,#nav2,#nav3,#nav4,#nav5,#nav7,#nav8').removeClass('active');
                 $(this).addClass('active');
-                $('#rest1,#rest2,#rest3,#rest4,#rest5,#rest7').hide();
+                $('#rest1,#rest2,#rest3,#rest4,#rest5,#rest7,#rest8').hide();
                 $('#rest6').show();
             });
             $('#nav7').click(function() {
-                $('#nav1,#nav2,#nav3,#nav4,#nav5,#nav6').removeClass('active');
+                $('#nav1,#nav2,#nav3,#nav4,#nav5,#nav6,#nav8').removeClass('active');
                 $(this).addClass('active');
-                $('#rest1,#rest2,#rest3,#rest4,#rest5,#rest6').hide();
+                $('#rest1,#rest2,#rest3,#rest4,#rest5,#rest6,#rest8').hide();
                 $('#rest7').show();
+            });
+            $('#nav8').click(function() {
+                $('#nav1,#nav2,#nav3,#nav4,#nav5,#nav6,#nav7').removeClass('active');
+                $(this).addClass('active');
+                $('#rest1,#rest2,#rest3,#rest4,#rest5,#rest6,#rest7').hide();
+                $('#rest8').show();
             });
         });
     </script>

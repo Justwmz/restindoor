@@ -15,12 +15,12 @@
         <div class="row">
             <div class="span3">
                 <div class="well pull-left" style="margin: 5px; padding: 8px 0;">
-                    <ul class="nav nav-list">
+                    <ul class="nav nav-list" id="myTab">
                         <li class="nav-header">{% if client %}{{ client.name_rus }}{% else %}Новый клиент{% endif %}</li>
-                        <li id="nav1" class="active"><a href="#">Общая информация</a></li>
-                        <li id="nav2"><a href="#">Юр. информация</a></li>
-                        <li id="nav3"><a href="#">О контакте</a></li>
-                        <li id="nav4"><a href="#">Контакты</a></li>
+                        <li class="active"><a class="tab" href="#total">Общая информация</a></li>
+                        <li><a class="tab" href="#juridical">Юр. информация</a></li>
+                        <li><a class="tab" href="#results">Результаты</a></li>
+                        <li><a class="tab" href="#contacts">Контакты</a></li>
                         <li class="divider"></li>
                         <div style="text-align:center;">
                             <a href="{% url 'client-index' %}" class="btn btn-small">Отменить</a>
@@ -42,9 +42,11 @@
 {% block script %}
     <script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
     <script src="{% static 'js/bootstrap-datetimepicker.ru.js' %}"></script>
+    <script src="{% static 'js/bootstrap-formhelpers-phone.format.js' %}"></script>
+    <script src="{% static 'js/bootstrap-formhelpers-phone.js' %}"></script>
     <script type="text/javascript">
         $(function(){
-            $('#datetimepicker').datetimepicker({
+            $('#datetimepicker_1').datetimepicker({
                 format: 'dd.MM.yyyy',
                 language: 'ru',
                 pickTime: false
@@ -53,31 +55,17 @@
     </script>
     <script type="text/javascript">
         $(function(){
-            $('#rest2,#rest3,#rest4').hide();
-            $('#nav1').click(function() {
-                $('#nav2,#nav3,#nav4').removeClass('active');
-                $(this).addClass('active');
-                $('#rest2,#rest3,#rest4').hide();
-                $('#rest1').show();
-            });
-            $('#nav2').click(function() {
-                $('#nav1,#nav3,#nav4').removeClass('active');
-                $(this).addClass('active');
-                $('#rest1,#rest3,#rest4').hide();
-                $('#rest2').show();
-            });
-            $('#nav3').click(function() {
-                $('#nav1,#nav2,#nav4').removeClass('active');
-                $(this).addClass('active');
-                $('#rest1,#rest2,#rest4').hide();
-                $('#rest3').show();
-            });
-            $('#nav4').click(function() {
-                $('#nav1,#nav2,#nav3').removeClass('active');
-                $(this).addClass('active');
-                $('#rest1,#rest2,#rest3').hide();
-                $('#rest4').show();
+            $('#datetimepicker_2').datetimepicker({
+                format: 'dd.MM.yyyy',
+                language: 'ru',
+                pickTime: false
             });
         });
+    </script>
+    <script type="text/javascript">
+        $('#myTab a.tab').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
     </script>
 {% endblock script %}

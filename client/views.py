@@ -3,39 +3,52 @@ from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages import error
-from client.models import Client, Contact, AdvertisingCampaign
-from client.forms import ClientForm, ContactForm, AdvertisingCampaignForm
+from django.forms.models import inlineformset_factory
+from django.contrib.auth.models import User
+from client.models import Client, Contact, AdvertisingCampaign, Branch
+from client.forms import ClientForm, ContactForm, AdvertisingCampaignForm, BranchForm
 
 
 @login_required
 def index(request):
-    clients_all = Client.objects.all()
-    clients = Client.objects.all()
+    managers = User.objects.all()
+    if request.GET.get('manager'):
+        manager_act = int(request.GET['manager'])
+        clients = Client.objects.filter(username__id=manager_act)
+    else:
+        clients = Client.objects.all()
 
     return render_to_response('client/index.html', locals(), context_instance=RequestContext(request))
 
 
 @login_required
 def newClient(request):
-    formClient = ClientForm(request.POST or None)
-    if formClient.is_valid():
+    my_client = Client(username=request.user)
+    ClientFormSet = inlineformset_factory(Client, Contact, form=ContactForm, can_delete=False, max_num=1)
+    formClient = ClientForm(request.POST or None, request.FILES or None, instance=my_client)
+    formClientSet = ClientFormSet(request.POST or None, instance=my_client)
+    if formClient.is_valid() and formClientSet.is_valid():
         formClient.save()
+        formClientSet.save()
         error(request, 'Информация о клиенте успешно добавлена.')
         return redirect('client-index')
-    var = {'formClient': formClient}
+    var = {'formClient': formClient, 'formClientSet': formClientSet}
 
     return render_to_response('client/client/edit.html', var, context_instance=RequestContext(request))
 
 
 @login_required
 def editClient(request, id):
-    client = Client.objects.get(id=id)
-    formClient = ClientForm(request.POST or None, instance=client)
-    if formClient.is_valid():
+    my_client = Client.objects.get(id=id)
+    ClientFormSet = inlineformset_factory(Client, Contact, form=ContactForm, can_delete=False, max_num=1)
+    formClient = ClientForm(request.POST or None, request.FILES or None, instance=my_client)
+    formClientSet = ClientFormSet(request.POST or None, instance=my_client)
+    if formClient.is_valid() and formClientSet.is_valid():
         formClient.save()
+        formClientSet.save()
         error(request, 'Информация о клиенте успешно изменена.')
         return redirect('client-index')
-    var = {'client': client, 'formClient': formClient}
+    var = {'client': my_client, 'formClient': formClient, 'formClientSet': formClientSet}
 
     return render_to_response('client/client/edit.html', var, context_instance=RequestContext(request))
 
@@ -51,7 +64,12 @@ def deleteClient(request, id):
 
 @login_required
 def indexContact(request):
-    contacts = Contact.objects.all()
+    clients = Client.objects.all()
+    if request.GET.get('client'):
+        client_act = int(request.GET['client'])
+        contacts = Contact.objects.filter(client__id=client_act)
+    else:
+        contacts = Contact.objects.all()
 
     return render_to_response('client/contact/index.html', locals(), context_instance=RequestContext(request))
 
@@ -129,3 +147,46 @@ def deleteAdvertisingCampaign(request, id):
     error(request, 'Информация о рекламной кампании успешно удалена.')
 
     return redirect('ac-index')
+
+
+@login_required
+def indexBranch(request):
+    branchs = Branch.objects.all()
+
+    return render_to_response('client/branch/index.html', locals(), context_instance=RequestContext(request))
+
+
+@login_required
+def newBranch(request):
+    formBranch = BranchForm(request.POST or None)
+    if formBranch.is_valid():
+        formBranch.save()
+        error(request, 'Информация об отраслях успешно добавлена.')
+        return redirect('client-branch-index')
+    var = {'formBranch': formBranch}
+
+    return render_to_response('client/branch/edit.html', var, context_instance=RequestContext(request))
+
+
+@login_required
+def editBranch(request, id):
+    branch = Branch.objects.get(id=id)
+    formBranch = BranchForm(request.POST or None, instance=branch)
+    if formBranch.is_valid():
+        formBranch.save()
+        error(request, 'Информация об отрасли успешно изменена.')
+        return redirect('client-branch-index')
+    var = {'branch': branch, 'formBranch': formBranch}
+
+    return render_to_response('client/branch/edit.html', var, context_instance=RequestContext(request))
+
+
+@login_required
+def deleteBranch(request, id):
+    branch = Branch.objects.get(id=id)
+    branch.delete()
+    error(request, 'Информация об отрасли успешно удалена.')
+
+    return redirect('branch-index')
+
+

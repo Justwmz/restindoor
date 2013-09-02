@@ -19,8 +19,23 @@
                         <li class="nav-header"></li>
                         <li class="active"><a href="#"><i class="icon-home"></i> Клиенты</a></li>
                         <li><a href="{% url 'client-contact-index' %}"><i class="icon-user"></i> Контакты</a></li>
-                        <!--<li><a href="#"><i class="icon-user"></i> Отрасли</a></li>-->
                         <li><a href="{% url 'client-ac-index' %}"><i class="icon-facetime-video"></i> Запуск РК</a></li>
+                        <li><a href="{% url 'client-branch-index' %}"><i class="icon-user"></i> Отрасли</a></li>
+                    </ul>
+                </div>
+                <div class="well pull-left" style="min-width: 210px; margin: 5px; padding: 8px 0;">
+                    <ul class="nav nav-list">
+                        <li class="nav-header">Фильтры</li>
+                        <li class="divider"></li>
+                        <form action="" method="get">
+                            <select name="manager" style="width:180px">
+                                <option value="">Менеджер</option>
+                                {% for manager in managers %}
+                                    <option {% ifequal manager_act manager.id %}selected{% endifequal %} value="{{ manager.id }}">{{ manager.last_name }} {{ manager.first_name }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-small">Продолжить</button>
+                        </form>
                     </ul>
                 </div>
             </div>
@@ -35,19 +50,21 @@
                     <thead>
                         <tr>
                             <th>Клиент</th>
+                            <th>Отрасль</th>
                             <th>Статус</th>
-                            <th>Сайт</th>
-                            <th>Дата</th>
+                            <th>Дата контакта</th>
+                            <th>Менеджер</th>
                             <th style="width:92px"><a href="{% url 'client-new' %}" class="btn btn-success btn-mini" style="width:78px"><i class="icon-plus icon-white"></i></a></th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for client in clients %}
                             <tr>
-                                <td>{{ client.name_rus }}</td>
+                                <td>{{ client.name }}</td>
+                                <td>{{ client.branch }}</td>
                                 <td>{{ client.status_verbose }}</td>
-                                <td><a href="{{ client.site }}">{{ client.site }}</a></td>
-                                <td>{{ client.add_date }}</td>
+                                <td>{{ client.next_cont_date }}</td>
+                                <td>{{ client.username.last_name }} {{ client.username.first_name }}</td>
                                 <td>
                                     <a href="#myModal_{{ client.id }}_browse" role="button" class="btn btn-info btn-mini" data-toggle="modal"><i class="icon-zoom-in icon-white"></i></a>
                                     <a href="{% url 'client-edit' client.id %}" class="btn btn-warning btn-mini"><i class="icon-edit icon-white"></i></a>

@@ -1,0 +1,27 @@
+<div class="modal hide fade" id="myModal_{{ branch.id }}_browse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ branch.id }}_browse" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 id="myModalLabel_{{ branch.id }}_browse">Просмотр "{{ branch }}"</h3>
+    </div>
+    <div class="modal-body">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th style="width:220px">Общая информация</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Название</td>
+                    <td>{{ branch.name }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Закрыть</button>
+        <a href="{% url 'client-branch-edit' branch.id %}" class="btn btn-warning">Редактировать</a>
+        <a href="#myModal_{{ branch.id }}_delete" role="button" class="btn btn-danger" data-toggle="modal" data-dismiss="modal" aria-hidden="true">Удалить</a>
+    </div>
+</div>

@@ -8,8 +8,8 @@ class ContactAdmin(admin.ModelAdmin):
 
 
 class ClientAdmin(admin.ModelAdmin):
-    search_fields = ('name_rus', )
-    list_display = ('name_rus', 'name_eng', 'add_date', 'control')
+    search_fields = ('name', )
+    list_display = ('name', 'add_date')
 
 
 class AdvertisingCampaignAdmin(admin.ModelAdmin):

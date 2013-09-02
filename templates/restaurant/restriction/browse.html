@@ -1,0 +1,27 @@
+<div class="modal hide fade" id="myModal_{{ restriction.id }}_browse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ restriction.id }}_browse" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 id="myModalLabel_{{ restriction.id }}_browse">Просмотр "{{ restriction }}"</h3>
+    </div>
+    <div class="modal-body">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th style="width:220px">Общая информация</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Название</td>
+                    <td>{{ restriction.name }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Закрыть</button>
+        <a href="{% url 'restriction-edit' restriction.id %}" class="btn btn-warning">Редактировать</a>
+        <a href="#myModal_{{ restriction.id }}_delete" role="button" class="btn btn-danger" data-toggle="modal" data-dismiss="modal" aria-hidden="true">Удалить</a>
+    </div>
+</div>

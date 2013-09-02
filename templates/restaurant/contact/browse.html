@@ -13,12 +13,16 @@
             </thead>
             <tbody>
                 <tr>
+                    <td>Ресторан</td>
+                    <td>{{ contact.restaurant }}</td>
+                </tr>
+                <tr>
                     <td>Ф.И.О.</td>
                     <td>{{ contact.name }}</td>
                 </tr>
                 <tr>
-                    <td>Уровень контакта</td>
-                    <td>{{ contact.lvl_verbose }}</td>
+                    <td>Должность</td>
+                    <td>{{ contact.position_verbose }}</td>
                 </tr>
                 <tr>
                     <td>Номер телефона (раб.)</td>
@@ -39,6 +43,14 @@
                 <tr>
                     <td>Skype</td>
                     <td>{{ contact.skype }}</td>
+                </tr>
+                <tr>
+                    <td>Фактический адрес</td>
+                    <td>{{ contact.address }}</td>
+                </tr>
+                <tr>
+                    <td>Дополнительные контакты</td>
+                    <td>{{ contact.additional }}</td>
                 </tr>
             </tbody>
         </table>

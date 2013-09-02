@@ -1,9 +1,8 @@
-{% extends "client/contact/index.html" %}
+{% extends "restaurant/restriction/index.html" %}
 {% load floppyforms %}
-{% load staticfiles %}
 
 {% block title %}
-    {% if contact %}{{ contact }}{% else %}Новый контакт{% endif %} | Контакты | Клиенты
+    {% if restriction %}{{ restriction }}{% else %}Новое ограничение{% endif %} | Ограничения | Рестораны
 {% endblock title %}
 
 {% block content %}
@@ -12,11 +11,11 @@
             <div class="span3">
                 <div class="well pull-left" style="margin: 5px; padding: 8px 0;">
                     <ul class="nav nav-list">
-                        <li class="nav-header">{% if contact %}{{ contact.name }}{% else %}Новый контакт{% endif %}</li>
+                        <li class="nav-header">{% if restriction %}{{ restriction.name }}{% else %}Новое ограничение{% endif %}</li>
                         <li id="nav1" class="active"><a href="#">Общая информация</a></li>
                         <li class="divider"></li>
                         <div style="text-align:center;">
-                            <a href="{% url 'client-contact-index' %}" class="btn btn-small">Отменить</a>
+                            <a href="{% url 'restriction-index' %}" class="btn btn-small">Отменить</a>
                             <button type="submit" class="btn btn-primary btn-small" form="cont_form">Сохранить</button>
                         </div>
                     </ul>
@@ -26,14 +25,9 @@
                 <form action="" method="post" class="form-horizontal" id="cont_form">
                     {% csrf_token %}
                     <h4>Общая информация</h4>
-                    {% form formCont using "floppyforms/layouts/bootstrap.html" with style_div="margin-left:220px" style_label="width:200px" %}
+                    {% form formRestrict using "floppyforms/layouts/bootstrap.html" with style_div="margin-left:220px" style_label="width:200px"  %}
                 </form>
             </div>
         </div>
     </div>
 {% endblock content %}
-
-{% block script %}
-    <script src="{% static 'js/bootstrap-formhelpers-phone.format.js' %}"></script>
-    <script src="{% static 'js/bootstrap-formhelpers-phone.js' %}"></script>
-{% endblock script %}

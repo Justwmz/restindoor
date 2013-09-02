@@ -1,8 +1,7 @@
 {% extends "floppyforms/layouts/bootstrap.html" %}{% load floppyforms %}
 
 {% block rows %}
-<div class="tab-content">
-    <div class="tab-pane active" id="total">
+    <div>
         <h4>Общая информация</h4>
         {% formrow form.name %}
         {% formrow form.adv_ag %}
@@ -22,14 +21,13 @@
     <div class="tab-pane" id="results">
         <h4>Результаты</h4>
         {% formrow form.negot_res with style_div="margin-left:220px" style_label="width:200px" %}
-        {% formrow form.last_cont_date using 'floppyforms/rows/restaurant/add_date.html' with style_div="margin-left:220px" style_label="width:200px" date_id="1" %}
+        {% formrow form.last_cont_date using 'floppyforms/rows/restaurant/add_date.html' with style_div="margin-left:220px" style_label="width:200px" %}
         {% formrow form.contact_plan with style_div="margin-left:220px" style_label="width:200px" %}
-        {% formrow form.next_cont_date using 'floppyforms/rows/restaurant/add_date.html' with style_div="margin-left:220px" style_label="width:200px" date_id="2" %}
+        {% formrow form.next_cont_date using 'floppyforms/rows/restaurant/add_date.html' with style_div="margin-left:220px" style_label="width:200px" %}
     </div>
     <div class="tab-pane" id="contacts">
         <h4>Контакты</h4>
         {{ formClientSet.management_form }}
         {% form formClientSet.forms using "floppyforms/layouts/bootstrap.html" with style_div="margin-left:220px" style_label="width:200px" %}
     </div>
-</div>
 {% endblock %}

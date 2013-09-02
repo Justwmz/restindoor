@@ -1,19 +1,17 @@
-{% load floppyforms %}{% block row %}
+{% load floppyforms %}{% block row %}{% for field in fields %}
     <tr>
         <td>
             {% with classes=field.css_classes label=label|default:field.label help_text=help_text|default:field.help_text %}
-            {% block label %}
-                {% if fields.0|id %}<label for="{{ fields.0|id }}">{% endif %}Количество плазм{% if fields.0.field.required %} <span class="required">*</span>{% endif %}{% if label|last not in ".:!?" %}:{% endif %}{% if fields.0|id %}</label>{% endif %}
-            {% endblock %}
+            {% block label %}{% if field|id %}{{ label }}{% if field.field.required %} <span class="required">*</span>{% endif %}{% endif %}{% endblock %}
         </td>
         <td style="text-align:center">
             {% block field %}
                 <div class="{{ classes }} field-{{ field.name }}">
-                    {% formfield fields.0 %} / {% formfield fields.1 %}
-                    {% block errors %}{% include "floppyforms/errors.html" with errors=fields.0.errors %}{% endblock %}
+                    {% block widget %}{% formfield field %}{% endblock %}
+                    {% block errors %}{% include "floppyforms/errors.html" with errors=field.errors %}{% endblock %}
                 </div><!--- .controls -->
             {% endblock %}
             {% endwith %}
         </td>
     </tr>
-{% endblock %}
+{% endfor %}{% endblock %}

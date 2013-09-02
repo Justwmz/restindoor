@@ -14,88 +14,80 @@
             <tbody>
                 <tr>
                     <td>Клиент</td>
-                    <td>{{ client.name_rus }} / {{ client.name_eng }}</td>
+                    <td>{{ client.name }}</td>
                 </tr>
+                {% if client.adv_ag %}
                 <tr>
                     <td>Рекламное агенство</td>
-                    <td>{{ client.ra }}</td>
+                    <td>{{ client.adv_ag }}</td>
+                </tr>
+                {% endif %}
+                {% if client.payer %}
+                <tr>
+                    <td>Плательщик</td>
+                    <td>{{ client.payer }}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td>Отрасль</td>
+                    <td>{{ client.branch }}</td>
                 </tr>
                 <tr>
                     <td>Сайт</td>
                     <td><a href="{{ client.site }}" target="_blank">{{ client.site }}</a></td>
                 </tr>
                 <tr>
-                    <td>На контроле</td>
-                    <td>{{ client.control }}</td>
+                    <td>Примечания</td>
+                    <td>{{ client.notes }}</td>
                 </tr>
                 <tr>
-                    <td>Дата создания</td>
-                    <td>{{ client.add_date }}</td>
+                    <td>Статус</td>
+                    <td>{{ client.status_verbose }}</td>
                 </tr>
                 <tr>
                     <th>Юридическая информация</th>
                     <th></th>
                 </tr>
                 <tr>
-                    <td>Отрасль</td>
-                    <td>{{ client.branch }}</td>
+                    <td>Плательщик НДС</td>
+                    <td>{{ client.payer_vat_verbose }}</td>
                 </tr>
+                {% if client.payer_cert %}
                 <tr>
-                    <td>Заметки</td>
-                    <td>{{ client.notes }}</td>
+                    <td>Плательщик</td>
+                    <td>{{ client.payer_cert }}</td>
                 </tr>
+                {% endif %}
+                {% if client.details %}
                 <tr>
-                    <td>Тэги</td>
-                    <td>{{ client.tags }}</td>
-                </tr>
-                <tr>
-                    <td>Юр. название</td>
+                    <td>Плательщик</td>
                     <td>{{ client.details }}</td>
                 </tr>
+                {% endif %}
                 <tr>
-                    <th>О контакте</th>
+                    <th>Результаты</th>
                     <th></th>
                 </tr>
                 <tr>
-                    <td>Уровень контакта</td>
-                    <td>{{ client.contact_lvl_verbose }}</td>
+                    <td>Дата внесения в базу</td>
+                    <td>{{ client.add_date }}</td>
                 </tr>
                 <tr>
-                    <td>Дата следующего контакта</td>
-                    <td>{{ client.next_date }}</td>
-                </tr>
-                <tr>
-                    <td>Тип следующего контакта</td>
-                    <td>{{ client.contact_type_verbose }}</td>
-                </tr>
-                <tr>
-                    <td>Результаты контактов</td>
-                    <td>{{ client.contact_result }}</td>
+                    <td>Результаты переговоров</td>
+                    <td>{{ client.negot_res }}</td>
                 </tr>
                 <tr>
                     <td>Дата последнего контакта</td>
-                    <td>{{ client.last_date }}</td>
+                    <td>{{ client.last_cont_date }}</td>
                 </tr>
                 <tr>
-                    <th>Контакты</th>
-                    <th></th>
+                    <td>План следующего контакта</td>
+                    <td>{{ client.contact_plan }}</td>
                 </tr>
                 <tr>
-                    <td>Контакт</td>
-                    <td>{{ client.contact_1 }}</td>
+                    <td>Дата следующего контакта</td>
+                    <td>{{ client.next_cont_date }}</td>
                 </tr>
-                {% if client.contact_2 %}
-                <tr>
-                    <td></td>
-                    <td>{{ client.contact_2 }}</td>
-                </tr>
-                {% endif %}
-                {% if client.contact_3 %}
-                <tr>
-                    <td></td>
-                    <td>{{ client.contact_3 }}</td>
-                </tr>
-                {% endif %}
             </tbody>
         </table>
     </div>

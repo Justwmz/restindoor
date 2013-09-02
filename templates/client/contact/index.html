@@ -19,6 +19,22 @@
                         <li><a href="{% url 'client-index' %}"><i class="icon-home"></i> Клиенты</a></li>
                         <li class="active"><a href="#"><i class="icon-user"></i> Контакты</a></li>
                         <li><a href="{% url 'client-ac-index' %}"><i class="icon-facetime-video"></i> Запуск РК</a></li>
+                        <li><a href="{% url 'client-branch-index' %}"><i class="icon-user"></i> Отрасли</a></li>
+                    </ul>
+                </div>
+                <div class="well pull-left" style="min-width: 210px; margin: 5px; padding: 8px 0;">
+                    <ul class="nav nav-list">
+                        <li class="nav-header">Фильтры</li>
+                        <li class="divider"></li>
+                        <form action="" method="get">
+                            <select name="client" style="width:180px">
+                                <option value="">Клиент</option>
+                                {% for client in clients %}
+                                    <option {% ifequal client_act client.id %}selected{% endifequal %} value="{{ client.id }}">{{ client.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-small">Продолжить</button>
+                        </form>
                     </ul>
                 </div>
             </div>
@@ -32,9 +48,9 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            <th>Клиент</th>
                             <th>Ф.И.О.</th>
                             <th>Должность</th>
-                            <th>Рабочий тел.</th>
                             <th>Мобильный тел.</th>
                             <th style="width:92px"><a href="{% url 'client-contact-new' %}" class="btn btn-success btn-mini" style="width:78px"><i class="icon-plus icon-white"></i></a></th>
                         </tr>
@@ -42,9 +58,9 @@
                     <tbody>
                         {% for contact in contacts %}
                             <tr>
+                                <td>{{ contact.client }}</td>
                                 <td>{{ contact.name }}</td>
                                 <td>{{ contact.position }}</td>
-                                <td>{{ contact.phone_work }}</td>
                                 <td>{{ contact.phone_cell }}</td>
                                 <td>
                                     <a href="#myModal_{{ contact.id }}_browse" role="button" class="btn btn-info btn-mini" data-toggle="modal"><i class="icon-zoom-in icon-white"></i></a>
@@ -63,8 +79,3 @@
         {% endfor %}
     </div>
 {% endblock content %}
-
-{% block script %}
-    <script src="{% static 'js/bootstrap-formhelpers-phone.format.js' %}"></script>
-    <script src="{% static 'js/bootstrap-formhelpers-phone.js' %}"></script>
-{% endblock script %}

@@ -4,18 +4,21 @@
     <div id="rest1">
         <h4>Общая информация</h4>
         {% formrow form.name_rus form.name_eng using 'floppyforms/rows/restaurant/name.html' with label='Ресторан' %}
-        {% formrow form.chain_avail %}
         {% formrow form.chain_name_rus form.chain_name_eng using 'floppyforms/rows/restaurant/name.html' with label='Сеть ресторанов' %}
+        {% formrow form.rest_open form.rest_close using 'floppyforms/rows/restaurant/mode.html' with label='Режим работы' %}
+        {% formrow form.broadcast %}
         {% formrow form.site using 'floppyforms/rows/restaurant/site.html' %}
-        {% formrow form.city form.city_sec using 'floppyforms/rows/restaurant/city.html' %}
+        {% formrow form.city %}
+        {% formrow form.address %}
         {% formrow form.add_date using 'floppyforms/rows/restaurant/add_date.html' %}
+        {% formfield form.username %}
     </div>
     <div id="rest2">
         <h4>Информация о контакте</h4>
         {% formrow form.contact using 'floppyforms/rows/restaurant/contact.html' %}
         {% formrow form.form_coop with style_div="margin-left:220px" style_label="width:200px" %}
         {% formrow form.status with style_div="margin-left:220px" style_label="width:200px" %}
-        {% formrow form.sum_payment using 'floppyforms/rows/restaurant/contact.html' with add_on="грн." %}
+        {% formrow form.sum_payment form.sum_payment_min using 'floppyforms/rows/restaurant/sum_payment.html' %}
         {% formrow form.payment_term with style_div="margin-left:220px" style_label="width:200px" %}
         {% formrow form.pay_term_com with style_div="margin-left:220px" style_label="width:200px" %}
     </div>
@@ -84,7 +87,7 @@
             <thead>
                 <tr>
                     <th style="width:450px"></th>
-                    <th style="text-align:center">подключенных / общее</th>
+                    <th style="text-align:center">Количество плазм</th>
                 </tr>
             </thead>
             <tbody>
@@ -95,5 +98,10 @@
     <div id="rest7">
         <h4>Видеоролики</h4>
         {% formrow form.video using 'floppyforms/rows/restaurant/multiselect.html' %}
+    </div>
+    <div id="rest8">
+        <h4>Контакты</h4>
+        {{ formRestSet.management_form }}
+        {% form formRestSet.forms using "floppyforms/layouts/bootstrap.html" with style_div="margin-left:220px" style_label="width:200px" %}
     </div>
 {% endblock %}

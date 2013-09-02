@@ -1,10 +1,5 @@
 from django.contrib import admin
-from index.models import Branch, Video
-
-
-class BranchAdmin(admin.ModelAdmin):
-    search_fields = ('name', )
-    list_display = ('name', )
+from index.models import Video
 
 
 class VideoAdmin(admin.ModelAdmin):
@@ -13,5 +8,4 @@ class VideoAdmin(admin.ModelAdmin):
     readonly_fields = ('periodicity', )
 
 
-admin.site.register(Branch, BranchAdmin)
 admin.site.register(Video, VideoAdmin)

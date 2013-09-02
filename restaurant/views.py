@@ -5,16 +5,18 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages import error
 from django.utils.html import escape
-from restaurant.models import Restaurant, Contact
-from restaurant.forms import RestaurantForm, ContactForm
+from django.forms.models import inlineformset_factory
+from django.contrib.auth.models import User
+from restaurant.models import Restaurant, Contact, Restriction
+from restaurant.forms import RestaurantForm, ContactForm, RestrictionForm
 
 
 @login_required
 def index(request):
-    restaurants_all = Restaurant.objects.all()
-    if request.GET.get('chain_name_rus'):
-        chain_act = request.GET['chain_name_rus']
-        restaurants = Restaurant.objects.filter(chain_name_rus__exact=chain_act)
+    managers = User.objects.all()
+    if request.GET.get('manager'):
+        manager_act = int(request.GET['manager'])
+        restaurants = Restaurant.objects.filter(username__id=manager_act)
     else:
         restaurants = Restaurant.objects.all()
 
@@ -23,26 +25,32 @@ def index(request):
 
 @login_required
 def newRestaurant(request):
-    formRest = RestaurantForm(request.POST or None)
-    if formRest.is_valid():
+    my_restaurant = Restaurant(username=request.user)
+    RestaurantFormSet = inlineformset_factory(Restaurant, Contact, form=ContactForm, can_delete=False, max_num=1)
+    formRest = RestaurantForm(request.POST or None, instance=my_restaurant)
+    formRestSet = RestaurantFormSet(request.POST or None, instance=my_restaurant)
+    if formRest.is_valid() and formRestSet.is_valid():
         formRest.save()
+        formRestSet.save()
         error(request, 'Информация о ресторане успешно добавлена.')
         return redirect('restaurant-index')
-    var = {'formRest': formRest}
+    var = {'formRest': formRest, 'formRestSet': formRestSet}
 
     return render_to_response('restaurant/restaurant/edit.html', var, context_instance=RequestContext(request))
 
 
-
 @login_required
 def editRestaurant(request, id):
-    restaurant = Restaurant.objects.get(id=id)
-    formRest = RestaurantForm(request.POST or None, instance=restaurant)
-    if formRest.is_valid():
+    my_restaurant = Restaurant.objects.get(id=id)
+    RestaurantFormSet = inlineformset_factory(Restaurant, Contact, form=ContactForm, can_delete=False, max_num=1)
+    formRest = RestaurantForm(request.POST or None, instance=my_restaurant)
+    formRestSet = RestaurantFormSet(request.POST or None, instance=my_restaurant)
+    if formRest.is_valid() and formRestSet.is_valid():
         formRest.save()
+        formRestSet.save()
         error(request, 'Информация о ресторане успешно изменена.')
         return redirect('restaurant-index')
-    var = {'restaurant': restaurant, 'formRest': formRest}
+    var = {'restaurant': my_restaurant, 'formRest': formRest, 'formRestSet': formRestSet}
 
     return render_to_response('restaurant/restaurant/edit.html', var, context_instance=RequestContext(request))
 
@@ -58,7 +66,12 @@ def deleteRestaurant(request, id):
 
 @login_required
 def indexContact(request):
-    contacts = Contact.objects.all()
+    restaurants = Restaurant.objects.all()
+    if request.GET.get('restaurant'):
+        restaurant_act = int(request.GET['restaurant'])
+        contacts = Contact.objects.filter(restaurant__id=restaurant_act)
+    else:
+        contacts = Contact.objects.all()
 
     return render_to_response('restaurant/contact/index.html', locals(), context_instance=RequestContext(request))
 
@@ -73,7 +86,6 @@ def newContact(request):
     var = {'formCont': formCont}
 
     return render_to_response('restaurant/contact/edit.html', var, context_instance=RequestContext(request))
-
 
 
 @login_required
@@ -96,6 +108,47 @@ def deleteContact(request, id):
     error(request, 'Информация о контакте успешно удалена.')
 
     return redirect('contact-index')
+
+
+@login_required
+def indexRestriction(request):
+    restrictions = Restriction.objects.all()
+
+    return render_to_response('restaurant/restriction/index.html', locals(), context_instance=RequestContext(request))
+
+
+@login_required
+def newRestriction(request):
+    formRestrict = RestrictionForm(request.POST or None)
+    if formRestrict.is_valid():
+        formRestrict.save()
+        error(request, 'Информация об ограничениях успешно добавлена.')
+        return redirect('restriction-index')
+    var = {'formRestrict': formRestrict}
+
+    return render_to_response('restaurant/restriction/edit.html', var, context_instance=RequestContext(request))
+
+
+@login_required
+def editRestriction(request, id):
+    restriction = Restriction.objects.get(id=id)
+    formRestrict = RestrictionForm(request.POST or None, instance=restriction)
+    if formRestrict.is_valid():
+        formRestrict.save()
+        error(request, 'Информация об ограничении успешно изменена.')
+        return redirect('restriction-index')
+    var = {'restriction': restriction, 'formRestrict': formRestrict}
+
+    return render_to_response('restaurant/restriction/edit.html', var, context_instance=RequestContext(request))
+
+
+@login_required
+def deleteRestriction(request, id):
+    restriction = Restriction.objects.get(id=id)
+    restriction.delete()
+    error(request, 'Информация об ограничении успешно удалена.')
+
+    return redirect('restriction-index')
 
 
 @login_required

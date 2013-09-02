@@ -1,0 +1,13 @@
+<div class="modal hide fade" id="myModal_{{ restriction.id }}_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ restriction.id }}_delete" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 id="myModalLabel_{{ restriction.id }}_delete">Удалиение "{{ restriction }}"</h3>
+    </div>
+    <div class="modal-body">
+        <p>Вы уверены, что хотите удалить всю информацию об ограничении?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Отменить</button>
+        <a href="{% url 'restriction-delete' restriction.id %}" class="btn btn-danger">Удалить</a>
+    </div>
+</div>

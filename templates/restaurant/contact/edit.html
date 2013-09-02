@@ -1,5 +1,6 @@
 {% extends "restaurant/contact/index.html" %}
 {% load floppyforms %}
+{% load staticfiles %}
 
 {% block title %}
     {% if contact %}{{ contact }}{% else %}Новый контакт{% endif %} | Контакты | Рестораны
@@ -31,3 +32,8 @@
         </div>
     </div>
 {% endblock content %}
+
+{% block script %}
+    <script src="{% static 'js/bootstrap-formhelpers-phone.format.js' %}"></script>
+    <script src="{% static 'js/bootstrap-formhelpers-phone.js' %}"></script>
+{% endblock script %}

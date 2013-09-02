@@ -2,13 +2,6 @@
 from django.db import models
 
 
-class Branch(models.Model):
-    name = models.CharField(max_length=100, verbose_name=u'Название')
-
-    def __unicode__(self):
-        return self.name
-
-
 class Video(models.Model):
     name = models.CharField(max_length=100, verbose_name=u'Название')
     address = models.CharField(max_length=200, verbose_name=u'Адрес на сервере')

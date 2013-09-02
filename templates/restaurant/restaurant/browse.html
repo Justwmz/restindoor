@@ -17,32 +17,32 @@
                     <td>{{ restaurant.name_rus }} / {{ restaurant.name_eng }}</td>
                 </tr>
                 <tr>
-                    <td>Наличие своей сети</td>
-                    <td>{% if restaurant.chain_avail %}<i class="icon-plus-sign"></i>{% else %}<i class="icon-minus-sign"></i>{% endif %}</td>
-                </tr>
-                <tr>
                     <td>Сеть ресторанов</td>
                     <td>{{ restaurant.chain_name_rus }} / {{ restaurant.chain_name_eng }}</td>
+                </tr>
+                <tr>
+                    <td>Режим работы ресторана</td>
+                    <td>{{ restaurant.rest_open }} - {{ restaurant.rest_close }}</td>
+                </tr>
+                <tr>
+                    <td>Система вещания</td>
+                    <td>{{ restaurant.broadcast_verbose }}</td>
                 </tr>
                 <tr>
                     <td>Сайт</td>
                     <td><a href="{{ restaurant.site }}" target="_blank">{{ restaurant.site }}</a></td>
                 </tr>
                 <tr>
-                    <td>Адрес</td>
-                    <td>{{ restaurant.city_verbose }}{% if restaurant.city_sec != '' %} / {{ restaurant.city_sec }}{% endif %}</td>
+                    <td>Город/Область</td>
+                    <td>{{ restaurant.city_verbose }}</td>
                 </tr>
                 <tr>
-                    <td>Дата создания</td>
-                    <td>{{ restaurant.add_date }}</td>
+                    <td>Адрес</td>
+                    <td>{{ restaurant.address }}</td>
                 </tr>
                 <tr>
                     <th>Информация о контакте</th>
                     <th></th>
-                </tr>
-                <tr>
-                    <td>Ф.И.О. контакта</td>
-                    <td>{{ restaurant.contact }}</td>
                 </tr>
                 <tr>
                     <td>Форма сотрудничества</td>
@@ -53,8 +53,8 @@
                     <td>{{ restaurant.status_verbose }}</td>
                 </tr>
                 <tr>
-                    <td>Сумма оплаты</td>
-                    <td>{{ restaurant.sum_payment }} грн.</td>
+                    <td>Сумма оплаты с НДС</td>
+                    <td>{{ restaurant.sum_payment }} грн. / {{ restaurant.sum_payment_min }} грн./мин.</td>
                 </tr>
                 <tr>
                     <td>Условия оплаты</td>
@@ -115,15 +115,19 @@
                     <td>{% if restaurant.equipment %}Подключено{% else %}Не подключено{% endif %}</td>
                 </tr>
                 <tr>
-                    <td>Количество плазм</td>
-                    <td>{{ restaurant.plasma_work }}/{{ restaurant.plasma_all }}</td>
+                    <td>Подключенных плазм</td>
+                    <td>{{ restaurant.plasma_work }}</td>
+                </tr>
+                <tr>
+                    <td>Всего плазм</td>
+                    <td>{{ restaurant.plasma_all }}</td>
                 </tr>
                 <tr>
                     <th>Видеоролики</th>
                     <th></th>
                 </tr>
                 <tr>
-                    <td>Ограничения</td>
+                    <td></td>
                     <td>{% for item in restaurant.video.all %}{{ item }}<br>{% endfor %}</td>
                 </tr>
             </tbody>

@@ -18,6 +18,22 @@
                         <li class="nav-header"></li>
                         <li><a href="{% url 'restaurant-index' %}"><i class="icon-home"></i> Рестораны</a></li>
                         <li class="active"><a href="#"><i class="icon-user"></i> Контакты</a></li>
+                        <li><a href="{% url 'restriction-index' %}"><i class="icon-user"></i> Ограничения</a></li>
+                    </ul>
+                </div>
+                <div class="well pull-left" style="min-width: 210px; margin: 5px; padding: 8px 0;">
+                    <ul class="nav nav-list">
+                        <li class="nav-header">Фильтры</li>
+                        <li class="divider"></li>
+                        <form action="" method="get">
+                            <select name="restaurant" style="width:180px">
+                                <option value="">Ресторан</option>
+                                {% for restaurant in restaurants %}
+                                    <option {% ifequal restaurant_act restaurant.id %}selected{% endifequal %} value="{{ restaurant.id }}">{{ restaurant.name_rus }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-small">Продолжить</button>
+                        </form>
                     </ul>
                 </div>
             </div>
@@ -31,9 +47,9 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            <th>Ресторан</th>
                             <th>Ф.И.О.</th>
-                            <th>Уровень</th>
-                            <th>Рабочий тел.</th>
+                            <th>Должность</th>
                             <th>Мобильный тел.</th>
                             <th style="width:92px"><a href="{% url 'contact-new' %}" class="btn btn-success btn-mini" style="width:78px"><i class="icon-plus icon-white"></i></a></th>
                         </tr>
@@ -41,9 +57,9 @@
                     <tbody>
                         {% for contact in contacts %}
                             <tr>
+                                <td>{{ contact.restaurant }}</td>
                                 <td>{{ contact.name }}</td>
-                                <td>{{ contact.lvl_verbose }}</td>
-                                <td>{{ contact.phone_work }}</td>
+                                <td>{{ contact.position_verbose }}</td>
                                 <td>{{ contact.phone_cell }}</td>
                                 <td>
                                     <a href="#myModal_{{ contact.id }}_browse" role="button" class="btn btn-info btn-mini" data-toggle="modal"><i class="icon-zoom-in icon-white"></i></a>
@@ -62,8 +78,3 @@
         {% endfor %}
     </div>
 {% endblock content %}
-
-{% block script %}
-    <script src="{% static 'js/bootstrap-formhelpers-phone.format.js' %}"></script>
-    <script src="{% static 'js/bootstrap-formhelpers-phone.js' %}"></script>
-{% endblock script %}
