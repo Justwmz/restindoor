@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="span9">
-                <form action="" method="post" class="form-horizontal" id="grew_form">
+                <form enctype="multipart/form-data" action="" method="post" class="form-horizontal" id="grew_form">
                     {% csrf_token %}
                     {% form formClient using "floppyforms/layouts/client.html" %}
                 </form>

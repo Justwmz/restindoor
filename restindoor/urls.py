@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -38,4 +40,4 @@ urlpatterns = patterns('',
     url(r'^restaurant/restriction/(?P<id>\d+)/delete/$', 'restaurant.views.deleteRestriction', name='restriction-delete'),
     url(r'^analytics/$', 'analytics.views.index', name='analytics-index'),
     url(r'^add/contact/?$', 'restaurant.views.newCont'),
-)
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

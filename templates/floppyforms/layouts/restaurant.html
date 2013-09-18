@@ -3,6 +3,7 @@
 {% block rows %}
     <div id="rest1">
         <h4>Общая информация</h4>
+        {% formrow form.logo %}
         {% formrow form.name_rus form.name_eng using 'floppyforms/rows/restaurant/name.html' with label='Ресторан' %}
         {% formrow form.chain_name_rus form.chain_name_eng using 'floppyforms/rows/restaurant/name.html' with label='Сеть ресторанов' %}
         {% formrow form.rest_open form.rest_close using 'floppyforms/rows/restaurant/mode.html' with label='Режим работы' %}

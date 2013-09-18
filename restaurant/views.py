@@ -27,7 +27,7 @@ def index(request):
 def newRestaurant(request):
     my_restaurant = Restaurant(username=request.user)
     RestaurantFormSet = inlineformset_factory(Restaurant, Contact, form=ContactForm, can_delete=False, max_num=1)
-    formRest = RestaurantForm(request.POST or None, instance=my_restaurant)
+    formRest = RestaurantForm(request.POST or None, request.FILES or None, instance=my_restaurant)
     formRestSet = RestaurantFormSet(request.POST or None, instance=my_restaurant)
     if formRest.is_valid() and formRestSet.is_valid():
         formRest.save()
@@ -43,7 +43,7 @@ def newRestaurant(request):
 def editRestaurant(request, id):
     my_restaurant = Restaurant.objects.get(id=id)
     RestaurantFormSet = inlineformset_factory(Restaurant, Contact, form=ContactForm, can_delete=False, max_num=1)
-    formRest = RestaurantForm(request.POST or None, instance=my_restaurant)
+    formRest = RestaurantForm(request.POST or None, request.FILES or None, instance=my_restaurant)
     formRestSet = RestaurantFormSet(request.POST or None, instance=my_restaurant)
     if formRest.is_valid() and formRestSet.is_valid():
         formRest.save()
