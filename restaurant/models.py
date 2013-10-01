@@ -71,7 +71,6 @@ class Restaurant(models.Model):
     payment_term = models.CharField(max_length=1, choices=PAYMENT_TERM, verbose_name=u'Условия оплаты')
     pay_term_com = models.TextField(blank=True, verbose_name=u'Комментарии к оплате')
     org_form = models.CharField(max_length=1, choices=ORG_FORM, verbose_name=u'Организационная форма')
-    details = models.TextField(verbose_name=u'Реквизиты')
     stat_doc_1 = models.BooleanField()
     stat_doc_2 = models.BooleanField()
     stat_doc_3 = models.BooleanField()
@@ -160,7 +159,7 @@ class Contact(models.Model):
         (u'5', 'Бухгалтер'),
         (u'6', 'Тех. отдел'),
     )
-    restaurant = models.ForeignKey(Restaurant, verbose_name=u'Ресторан')
+    restaurant = models.ForeignKey(Restaurant, verbose_name=u'Ресторан', related_name='contact')
     name = models.CharField(max_length=150, verbose_name=u'Ф.И.О.')
     position = models.CharField(max_length=1, choices=POSITION, verbose_name=u'Должность')
     phone_work = models.CharField(max_length=15, blank=True, verbose_name=u'Номер телефона (раб.)')
@@ -177,3 +176,22 @@ class Contact(models.Model):
     @property
     def position_verbose(self):
         return get_display(self.position, self.POSITION)
+
+class Details(models.Model):
+    restaurant = models.OneToOneField(Restaurant, verbose_name=u'Ресторан', related_name='details')
+    legal_name = models.CharField(max_length=200, verbose_name=u'Юридическое название')
+    code = models.IntegerField()
+    index = models.IntegerField(blank=True)
+    region = models.CharField(max_length=200, blank=True, verbose_name=u'Область')
+    city = models.CharField(max_length=200, blank=True, verbose_name=u'Город')
+    street = models.CharField(max_length=200, blank=True, verbose_name=u'Улица')
+    house = models.CharField(max_length=20, blank=True, verbose_name=u'Корпус')
+    room1 = models.CharField(max_length=20, blank=True, verbose_name=u'Квартира')
+    officce = models.CharField(max_length=20, blank=True, verbose_name=u'Офис')
+    room2 = models.CharField(max_length=20, blank=True, verbose_name=u'Комната')
+    phone = models.CharField(max_length=15, blank=True, verbose_name=u'Номер телефона')
+    bank = models.CharField(max_length=150, blank=True, verbose_name=u'Название банка')
+    mfo = models.IntegerField(max_length=6, blank=True, verbose_name=u'МФО')
+    current_account = models.IntegerField(max_length=14, blank=True, verbose_name=u'Расчетный счет')
+    inn = models.IntegerField(max_length=12, blank=True, verbose_name=u'ИНН')
+    nds_number = models.IntegerField(max_length=10, blank=True, verbose_name=u'Номер свидетельства НДС')

@@ -102,7 +102,12 @@
     </div>
     <div id="rest8">
         <h4>Контакты</h4>
-        {{ formRestSet.management_form }}
-        {% form formRestSet.forms using "floppyforms/layouts/bootstrap.html" with style_div="margin-left:220px" style_label="width:200px" %}
+        {{ formRestSet2.management_form }}
+        {% form formRestSet2.forms using "floppyforms/layouts/bootstrap.html" with style_div="margin-left:220px" style_label="width:200px" %}
+    </div>
+    <div id="rest9">
+        <h4>Контакты</h4>
+        {{ formRestSet1.management_form }}
+        {% form formRestSet1.forms using "floppyforms/layouts/bootstrap.html" with style_div="margin-left:220px" style_label="width:200px" %}
     </div>
 {% endblock %}

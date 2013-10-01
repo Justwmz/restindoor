@@ -3,7 +3,7 @@ from django.forms import ModelForm
 #from django import forms
 import floppyforms as forms
 from restaurant.widgets import SelectWithPop, PhoneInput
-from restaurant.models import Contact, Restaurant, Restriction
+from restaurant.models import Contact, Restaurant, Restriction, Details
 
 class ContactForm(ModelForm):
     class Meta:
@@ -15,6 +15,10 @@ class ContactForm(ModelForm):
             'address': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
             'additional': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
         }
+
+class DetailsForm(ModelForm):
+    class Meta:
+        model = Details
 
 class RestrictionForm(ModelForm):
     class Meta:
