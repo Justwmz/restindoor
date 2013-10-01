@@ -59,7 +59,7 @@
             });
         });
     </script>
-     <script type="text/javascript">
+    <script type="text/javascript">
         $(function(){
             $('#datetimepicker_2').datetimepicker({
                 format: 'hh:mm',
@@ -69,9 +69,33 @@
         });
     </script>
     <script type="text/javascript">
+        $(document).ready(function() {
+            $("#sum_1").keyup(function() {
+                var sum_1 = $("#sum_1").val();
+                var sum_2 = $("#sum_2");
+                if (sum_1.length == 0) {
+                    if (sum_2.is(":disabled")) sum_2.removeAttr("disabled");
+                }
+                else {
+                    if (!sum_2.is(":disabled")) sum_2.attr("disabled",true);
+                }
+            });
+            $("#sum_2").keyup(function() {
+                var sum_2 = $("#sum_2").val();
+                var sum_1 = $("#sum_1");
+                if (sum_2.length == 0) {
+                    if (sum_1.is(":disabled")) sum_1.removeAttr("disabled");
+                }
+                else {
+                    if (!sum_1.is(":disabled")) sum_1.attr("disabled",true);
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
         $(function(){
             $('#rest2,#rest3,#rest4,#rest5,#rest6,#rest7,#rest8,#rest9').hide();
-            $('#stat_doc_1_1, #stat_doc_1_2, #stat_doc_2_1, #stat_doc_2_2, #stat_doc_3_1, #stat_doc_3_2, #stat_doc_4_1, #stat_doc_4_2').hide()
+            $('#stat_doc_1_1, #stat_doc_1_2, #stat_doc_2_1, #stat_doc_2_2, #stat_doc_3_1, #stat_doc_3_2, #stat_doc_4_1, #stat_doc_4_2').hide();
             $('#nav1').click(function() {
                 $('#nav2,#nav3,#nav4,#nav5,#nav6,#nav7,#nav8,#nav9').removeClass('active');
                 $(this).addClass('active');
