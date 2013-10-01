@@ -1,0 +1,20 @@
+{% extends "floppyforms/layouts/bootstrap.html" %}{% load floppyforms %}
+
+{% block rows %}
+    {% formrow form.legal_name %}
+    {% formrow form.code using 'floppyforms/rows/restaurant/code.html' with label_1='Код ЕДРПОУ' label_2='Идентификационный код' %}
+    {% formrow form.index %}
+    {% formrow form.region %}
+    {% formrow form.city %}
+    {% formrow form.street %}
+    {% formrow form.house1 %}
+    {% formrow form.house2 %}
+    {% formrow form.room1 %}
+    {% formrow form.office %}
+    {% formrow form.room2 %}
+    {% formrow form.phone %}
+    {% formrow form.bank %}
+    {% formrow form.mfo %}
+    {% formrow form.current_account %}
+    {% formrow form.vat_inn using 'floppyforms/rows/restaurant/code.html' with label_1='Номер свидетельства НДС' label_2='ИНН' %}
+{% endblock %}

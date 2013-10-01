@@ -95,7 +95,7 @@
     <script type="text/javascript">
         $(function(){
             $('#rest2,#rest3,#rest4,#rest5,#rest6,#rest7,#rest8,#rest9').hide();
-            $('#stat_doc_1_1, #stat_doc_1_2, #stat_doc_2_1, #stat_doc_2_2, #stat_doc_3_1, #stat_doc_3_2, #stat_doc_4_1, #stat_doc_4_2').hide();
+            $('#stat_doc_1_1, #stat_doc_1_2, #stat_doc_2_1, #stat_doc_2_2, #stat_doc_3_1, #stat_doc_3_2, #stat_doc_4_1, #stat_doc_4_2, #code_1, #code_2, #vat_inn_1, #vat_inn_2').hide();
             $('#nav1').click(function() {
                 $('#nav2,#nav3,#nav4,#nav5,#nav6,#nav7,#nav8,#nav9').removeClass('active');
                 $(this).addClass('active');
@@ -114,8 +114,8 @@
                 $('#rest1,#rest2,#rest4,#rest5,#rest6,#rest7,#rest8,#rest9').hide();
                 $('#rest3').show();
                 $('#grew_form').grewform({
-                    '#div_org_form option[value=1]:selected':{show:'#stat_doc_1_1, #stat_doc_2_1, #stat_doc_3_1, #stat_doc_4_1'},
-                    '#div_org_form option[value=2]:selected':{show:'#stat_doc_1_2, #stat_doc_2_2, #stat_doc_3_2, #stat_doc_4_2'}
+                    '#div_org_form option[value=1]:selected':{show:'#stat_doc_1_1, #stat_doc_2_1, #stat_doc_3_1, #stat_doc_4_1, #code_1, #vat_inn_1'},
+                    '#div_org_form option[value=2]:selected':{show:'#stat_doc_1_2, #stat_doc_2_2, #stat_doc_3_2, #stat_doc_4_2, #code_2, #vat_inn_2'}
                 });
             });
             $('#nav4').click(function() {
