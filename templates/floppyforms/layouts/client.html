@@ -15,8 +15,8 @@
     </div>
     <div class="tab-pane" id="juridical">
         <h4>Юридическая информация</h4>
-        {% formrow form.payer_vat %}
-        {% formrow form.payer_cert %}
+        {% formrow form.payer_vat with div_id='div_payer_vat' %}
+        {% formrow form.payer_cert with div_id='div_payer_cert' %}
         {% formrow form.details %}
     </div>
     <div class="tab-pane" id="results">

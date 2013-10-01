@@ -44,6 +44,7 @@
     <script src="{% static 'js/bootstrap-datetimepicker.ru.js' %}"></script>
     <script src="{% static 'js/bootstrap-formhelpers-phone.format.js' %}"></script>
     <script src="{% static 'js/bootstrap-formhelpers-phone.js' %}"></script>
+    <script src="{% static 'js/jquery.grewform.min.js' %}"></script>
     <script type="text/javascript">
         $(function(){
             $('#datetimepicker_1').datetimepicker({
@@ -67,5 +68,13 @@
             e.preventDefault();
             $(this).tab('show');
         })
+    </script>
+    <script type="text/javascript">
+        $(function(){
+            $('#div_payer_cert').hide();
+            $('#grew_form').grewform({
+                '#div_payer_vat option[value=1]:selected':{show:'#div_payer_cert'}
+            });
+        });
     </script>
 {% endblock script %}
