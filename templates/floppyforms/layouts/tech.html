@@ -1,0 +1,55 @@
+{% extends "floppyforms/layouts/bootstrap.html" %}{% load floppyforms %}
+
+{% block rows %}
+    <div id="rest1">
+        <h4>Общая информация</h4>
+        {% formrow form.name_rus form.name_eng using 'floppyforms/rows/restaurant/name.html' with label='Ресторан' %}
+        {% formrow form.chain_name_rus form.chain_name_eng using 'floppyforms/rows/restaurant/name.html' with label='Сеть ресторанов' %}
+        {% formrow form.rest_open form.rest_close using 'floppyforms/rows/restaurant/mode.html' with label='Режим работы' %}
+        {% formrow form.city %}
+        {% formrow form.address %}
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:450px"></th>
+                    <th style="text-align:center">подписан / не подписан</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% formrow form.contract form.act_rec_trans form.warranty_mail using 'floppyforms/rows/restaurant/docs.html' %}
+            </tbody>
+        </table>
+    </div>
+    <div id="rest2">
+        <h4>Оборудование</h4>
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:450px"></th>
+                    <th style="text-align:center">подключено / не подключено</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% formrow form.equipment using 'floppyforms/rows/restaurant/docs.html' %}
+            </tbody>
+        </table>
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:450px"></th>
+                    <th style="text-align:center">Количество плазм</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% formrow form.plasma_work form.plasma_all using 'floppyforms/rows/restaurant/plasma.html' %}
+            </tbody>
+        </table>
+        {{ formRestSet2.management_form }}
+        {% form formRestSet2.forms using "floppyforms/layouts/device.html" with style_div="margin-left:220px" style_label="width:200px" %}
+    </div>
+    <div id="rest3">
+        <h4>Контакты</h4>
+        {{ formRestSet1.management_form }}
+        {% form formRestSet1.forms using "floppyforms/layouts/bootstrap.html" with style_div="margin-left:220px" style_label="width:200px" %}
+    </div>
+{% endblock %}

@@ -74,14 +74,6 @@ class NegotiationResult(models.Model):
 
 
 class Contact(models.Model):
-    POSITION = (
-        (u'1', 'Менеджер'),
-        (u'2', 'Администратор'),
-        (u'3', 'Директор'),
-        (u'4', 'Зам. директора'),
-        (u'5', 'Ген. директор'),
-        (u'6', 'Владелец'),
-    )
     client = models.ForeignKey(Client, verbose_name=u'Клиент', related_name='contact')
     name = models.CharField(max_length=200, verbose_name=u'Ф.И.О.')
     position = models.TextField(verbose_name=u'Должность')
@@ -95,10 +87,6 @@ class Contact(models.Model):
 
     def __unicode__(self):
         return self.name
-
-    @property
-    def position_verbose(self):
-        return get_display(self.position, self.POSITION)
 
 
 class AdvertisingCampaign(models.Model):

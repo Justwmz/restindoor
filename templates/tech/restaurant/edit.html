@@ -1,0 +1,106 @@
+{% extends "tech/index.html" %}
+{% load staticfiles %}
+{% load floppyforms %}
+
+{% block title %}
+    {% if restaurant %}{{ restaurant }}{% else %}Новый ресторан{% endif %} | Рестораны
+{% endblock title %}
+
+{% block head %}
+    <link href="{% static 'css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen">
+{% endblock head %}
+
+{% block content %}
+    <div class="container" style="padding-top: 20px">
+        <div class="row">
+            <div class="span3">
+                <div class="well pull-left" style="margin: 5px; padding: 8px 0;">
+                    <ul class="nav nav-list">
+                        <li class="nav-header">{% if restaurant %}{{ restaurant.name_rus }}{% else %}Новый ресторан{% endif %}</li>
+                        <li id="nav1" class="active"><a href="#">Общая информация</a></li>
+                        <li id="nav2"><a href="#">Технический отдел</a></li>
+                        <li id="nav3"><a href="#">Контакты</a></li>
+                        <li class="divider"></li>
+                        <div style="text-align:center;">
+                            <a href="{% url 'restaurant-index' %}" class="btn btn-small">Отменить</a>
+                            <button type="submit" class="btn btn-primary btn-small" form="grew_form">Сохранить</button>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <div class="span9">
+                <form enctype="multipart/form-data" action="" method="post" class="form-horizontal" id="grew_form">
+                    {% csrf_token %}
+                    {% form formRest using "floppyforms/layouts/tech.html" %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datetimepicker.ru.js' %}"></script>
+    <script src="{% static 'js/bootstrap-formhelpers-phone.format.js' %}"></script>
+    <script src="{% static 'js/bootstrap-formhelpers-phone.js' %}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('#datetimepicker_1').datetimepicker({
+                format: 'hh:mm',
+                language: 'ru',
+                pickDate: false
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function(){
+            $('#datetimepicker_2').datetimepicker({
+                format: 'hh:mm',
+                language: 'ru',
+                pickDate: false
+            });
+        });
+    </script>
+        <script type="text/javascript">
+        $(function(){
+            $('#datetimepicker_3').datetimepicker({
+                format: 'dd.MM.yyyy',
+                language: 'ru',
+                pickTime: false
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function(){
+            $('#datetimepicker_4').datetimepicker({
+                format: 'dd.MM.yyyy',
+                language: 'ru',
+                pickTime: false
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function(){
+            $('#rest2,#rest3').hide();
+            $('#nav1').click(function() {
+                $('#nav2,#nav3').removeClass('active');
+                $(this).addClass('active');
+                $('#rest2,#rest3').hide();
+                $('#rest1').show();
+            });
+            $('#nav2').click(function() {
+                $('#nav1,#nav3').removeClass('active');
+                $(this).addClass('active');
+                $('#rest1,#rest3').hide();
+                $('#rest2').show();
+            });
+            $('#nav3').click(function() {
+                $('#nav1,#nav2').removeClass('active');
+                $(this).addClass('active');
+                $('#rest1,#rest2').hide();
+                $('#rest3').show();
+            });
+        });
+    </script>
+{% endblock script %}

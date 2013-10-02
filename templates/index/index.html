@@ -5,10 +5,11 @@
 {% endblock title %}
 
 {% block navbar %}
-    <li class="active"><a href="/">Главная</a></li>
+    <!--<li class="active"><a href="/">Главная</a></li>-->
     <li><a href="/client/">Клиенты</a></li>
     <li><a href="/restaurant/">Рестораны</a></li>
-    <li><a href="/analytics/">Отчетность</a></li>
+    <li><a href="{% url 'tech-index' %}">Технический отдел</a></li>
+    <!--<li><a href="{% url 'analytics-index' %}">Отчетность</a></li>-->
 {% endblock navbar %}
 
 {% block content %}
@@ -16,11 +17,11 @@
         <div class="row">
             <div class="span2">
                 <!--Sidebar content-->
-                Menues
+                
             </div>
             <div class="span10">
                 <!--Body content-->
-                Content
+                
             </div>
         </div>
     </div>

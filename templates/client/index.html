@@ -5,10 +5,11 @@
 {% endblock title %}
 
 {% block navbar %}
-    <li><a href="{% url 'index' %}">Главная</a></li>
+    <!--<li><a href="{% url 'index' %}">Главная</a></li>-->
     <li class="active"><a href="{% url 'client-index' %}">Клиенты</a></li>
     <li><a href="{% url 'restaurant-index' %}">Рестораны</a></li>
-    <li><a href="{% url 'analytics-index' %}">Отчетность</a></li>
+    <li><a href="{% url 'tech-index' %}">Технический отдел</a></li>
+    <!--<li><a href="{% url 'analytics-index' %}">Отчетность</a></li>-->
 {% endblock navbar %}
 {% block content %}
     <div class="container" style="padding-top: 20px">

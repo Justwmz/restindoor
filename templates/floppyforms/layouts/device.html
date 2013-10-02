@@ -1,0 +1,18 @@
+{% extends "floppyforms/layouts/bootstrap.html" %}{% load floppyforms %}
+
+{% block rows %}
+    <table class="table table-hover table-condensed">
+        <thead>
+            <tr>
+                <th style="width:450px"></th>
+                <th style="text-align:center">проведено / не проведено</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% formrow form.survey form.installation using 'floppyforms/rows/tech/device.html' %}
+        </tbody>
+    </table>
+    {% formrow form.survey_date using 'floppyforms/rows/restaurant/add_date.html' with date_id="3" %}
+    {% formrow form.installation_date using 'floppyforms/rows/restaurant/add_date.html' with date_id="4" %}
+    {% formrow form.problems %}
+{% endblock %}
