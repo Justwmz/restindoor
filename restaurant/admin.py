@@ -10,7 +10,7 @@ class ContactAdmin(admin.ModelAdmin):
 class RestaurantAdmin(admin.ModelAdmin):
     search_fields = ('name_rus', 'name_eng')
     list_display = ('name_rus', 'name_eng', 'city', 'add_date')
-    filter_horizontal = ('restriction', 'video')
+    filter_horizontal = ('restriction', )
 
 
 admin.site.register(Contact, ContactAdmin)

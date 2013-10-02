@@ -13,6 +13,9 @@ def get_display(key, list):
 
 class Restriction(models.Model):
     name = models.CharField(max_length=100, verbose_name=u'Название')
+    add_date = models.DateField(auto_now_add=True, verbose_name=u'Дата внесения в базу')
+    username = models.ForeignKey(User, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.name
@@ -83,8 +86,8 @@ class Restaurant(models.Model):
     equipment = models.BooleanField(verbose_name=u'Оборудование')
     plasma_work = models.IntegerField(blank=True, default=0, verbose_name=u'Количество подключенных плазм')
     plasma_all = models.IntegerField(blank=True, default=0, verbose_name=u'Общее количество плазм')
-    video = models.ManyToManyField(Video, blank=True, verbose_name=u'Ролик')
-    username = models.ForeignKey(User, blank=True)
+    username = models.ForeignKey(User, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
 
 #    class Meta:
 #        permissions = (
@@ -169,6 +172,9 @@ class Contact(models.Model):
     skype = models.CharField(max_length=50, blank=True, verbose_name=u'Skype')
     address = models.TextField(blank=True, verbose_name=u'Фактический адрес')
     additional = models.TextField(blank=True, verbose_name=u'Дополнительные контакты')
+    add_date = models.DateField(auto_now_add=True, verbose_name=u'Дата внесения в базу')
+    username = models.ForeignKey(User, null=True, blank=True, related_name='restaurant_contact')
+    is_active = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.name
@@ -196,3 +202,6 @@ class Details(models.Model):
     mfo = models.IntegerField(max_length=6, blank=True, verbose_name=u'МФО')
     current_account = models.IntegerField(max_length=14, blank=True, verbose_name=u'Расчетный счет')
     vat_inn = models.IntegerField(max_length=12, blank=True)
+    add_date = models.DateField(auto_now_add=True, verbose_name=u'Дата внесения в базу')
+    username = models.ForeignKey(User, null=True, blank=True, related_name='restaurant_details')
+    is_active = models.BooleanField(default=True)

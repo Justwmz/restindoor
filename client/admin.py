@@ -14,7 +14,7 @@ class ClientAdmin(admin.ModelAdmin):
 
 class AdvertisingCampaignAdmin(admin.ModelAdmin):
     search_fields = ('client', )
-    list_display = ('client', 'subject', 'video')
+    list_display = ('client', 'subject')
 
 
 admin.site.register(Contact, ContactAdmin)

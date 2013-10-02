@@ -10,6 +10,14 @@ YN = (
     (u'1', 'Да'),
 )
 
+STATUS = (
+    (u'1', 'Активный'),
+    (u'2', 'Подписан'),
+    (u'3', 'Сдаюсь'),
+    (u'4', 'Не наш'),
+    (u'5', 'Переговоры'),
+)
+
 def get_display(key, list):
         d = dict(list)
         if key in d:
@@ -19,6 +27,9 @@ def get_display(key, list):
 
 class Branch(models.Model):
     name = models.CharField(max_length=100, verbose_name=u'Название')
+    add_date = models.DateField(auto_now_add=True, verbose_name=u'Дата внесения в базу')
+    username = models.ForeignKey(User, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.name
@@ -26,19 +37,24 @@ class Branch(models.Model):
 
 class AdvertisingAgency(models.Model):
     name = models.CharField(max_length=200, verbose_name=u'Название')
+    is_client = models.BooleanField(verbose_name=u'Является клиентом')
+    payer = models.CharField(max_length=200, blank=True, verbose_name=u'Плательщик')
+    brand = models.CharField(max_length=200, blank=True, verbose_name=u'Бренд')
+    branch = models.ForeignKey(Branch, blank=True, null=True, verbose_name=u'Отрасль')
+    site = models.URLField(blank=True, verbose_name=u'Сайт')
+    notes = models.TextField(blank=True, verbose_name=u'Примечания')
+    status = models.CharField(max_length=1, choices=STATUS, verbose_name=u'Статус')
+    payer_vat = models.CharField(max_length=1, choices=YN, verbose_name=u'Плательщик НДС')
+    payer_cert = models.FileField(upload_to=u'payer_cert', blank=True, verbose_name=u'Свидетельство плательщика')
+    add_date = models.DateField(auto_now_add=True, verbose_name=u'Дата внесения в базу')
+    username = models.ForeignKey(User, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.name
 
 
 class Client(models.Model):
-    STATUS = (
-        (u'1', 'Активный'),
-        (u'2', 'Подписан'),
-        (u'3', 'Сдаюсь'),
-        (u'4', 'Не наш'),
-        (u'5', 'Переговоры'),
-    )
     name = models.CharField(max_length=200, verbose_name=u'Клиент')
     adv_ag = models.ForeignKey(AdvertisingAgency, blank=True, null=True, verbose_name=u'Рекламное агентство')
     payer = models.CharField(max_length=200, blank=True, verbose_name=u'Плательщик')
@@ -50,7 +66,8 @@ class Client(models.Model):
     payer_vat = models.CharField(max_length=1, choices=YN, verbose_name=u'Плательщик НДС')
     payer_cert = models.FileField(upload_to=u'payer_cert', blank=True, verbose_name=u'Свидетельство плательщика')
     add_date = models.DateField(auto_now_add=True, verbose_name=u'Дата внесения в базу')
-    username = models.ForeignKey(User, blank=True)
+    username = models.ForeignKey(User, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.name
@@ -71,6 +88,8 @@ class NegotiationResult(models.Model):
     contact_plan = models.TextField(blank=True, verbose_name=u'План следующего контакта')
     next_cont_date = models.DateField(blank=True, null=True, verbose_name=u'Дата следующего контакта')
     add_date = models.DateField(auto_now_add=True, verbose_name=u'Дата внесения в базу')
+    username = models.ForeignKey(User, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
 
 
 class Contact(models.Model):
@@ -84,6 +103,9 @@ class Contact(models.Model):
     skype = models.CharField(max_length=100, blank=True, verbose_name=u'Skype')
     address = models.TextField(blank=True, verbose_name=u'Фактический адрес')
     additional = models.TextField(blank=True, verbose_name=u'Дополнительные контакты')
+    add_date = models.DateField(auto_now_add=True, verbose_name=u'Дата внесения в базу')
+    username = models.ForeignKey(User, null=True, blank=True, related_name='client_contact')
+    is_active = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.name
@@ -107,6 +129,9 @@ class AdvertisingCampaign(models.Model):
     amount_paid = models.FloatField(verbose_name=u'Сумма к оплате')
     pay_date = models.DateField(verbose_name=u'Дата проплаты')
     restaurant = models.ManyToManyField(Restaurant)
+    add_date = models.DateField(auto_now_add=True, verbose_name=u'Дата внесения в базу')
+    username = models.ForeignKey(User, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.client.name_rus
@@ -134,3 +159,6 @@ class Details(models.Model):
     mfo = models.IntegerField(max_length=6, blank=True, verbose_name=u'МФО')
     current_account = models.IntegerField(max_length=14, blank=True, verbose_name=u'Расчетный счет')
     vat_inn = models.IntegerField(max_length=12, blank=True)
+    add_date = models.DateField(auto_now_add=True, verbose_name=u'Дата внесения в базу')
+    username = models.ForeignKey(User, null=True, blank=True, related_name='client_details')
+    is_active = models.BooleanField(default=True)
