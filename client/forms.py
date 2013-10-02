@@ -2,7 +2,7 @@ from django.forms import ModelForm
 #from django import forms
 import floppyforms as forms
 from restaurant.widgets import SelectWithPop, PhoneInput
-from client.models import Contact, Client, AdvertisingCampaign, Branch, Details
+from client.models import Contact, Client, AdvertisingCampaign, Branch, Details, NegotiationResult
 
 class ContactForm(ModelForm):
     class Meta:
@@ -39,12 +39,17 @@ class ClientForm(ModelForm):
             'notes': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
             'status': forms.Select(attrs={'style': 'width:247px'}),
             'payer_vat': forms.Select(attrs={'style': 'width:247px'}),
-            'details': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
-            'negot_res': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
-            'contact_plan': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
             'username': forms.HiddenInput(),
         }
 
 class AdvertisingCampaignForm(ModelForm):
     class Meta:
         model = AdvertisingCampaign
+
+class NegotiationResultForm(ModelForm):
+    class Meta:
+        model = NegotiationResult
+        widgets = {
+            'negot_res': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
+            'contact_plan': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
+        }

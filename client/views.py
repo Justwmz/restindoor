@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.messages import error
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
-from client.models import Client, Contact, AdvertisingCampaign, Branch, Details
-from client.forms import ClientForm, ContactForm, AdvertisingCampaignForm, BranchForm, DetailsForm
+from client.models import Client, Contact, AdvertisingCampaign, Branch, Details, NegotiationResult
+from client.forms import ClientForm, ContactForm, AdvertisingCampaignForm, BranchForm, DetailsForm, NegotiationResultForm
 
 
 @login_required
@@ -26,16 +26,19 @@ def newClient(request):
     my_client = Client(username=request.user)
     ClientFormSet1 = inlineformset_factory(Client, Contact, form=ContactForm, can_delete=False, max_num=1)
     ClientFormSet2 = inlineformset_factory(Client, Details, form=DetailsForm, can_delete=False, max_num=1)
+    ClientFormSet3 = inlineformset_factory(Client, NegotiationResult, form=NegotiationResultForm, can_delete=False, max_num=1)
     formClient = ClientForm(request.POST or None, request.FILES or None, instance=my_client)
     formClientSet1 = ClientFormSet1(request.POST or None, instance=my_client)
     formClientSet2 = ClientFormSet2(request.POST or None, instance=my_client)
+    formClientSet3 = ClientFormSet3(request.POST or None, instance=my_client)
     if formClient.is_valid() and formClientSet.is_valid():
         formClient.save()
         formClientSet1.save()
         formClientSet2.save()
+        formClientSet3.save()
         error(request, 'Информация о клиенте успешно добавлена.')
         return redirect('client-index')
-    var = {'formClient': formClient, 'formClientSet1': formClientSet1, 'formClientSet2': formClientSet2}
+    var = {'formClient': formClient, 'formClientSet1': formClientSet1, 'formClientSet2': formClientSet2, 'formClientSet3': formClientSet3}
 
     return render_to_response('client/client/edit.html', var, context_instance=RequestContext(request))
 

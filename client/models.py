@@ -50,10 +50,6 @@ class Client(models.Model):
     payer_vat = models.CharField(max_length=1, choices=YN, verbose_name=u'Плательщик НДС')
     payer_cert = models.FileField(upload_to=u'payer_cert', blank=True, verbose_name=u'Свидетельство плательщика')
     add_date = models.DateField(auto_now_add=True, verbose_name=u'Дата внесения в базу')
-    negot_res = models.TextField(blank=True, verbose_name=u'Результаты переговоров')
-    last_cont_date = models.DateField(blank=True, null=True, verbose_name=u'Дата последнего контакта')
-    contact_plan = models.TextField(blank=True, verbose_name=u'План следующего контакта')
-    next_cont_date = models.DateField(blank=True, null=True, verbose_name=u'Дата следующего контакта')
     username = models.ForeignKey(User, blank=True)
 
     def __unicode__(self):
@@ -66,6 +62,15 @@ class Client(models.Model):
     @property
     def payer_vat_verbose(self):
         return get_display(self.payer_vat, YN)
+
+
+class NegotiationResult(models.Model):
+    client = models.ForeignKey(Client, verbose_name=u'Клиент', related_name='neg_res')
+    negot_res = models.TextField(blank=True, verbose_name=u'Результаты переговоров')
+    last_cont_date = models.DateField(blank=True, null=True, verbose_name=u'Дата последнего контакта')
+    contact_plan = models.TextField(blank=True, verbose_name=u'План следующего контакта')
+    next_cont_date = models.DateField(blank=True, null=True, verbose_name=u'Дата следующего контакта')
+    add_date = models.DateField(auto_now_add=True, verbose_name=u'Дата внесения в базу')
 
 
 class Contact(models.Model):
