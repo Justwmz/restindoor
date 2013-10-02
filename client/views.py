@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.messages import error
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
-from client.models import Client, Contact, AdvertisingCampaign, Branch
-from client.forms import ClientForm, ContactForm, AdvertisingCampaignForm, BranchForm
+from client.models import Client, Contact, AdvertisingCampaign, Branch, Details
+from client.forms import ClientForm, ContactForm, AdvertisingCampaignForm, BranchForm, DetailsForm
 
 
 @login_required
@@ -24,15 +24,18 @@ def index(request):
 @login_required
 def newClient(request):
     my_client = Client(username=request.user)
-    ClientFormSet = inlineformset_factory(Client, Contact, form=ContactForm, can_delete=False, max_num=1)
+    ClientFormSet1 = inlineformset_factory(Client, Contact, form=ContactForm, can_delete=False, max_num=1)
+    ClientFormSet2 = inlineformset_factory(Client, Details, form=DetailsForm, can_delete=False, max_num=1)
     formClient = ClientForm(request.POST or None, request.FILES or None, instance=my_client)
-    formClientSet = ClientFormSet(request.POST or None, instance=my_client)
+    formClientSet1 = ClientFormSet1(request.POST or None, instance=my_client)
+    formClientSet2 = ClientFormSet2(request.POST or None, instance=my_client)
     if formClient.is_valid() and formClientSet.is_valid():
         formClient.save()
-        formClientSet.save()
+        formClientSet1.save()
+        formClientSet2.save()
         error(request, 'Информация о клиенте успешно добавлена.')
         return redirect('client-index')
-    var = {'formClient': formClient, 'formClientSet': formClientSet}
+    var = {'formClient': formClient, 'formClientSet1': formClientSet1, 'formClientSet2': formClientSet2}
 
     return render_to_response('client/client/edit.html', var, context_instance=RequestContext(request))
 

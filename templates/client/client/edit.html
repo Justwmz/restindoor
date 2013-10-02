@@ -71,9 +71,10 @@
     </script>
     <script type="text/javascript">
         $(function(){
-            $('#div_payer_cert').hide();
+            $('#div_payer_cert, #code_1, #vat_inn_1, #code_2, #vat_inn_2').hide();
             $('#grew_form').grewform({
-                '#div_payer_vat option[value=1]:selected':{show:'#div_payer_cert'}
+                '#div_payer_vat option[value=0]:selected':{show:'#code_2, #vat_inn_2'},
+                '#div_payer_vat option[value=1]:selected':{show:'#div_payer_cert, #code_1, #vat_inn_1'}
             });
         });
     </script>

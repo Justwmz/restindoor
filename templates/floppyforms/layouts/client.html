@@ -17,7 +17,8 @@
         <h4>Юридическая информация</h4>
         {% formrow form.payer_vat with div_id='div_payer_vat' %}
         {% formrow form.payer_cert with div_id='div_payer_cert' %}
-        {% formrow form.details %}
+        {{ formClientSet.management_form }}
+        {% form formClientSet2.forms using "floppyforms/layouts/details.html" with style_div="margin-left:220px" style_label="width:200px" %}
     </div>
     <div class="tab-pane" id="results">
         <h4>Результаты</h4>
@@ -29,7 +30,7 @@
     <div class="tab-pane" id="contacts">
         <h4>Контакты</h4>
         {{ formClientSet.management_form }}
-        {% form formClientSet.forms using "floppyforms/layouts/bootstrap.html" with style_div="margin-left:220px" style_label="width:200px" %}
+        {% form formClientSet1.forms using "floppyforms/layouts/bootstrap.html" with style_div="margin-left:220px" style_label="width:200px" %}
     </div>
 </div>
 {% endblock %}

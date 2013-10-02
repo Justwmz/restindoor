@@ -45,15 +45,18 @@ def newRestaurant(request):
 @login_required
 def editRestaurant(request, id):
     my_restaurant = Restaurant.objects.get(id=id)
-    RestaurantFormSet = inlineformset_factory(Restaurant, Contact, form=ContactForm, can_delete=False, max_num=1)
+    RestaurantFormSet1 = inlineformset_factory(Restaurant, Contact, form=ContactForm, can_delete=False, max_num=1)
+    RestaurantFormSet2 = inlineformset_factory(Restaurant, Details, form=DetailsForm, can_delete=False, max_num=1)
     formRest = RestaurantForm(request.POST or None, request.FILES or None, instance=my_restaurant)
-    formRestSet = RestaurantFormSet(request.POST or None, instance=my_restaurant)
-    if formRest.is_valid() and formRestSet.is_valid():
+    formRestSet1 = RestaurantFormSet1(request.POST or None, instance=my_restaurant)
+    formRestSet2 = RestaurantFormSet2(request.POST or None, instance=my_restaurant)
+    if formRest.is_valid() and formRestSet1.is_valid() and formRestSet2.is_valid():
         formRest.save()
-        formRestSet.save()
+        formRestSet1.save()
+        formRestSet2.save()
         error(request, 'Информация о ресторане успешно изменена.')
         return redirect('restaurant-index')
-    var = {'restaurant': my_restaurant, 'formRest': formRest, 'formRestSet': formRestSet}
+    var = {'restaurant': my_restaurant, 'formRest': formRest, 'formRestSet1': formRestSet1, 'formRestSet2': formRestSet2}
 
     return render_to_response('restaurant/restaurant/edit.html', var, context_instance=RequestContext(request))
 

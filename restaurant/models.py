@@ -177,6 +177,7 @@ class Contact(models.Model):
     def position_verbose(self):
         return get_display(self.position, self.POSITION)
 
+
 class Details(models.Model):
     restaurant = models.OneToOneField(Restaurant, verbose_name=u'Ресторан', related_name='details')
     legal_name = models.CharField(max_length=200, verbose_name=u'Юридическое название')

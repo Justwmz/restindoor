@@ -2,7 +2,7 @@ from django.forms import ModelForm
 #from django import forms
 import floppyforms as forms
 from restaurant.widgets import SelectWithPop, PhoneInput
-from client.models import Contact, Client, AdvertisingCampaign, Branch
+from client.models import Contact, Client, AdvertisingCampaign, Branch, Details
 
 class ContactForm(ModelForm):
     class Meta:
@@ -16,6 +16,10 @@ class ContactForm(ModelForm):
             'additional': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
             'username': forms.HiddenInput(),
         }
+
+class DetailsForm(ModelForm):
+    class Meta:
+        model = Details
 
 class BranchForm(ModelForm):
     class Meta:
