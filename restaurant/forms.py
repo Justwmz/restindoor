@@ -14,16 +14,24 @@ class ContactForm(ModelForm):
             'phone_cell': PhoneInput(attrs={'class': 'bfh-phone', 'data-format': '(0dd) ddd-dd-dd'}),
             'address': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
             'additional': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
+            'username': forms.HiddenInput(),
+            'is_active': forms.HiddenInput(),
         }
 
 class DetailsForm(ModelForm):
     class Meta:
         model = Details
+        widgets = {
+            'username': forms.HiddenInput(),
+            'is_active': forms.HiddenInput(),
+        }
 
 class RestrictionForm(ModelForm):
     class Meta:
         model = Restriction
         widgets = {
+            'username': forms.HiddenInput(),
+            'is_active': forms.HiddenInput(),
         }
 
 class RestaurantForm(ModelForm):
@@ -51,4 +59,5 @@ class RestaurantForm(ModelForm):
             'video': forms.CheckboxSelectMultiple,
             'warranty_mail': forms.Select(attrs={'style': 'width:130px'}),
             'username': forms.HiddenInput(),
+            'is_active': forms.HiddenInput(),
         }

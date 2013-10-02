@@ -14,6 +14,8 @@ class ContactForm(ModelForm):
             'phone_cell': PhoneInput(attrs={'class': 'bfh-phone', 'data-format': '(0dd) ddd-dd-dd'}),
             'address': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
             'additional': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
+            'username': forms.HiddenInput(),
+            'is_active': forms.HiddenInput(),
         }
 
 class DeviceForm(ModelForm):
@@ -21,4 +23,6 @@ class DeviceForm(ModelForm):
         model = Device
         widgets = {
             'problems': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
+            'username': forms.HiddenInput(),
+            'is_active': forms.HiddenInput(),
         }

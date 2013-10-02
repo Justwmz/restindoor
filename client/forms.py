@@ -15,16 +15,23 @@ class ContactForm(ModelForm):
             'address': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
             'additional': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
             'username': forms.HiddenInput(),
+            'is_active': forms.HiddenInput(),
         }
 
 class DetailsForm(ModelForm):
     class Meta:
         model = Details
+        widgets = {
+            'username': forms.HiddenInput(),
+            'is_active': forms.HiddenInput(),
+        }
 
 class BranchForm(ModelForm):
     class Meta:
         model = Branch
         widgets = {
+            'username': forms.HiddenInput(),
+            'is_active': forms.HiddenInput(),
         }
 
 class ClientForm(ModelForm):
@@ -40,11 +47,16 @@ class ClientForm(ModelForm):
             'status': forms.Select(attrs={'style': 'width:247px'}),
             'payer_vat': forms.Select(attrs={'style': 'width:247px'}),
             'username': forms.HiddenInput(),
+            'is_active': forms.HiddenInput(),
         }
 
 class AdvertisingCampaignForm(ModelForm):
     class Meta:
         model = AdvertisingCampaign
+        widgets = {
+            'username': forms.HiddenInput(),
+            'is_active': forms.HiddenInput(),
+        }
 
 class NegotiationResultForm(ModelForm):
     class Meta:
@@ -52,4 +64,6 @@ class NegotiationResultForm(ModelForm):
         widgets = {
             'negot_res': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
             'contact_plan': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
+            'username': forms.HiddenInput(),
+            'is_active': forms.HiddenInput(),
         }
