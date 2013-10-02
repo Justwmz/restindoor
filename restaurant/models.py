@@ -86,6 +86,7 @@ class Restaurant(models.Model):
     equipment = models.BooleanField(verbose_name=u'Оборудование')
     plasma_work = models.IntegerField(blank=True, default=0, verbose_name=u'Количество подключенных плазм')
     plasma_all = models.IntegerField(blank=True, default=0, verbose_name=u'Общее количество плазм')
+    for_tech = models.BooleanField(verbose_name=u'Отправить в тех. отдел')
     username = models.ForeignKey(User, null=True, blank=True)
     is_active = models.BooleanField(default=True)
 
