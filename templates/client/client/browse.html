@@ -28,6 +28,12 @@
                     <td>{{ client.payer }}</td>
                 </tr>
                 {% endif %}
+                {% if client.brand %}
+                <tr>
+                    <td>Бренд</td>
+                    <td>{{ client.brand }}</td>
+                </tr>
+                {% endif %}
                 <tr>
                     <td>Отрасль</td>
                     <td>{{ client.branch }}</td>

@@ -34,6 +34,7 @@ class ClientForm(ModelForm):
             'name': forms.TextInput(attrs={'style': 'width:233px'}),
             'adv_ag': forms.Select(attrs={'style': 'width:247px'}),
             'payer': forms.TextInput(attrs={'style': 'width:233px'}),
+            'brand': forms.TextInput(attrs={'style': 'width:233px'}),
             'branch': forms.Select(attrs={'style': 'width:247px'}),
             'notes': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
             'status': forms.Select(attrs={'style': 'width:247px'}),

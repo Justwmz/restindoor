@@ -43,6 +43,7 @@ class Client(models.Model):
     name = models.CharField(max_length=200, verbose_name=u'Клиент')
     adv_ag = models.ForeignKey(AdvertisingAgency, blank=True, null=True, verbose_name=u'Рекламное агентство')
     payer = models.CharField(max_length=200, blank=True, verbose_name=u'Плательщик')
+    brand = models.CharField(max_length=200, blank=True, verbose_name=u'Бренд')
     branch = models.ForeignKey(Branch, blank=True, null=True, verbose_name=u'Отрасль')
     site = models.URLField(blank=True, verbose_name=u'Сайт')
     notes = models.TextField(blank=True, verbose_name=u'Примечания')
