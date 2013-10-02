@@ -33,12 +33,11 @@ class AdvertisingAgency(models.Model):
 
 class Client(models.Model):
     STATUS = (
-        (u'1', 'Прозвон'),
-        (u'2', 'Переговоры'),
-        (u'3', 'Утверждение'),
-        (u'4', 'Подписан'),
-        (u'5', 'Сдаюсь'),
-        (u'6', 'Не наш'),
+        (u'1', 'Активный'),
+        (u'2', 'Подписан'),
+        (u'3', 'Сдаюсь'),
+        (u'4', 'Не наш'),
+        (u'5', 'Переговоры'),
     )
     name = models.CharField(max_length=200, verbose_name=u'Клиент')
     adv_ag = models.ForeignKey(AdvertisingAgency, blank=True, null=True, verbose_name=u'Рекламное агентство')
