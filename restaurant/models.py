@@ -187,8 +187,8 @@ class Contact(models.Model):
 
 class Details(models.Model):
     restaurant = models.OneToOneField(Restaurant, verbose_name=u'Ресторан', related_name='details')
-    legal_name = models.CharField(max_length=200, verbose_name=u'Юридическое название')
-    code = models.IntegerField()
+    legal_name = models.CharField(blank=True, max_length=200, verbose_name=u'Юридическое название')
+    code = models.IntegerField(blank=True)
     index = models.IntegerField(blank=True, verbose_name=u'Индекс')
     region = models.CharField(max_length=200, blank=True, verbose_name=u'Область')
     city = models.CharField(max_length=200, blank=True, verbose_name=u'Город')

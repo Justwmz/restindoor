@@ -1,0 +1,24 @@
+{% load floppyforms %}
+{% block row %}
+<div class="control-group{% if fields.0.errors or fields.1.errors %} error{% endif %}">
+    {% with classes=fields.0.css_classes label=label|default:fields.0.label %}
+    {% block label %}
+        {% if fields.0|id %}<label class="control-label" for="{{ fields.0|id }}">{% endif %}{{ label }}{% if field.fields.0.required %} <span class="required">*</span>{% endif %}{% if label|last not in ".:!?" %}:{% endif %}{% if fields.0|id %}</label>{% endif %}
+    {% endblock %}
+    {% block field %}
+        <div class="controls {{ classes }} field-{{ fields.0.name }}">
+            {% block widget %}
+                {% formfield fields.0 %}
+                <div class="input-append">
+                    {% formfield fields.1 %}<span class="add-on"><p id="{{ fields.1.name }}_1">Код ЕДРПОУ</p><p id="{{ fields.1.name }}_2">Идентификационный код</p></span>
+                </div>
+            {% endblock %}
+            {% block errors %}
+                {% include "floppyforms/errors.html" with errors=fields.0.errors %}
+                {% include "floppyforms/errors.html" with errors=fields.1.errors %}
+            {% endblock %}
+        </div><!--- .controls -->
+    {% endblock %}
+    {% endwith %}
+</div><!--- .control-group{% if field.errors %}.error{% endif %} -->
+{% endblock %}

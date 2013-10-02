@@ -1,0 +1,23 @@
+{% load floppyforms %}
+{% block row %}
+<div class="control-group{% if fields.0.errors or fields.1.errors %} error{% endif %}">
+    {% with classes=fields.0.css_classes %}
+    {% block field %}
+        <div class="controls {{ classes }} field-{{ fields.0.name }}">
+            {% block widget %}
+                <div class="input-prepend">
+                    <span class="add-on">г.</span>{% formfield fields.0 %}
+                </div>
+                <div class="input-prepend">
+                    <span class="add-on">ул.</span>{% formfield fields.1 %}
+                </div>
+            {% endblock %}
+            {% block errors %}
+                {% include "floppyforms/errors.html" with errors=fields.0.errors %}
+                {% include "floppyforms/errors.html" with errors=fields.1.errors %}
+            {% endblock %}
+        </div><!--- .controls -->
+    {% endblock %}
+    {% endwith %}
+</div><!--- .control-group{% if field.errors %}.error{% endif %} -->
+{% endblock %}

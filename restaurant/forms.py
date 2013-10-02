@@ -22,6 +22,16 @@ class DetailsForm(ModelForm):
     class Meta:
         model = Details
         widgets = {
+            'code': forms.TextInput(attrs={'style': 'width:85px', 'maxlength': '10'}),
+            'index': forms.TextInput(attrs={'style': 'width:138px', 'maxlength': '10'}),
+            'region': forms.TextInput(attrs={'style': 'width:166px'}),
+            'city': forms.TextInput(attrs={'style': 'width:178px'}),
+            'street': forms.TextInput(attrs={'style': 'width:164px'}),
+            'house1': forms.TextInput(attrs={'style': 'width:167px'}),
+            'house2': forms.TextInput(attrs={'style': 'width:150px'}),
+            'room1': forms.TextInput(attrs={'style': 'width:90px'}),
+            'office': forms.TextInput(attrs={'style': 'width:85px'}),
+            'room2': forms.TextInput(attrs={'style': 'width:85px'}),
             'username': forms.HiddenInput(),
             'is_active': forms.HiddenInput(),
         }
