@@ -11,4 +11,8 @@
     {% formrow form.mfo %}
     {% formrow form.current_account %}
     {% formrow form.vat_inn using 'floppyforms/rows/restaurant/code.html' with label_1='Номер свидетельства НДС' label_2='ИНН' %}
+    {% formfield form.id %}
+    {% formfield form.restaurant %}
+    {% formfield form.username %}
+    {% formfield form.is_active %}    
 {% endblock %}

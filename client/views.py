@@ -31,7 +31,7 @@ def newClient(request):
     formClientSet1 = ClientFormSet1(request.POST or None, instance=my_client)
     formClientSet2 = ClientFormSet2(request.POST or None, instance=my_client)
     formClientSet3 = ClientFormSet3(request.POST or None, instance=my_client)
-    if formClient.is_valid() and formClientSet.is_valid():
+    if formClient.is_valid() and formClientSet1.is_valid() and formClientSet2.is_valid() and formClientSet3.is_valid():
         formClient.save()
         formClientSet1.save()
         formClientSet2.save()
@@ -46,15 +46,22 @@ def newClient(request):
 @login_required
 def editClient(request, id):
     my_client = Client.objects.get(id=id)
-    ClientFormSet = inlineformset_factory(Client, Contact, form=ContactForm, can_delete=False, max_num=1)
+    neg_results = NegotiationResult.objects.filter(client=my_client)
+    ClientFormSet1 = inlineformset_factory(Client, Contact, form=ContactForm, can_delete=False, max_num=1)
+    ClientFormSet2 = inlineformset_factory(Client, Details, form=DetailsForm, can_delete=False, max_num=1)
+    ClientFormSet3 = inlineformset_factory(Client, NegotiationResult, form=NegotiationResultForm, can_delete=False, extra=1)
     formClient = ClientForm(request.POST or None, request.FILES or None, instance=my_client)
-    formClientSet = ClientFormSet(request.POST or None, instance=my_client)
-    if formClient.is_valid() and formClientSet.is_valid():
+    formClientSet1 = ClientFormSet1(request.POST or None, instance=my_client)
+    formClientSet2 = ClientFormSet2(request.POST or None, instance=my_client)
+    formClientSet3 = ClientFormSet3(request.POST or None, instance=my_client)
+    if formClient.is_valid() and formClientSet1.is_valid() and formClientSet2.is_valid() and formClientSet3.is_valid():
         formClient.save()
-        formClientSet.save()
+        formClientSet1.save()
+        formClientSet2.save()
+        formClientSet3.save()
         error(request, 'Информация о клиенте успешно изменена.')
         return redirect('client-index')
-    var = {'client': my_client, 'formClient': formClient, 'formClientSet': formClientSet}
+    var = {'client': my_client, 'neg_results': neg_results, 'formClient': formClient, 'formClientSet1': formClientSet1, 'formClientSet2': formClientSet2, 'formClientSet3': formClientSet3}
 
     return render_to_response('client/client/edit.html', var, context_instance=RequestContext(request))
 

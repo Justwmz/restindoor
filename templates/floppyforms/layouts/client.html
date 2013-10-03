@@ -19,12 +19,30 @@
         {% formrow form.payer_vat with div_id='div_payer_vat' %}
         {% formrow form.payer_cert with div_id='div_payer_cert' %}
         {{ formClientSet2.management_form }}
-        {% form formClientSet2.forms using "floppyforms/layouts/details.html" %}
+        {% form formClientSet2.forms using "floppyforms/layouts/details_client.html" %}
     </div>
     <div class="tab-pane" id="results">
-        <h4>Результаты</h4>
-        {{ formClientSet3.management_form }}
-        {% form formClientSet3.forms using "floppyforms/layouts/neg_results.html" with style_div="margin-left:220px" style_label="width:200px" %}
+        <div class="row">
+            <div class="span6">
+                <h4>Результаты</h4>
+                {{ formClientSet3.management_form }}
+                {% for form in formClientSet3 %}
+                    <div {% if not forloop.last %}style="display:none"{% endif %}>
+                        {% form form using "floppyforms/layouts/neg_results.html" with style_div="margin-left:220px" style_label="width:200px" %}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="span3">
+                <div class="well pull-right" style="margin: 5px; padding: 8px 0;">
+                    <ul class="nav nav-list">
+                        <li class="nav-header">История переговоров</li>
+                        {% for neg_result in neg_results %}
+                            <li><a href="#" data-toggle="popover" data-html="true" data-placement="left" data-trigger="hover" data-content="{{ neg_result.negot_res }}<br><br><b>{{ neg_result.next_cont_date }}:</b><br>{{ neg_result.contact_plan }}" title="{{ neg_result.last_cont_date }}">{{ neg_result.last_cont_date }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="tab-pane" id="contacts">
         <h4>Контакты</h4>

@@ -94,8 +94,8 @@ class NegotiationResult(models.Model):
 
 class Contact(models.Model):
     client = models.ForeignKey(Client, verbose_name=u'Клиент', related_name='contact')
-    name = models.CharField(max_length=200, verbose_name=u'Ф.И.О.')
-    position = models.TextField(verbose_name=u'Должность')
+    name = models.CharField(max_length=200, blank=True, verbose_name=u'Ф.И.О.')
+    position = models.TextField(blank=True, verbose_name=u'Должность')
     phone_work = models.CharField(max_length=15, blank=True, verbose_name=u'Номер телефона (раб.)')
     phone_cell = models.CharField(max_length=15, blank=True, verbose_name=u'Номер телефона (моб.)')
     email = models.EmailField(blank=True, verbose_name=u'E-mail')
@@ -143,9 +143,9 @@ class AdvertisingCampaign(models.Model):
 
 class Details(models.Model):
     client = models.OneToOneField(Client, verbose_name=u'Название клиента', related_name='details')
-    legal_name = models.CharField(max_length=200, verbose_name=u'Юридическое название')
-    code = models.IntegerField()
-    index = models.IntegerField(blank=True, verbose_name=u'Индекс')
+    legal_name = models.CharField(max_length=200, blank=True, verbose_name=u'Юридическое название')
+    code = models.IntegerField(null=True, blank=True)
+    index = models.IntegerField(null=True, blank=True, verbose_name=u'Индекс')
     region = models.CharField(max_length=200, blank=True, verbose_name=u'Область')
     city = models.CharField(max_length=200, blank=True, verbose_name=u'Город')
     street = models.CharField(max_length=200, blank=True, verbose_name=u'Улица')
@@ -156,9 +156,9 @@ class Details(models.Model):
     room2 = models.CharField(max_length=20, blank=True, verbose_name=u'Комната')
     phone = models.CharField(max_length=15, blank=True, verbose_name=u'Номер телефона')
     bank = models.CharField(max_length=150, blank=True, verbose_name=u'Название банка')
-    mfo = models.IntegerField(max_length=6, blank=True, verbose_name=u'МФО')
-    current_account = models.IntegerField(max_length=14, blank=True, verbose_name=u'Расчетный счет')
-    vat_inn = models.IntegerField(max_length=12, blank=True)
+    mfo = models.IntegerField(max_length=6, null=True, blank=True, verbose_name=u'МФО')
+    current_account = models.IntegerField(max_length=14, null=True, blank=True, verbose_name=u'Расчетный счет')
+    vat_inn = models.IntegerField(max_length=12, null=True, blank=True)
     add_date = models.DateField(auto_now_add=True, verbose_name=u'Дата внесения в базу')
     username = models.ForeignKey(User, null=True, blank=True, related_name='client_details')
     is_active = models.BooleanField(default=True)
