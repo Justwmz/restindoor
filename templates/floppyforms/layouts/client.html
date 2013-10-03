@@ -32,6 +32,7 @@
                     </div>
                 {% endfor %}
             </div>
+            {% if neg_results %}
             <div class="span3">
                 <div class="well pull-right" style="margin: 5px; padding: 8px 0;">
                     <ul class="nav nav-list">
@@ -42,6 +43,7 @@
                     </ul>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
     <div class="tab-pane" id="contacts">
