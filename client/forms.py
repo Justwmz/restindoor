@@ -10,8 +10,8 @@ class ContactForm(ModelForm):
         widgets = {
             'position': forms.TextInput(),
             'characteristic': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
-            'phone_work': PhoneInput(attrs={'class': 'bfh-phone', 'data-format': '(0dd) ddd-dd-dd'}),
-            'phone_cell': PhoneInput(attrs={'class': 'bfh-phone', 'data-format': '(0dd) ddd-dd-dd'}),
+            'phone_work': PhoneInput(attrs={'class': 'bfh-phone', 'data-format': '(ddd) ddd-dd-dd'}),
+            'phone_cell': PhoneInput(attrs={'class': 'bfh-phone', 'data-format': '(ddd) ddd-dd-dd'}),
             'address': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
             'additional': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
             'username': forms.HiddenInput(),
