@@ -52,22 +52,6 @@ class AdvertisingAgency(models.Model):
         return self.name
 
 
-class AgencyPayer(models.Model):
-    agency = models.ForeignKey(AdvertisingAgency, related_name='payer')
-    payer = models.CharField(max_length=200, blank=True, verbose_name=u'Плательщик')
-
-    def __unicode__(self):
-        return self.payer
-
-
-class AgencyBrand(models.Model):
-    agency = models.ForeignKey(AdvertisingAgency, related_name='brand')
-    brand = models.CharField(max_length=200, blank=True, verbose_name=u'Бренд')
-
-    def __unicode__(self):
-        return self.brand
-
-
 class Client(models.Model):
     name = models.CharField(max_length=200, verbose_name=u'Клиент')
     adv_ag = models.ForeignKey(AdvertisingAgency, blank=True, null=True, verbose_name=u'Рекламное агентство')
@@ -94,7 +78,8 @@ class Client(models.Model):
 
 
 class NegotiationResult(models.Model):
-    client = models.ForeignKey(Client, verbose_name=u'Клиент', related_name='neg_res')
+    client = models.ForeignKey(Client, null=True, blank=True, verbose_name=u'Клиент', related_name='client_neg_res')
+    agency = models.ForeignKey(AdvertisingAgency, null=True, blank=True, verbose_name=u'Рекламное агентство', related_name='agency_neg_res')
     negot_res = models.TextField(blank=True, verbose_name=u'Результаты переговоров')
     last_cont_date = models.DateField(blank=True, null=True, verbose_name=u'Дата последнего контакта')
     contact_plan = models.TextField(blank=True, verbose_name=u'План следующего контакта')
@@ -105,7 +90,8 @@ class NegotiationResult(models.Model):
 
 
 class Contact(models.Model):
-    client = models.ForeignKey(Client, verbose_name=u'Клиент', related_name='contact')
+    client = models.ForeignKey(Client, null=True, blank=True, verbose_name=u'Клиент', related_name='client_contact')
+    agency = models.ForeignKey(AdvertisingAgency, null=True, blank=True, verbose_name=u'Рекламное агентство', related_name='agency_contact')
     name = models.CharField(max_length=200, blank=True, verbose_name=u'Ф.И.О.')
     position = models.TextField(blank=True, verbose_name=u'Должность')
     phone_work = models.CharField(max_length=15, blank=True, verbose_name=u'Номер телефона (раб.)')
@@ -124,7 +110,8 @@ class Contact(models.Model):
 
 
 class Details(models.Model):
-    client = models.OneToOneField(Client, verbose_name=u'Название клиента', related_name='details')
+    client = models.OneToOneField(Client, null=True, blank=True, verbose_name=u'Название клиента', related_name='contact_details')
+    agency = models.ForeignKey(AdvertisingAgency, null=True, blank=True, verbose_name=u'Рекламное агентство', related_name='agency_details')
     legal_name = models.CharField(max_length=200, blank=True, verbose_name=u'Юридическое название')
     code = models.IntegerField(null=True, blank=True)
     index = models.IntegerField(null=True, blank=True, verbose_name=u'Индекс')
@@ -146,8 +133,9 @@ class Details(models.Model):
     is_active = models.BooleanField(default=True)
 
 
-class ClientPayer(models.Model):
-    client = models.ForeignKey(Client, related_name='payer')
+class Payer(models.Model):
+    client = models.ForeignKey(Client, null=True, blank=True, related_name='client_payer')
+    agency = models.ForeignKey(AdvertisingAgency, null=True, blank=True, related_name='agency_payer')
     payer = models.CharField(max_length=200, blank=True, verbose_name=u'Плательщик')
 
     def __unicode__(self):
@@ -155,7 +143,8 @@ class ClientPayer(models.Model):
 
 
 class ClientBrand(models.Model):
-    client = models.ForeignKey(Client, related_name='brand')
+    client = models.ForeignKey(Client, null=True, blank=True, related_name='client_brand')
+    agency = models.ForeignKey(AdvertisingAgency, null=True, blank=True, related_name='agency_brand')
     brand = models.CharField(max_length=200, blank=True, verbose_name=u'Бренд')
 
     def __unicode__(self):
