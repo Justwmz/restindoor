@@ -5,7 +5,7 @@
     <div class="tab-pane active" id="total">
         <h4>Общая информация</h4>
         {% formrow form.name %}
-        {% formrow form.adv_ag %}
+        {% formrow form.is_client %}
         {{ formPayerSet.management_form }}
         {% form formPayerSet.forms using "floppyforms/layouts/bootstrap.html" %}
         {{ formBrandSet.management_form }}

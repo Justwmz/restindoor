@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.messages import error
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
-from client.models import Client, Contact, AdvertisingCampaign, Branch, Details, NegotiationResult
-from client.forms import ClientForm, ContactForm, AdvertisingCampaignForm, BranchForm, DetailsForm, NegotiationResultForm
+from client.models import Client, Contact, AdvertisingCampaign, Branch, Details, NegotiationResult, Brand, Payer, AdvertisingAgency
+from client.forms import ClientForm, ContactForm, AdvertisingCampaignForm, BranchForm, DetailsForm, NegotiationResultForm, BrandForm, PayerForm, AgencyForm
 
 
 @login_required
@@ -24,21 +24,27 @@ def index(request):
 @login_required
 def newClient(request):
     my_client = Client(username=request.user)
-    ClientFormSet1 = inlineformset_factory(Client, Contact, form=ContactForm, can_delete=False, max_num=1)
-    ClientFormSet2 = inlineformset_factory(Client, Details, form=DetailsForm, can_delete=False, max_num=1)
-    ClientFormSet3 = inlineformset_factory(Client, NegotiationResult, form=NegotiationResultForm, can_delete=False, max_num=1)
+    ContactFormSet = inlineformset_factory(Client, Contact, form=ContactForm, can_delete=False, max_num=1)
+    DetailsFormSet = inlineformset_factory(Client, Details, form=DetailsForm, can_delete=False, max_num=1)
+    NegotiationResultFormSet = inlineformset_factory(Client, NegotiationResult, form=NegotiationResultForm, can_delete=False, extra=1)
+    BrandFormSet = inlineformset_factory(Client, Brand, form=BrandForm, can_delete=False, max_num=1)
+    PayerFormSet = inlineformset_factory(Client, Payer, form=PayerForm, can_delete=False, max_num=1)
     formClient = ClientForm(request.POST or None, request.FILES or None, instance=my_client)
-    formClientSet1 = ClientFormSet1(request.POST or None, instance=my_client)
-    formClientSet2 = ClientFormSet2(request.POST or None, instance=my_client)
-    formClientSet3 = ClientFormSet3(request.POST or None, instance=my_client)
-    if formClient.is_valid() and formClientSet1.is_valid() and formClientSet2.is_valid() and formClientSet3.is_valid():
+    formContactSet = ContactFormSet(request.POST or None, instance=my_client)
+    formDetailsSet = DetailsFormSet(request.POST or None, instance=my_client)
+    formNegotiationResultSet = NegotiationResultFormSet(request.POST or None, instance=my_client)
+    formBrandSet = BrandFormSet(request.POST or None, instance=my_client)
+    formPayerSet = PayerFormSet(request.POST or None, instance=my_client)
+    if formClient.is_valid() and formContactSet.is_valid() and formDetailsSet.is_valid() and formNegotiationResultSet.is_valid() and formBrandSet.is_valid() and formPayerSet.is_valid():
         formClient.save()
-        formClientSet1.save()
-        formClientSet2.save()
-        formClientSet3.save()
+        formContactSet.save()
+        formDetailsSet.save()
+        formNegotiationResultSet.save()
+        formBrandSet.save()
+        formPayerSet.save()
         error(request, 'Информация о клиенте успешно добавлена.')
         return redirect('client-index')
-    var = {'formClient': formClient, 'formClientSet1': formClientSet1, 'formClientSet2': formClientSet2, 'formClientSet3': formClientSet3}
+    var = {'formClient': formClient, 'formContactSet': formContactSet, 'formDetailsSet': formDetailsSet, 'formNegotiationResultSet': formNegotiationResultSet, 'formBrandSet': formBrandSet, 'formPayerSet': formPayerSet}
 
     return render_to_response('client/client/edit.html', var, context_instance=RequestContext(request))
 
@@ -47,21 +53,27 @@ def newClient(request):
 def editClient(request, id):
     my_client = Client.objects.get(id=id)
     neg_results = NegotiationResult.objects.filter(client=my_client)
-    ClientFormSet1 = inlineformset_factory(Client, Contact, form=ContactForm, can_delete=False, max_num=1)
-    ClientFormSet2 = inlineformset_factory(Client, Details, form=DetailsForm, can_delete=False, max_num=1)
-    ClientFormSet3 = inlineformset_factory(Client, NegotiationResult, form=NegotiationResultForm, can_delete=False, extra=1)
+    ContactFormSet = inlineformset_factory(Client, Contact, form=ContactForm, can_delete=False, max_num=1)
+    DetailsFormSet = inlineformset_factory(Client, Details, form=DetailsForm, can_delete=False, max_num=1)
+    NegotiationResultFormSet = inlineformset_factory(Client, NegotiationResult, form=NegotiationResultForm, can_delete=False, extra=1)
+    BrandFormSet = inlineformset_factory(Client, Brand, form=BrandForm, can_delete=False, max_num=1)
+    PayerFormSet = inlineformset_factory(Client, Payer, form=PayerForm, can_delete=False, max_num=1)
     formClient = ClientForm(request.POST or None, request.FILES or None, instance=my_client)
-    formClientSet1 = ClientFormSet1(request.POST or None, instance=my_client)
-    formClientSet2 = ClientFormSet2(request.POST or None, instance=my_client)
-    formClientSet3 = ClientFormSet3(request.POST or None, instance=my_client)
-    if formClient.is_valid() and formClientSet1.is_valid() and formClientSet2.is_valid() and formClientSet3.is_valid():
+    formContactSet = ContactFormSet(request.POST or None, instance=my_client)
+    formDetailsSet = DetailsFormSet(request.POST or None, instance=my_client)
+    formNegotiationResultSet = NegotiationResultFormSet(request.POST or None, instance=my_client)
+    formBrandSet = BrandFormSet(request.POST or None, instance=my_client)
+    formPayerSet = PayerFormSet(request.POST or None, instance=my_client)
+    if formClient.is_valid() and formContactSet.is_valid() and formDetailsSet.is_valid() and formNegotiationResultSet.is_valid() and formBrandSet.is_valid() and formPayerSet.is_valid():
         formClient.save()
-        formClientSet1.save()
-        formClientSet2.save()
-        formClientSet3.save()
+        formContactSet.save()
+        formDetailsSet.save()
+        formNegotiationResultSet.save()
+        formBrandSet.save()
+        formPayerSet.save()
         error(request, 'Информация о клиенте успешно изменена.')
         return redirect('client-index')
-    var = {'client': my_client, 'neg_results': neg_results, 'formClient': formClient, 'formClientSet1': formClientSet1, 'formClientSet2': formClientSet2, 'formClientSet3': formClientSet3}
+    var = {'client': my_client, 'neg_results': neg_results, 'formClient': formClient, 'formContactSet': formContactSet, 'formDetailsSet': formDetailsSet, 'formNegotiationResultSet': formNegotiationResultSet, 'formBrandSet': formBrandSet, 'formPayerSet': formPayerSet}
 
     return render_to_response('client/client/edit.html', var, context_instance=RequestContext(request))
 
@@ -70,9 +82,87 @@ def editClient(request, id):
 def deleteClient(request, id):
     client = Client.objects.get(id=id)
     client.delete()
-    error(request, 'Информация о ресторане успешно удалена.')
+    error(request, 'Информация о клиенте успешно удалена.')
 
     return redirect('client-index')
+
+
+@login_required
+def indexAgency(request):
+    managers = User.objects.all()
+    if request.GET.get('manager'):
+        manager_act = int(request.GET['manager'])
+        agencies = AdvertisingAgency.objects.filter(username__id=manager_act)
+    else:
+        agencies = AdvertisingAgency.objects.all()
+
+    return render_to_response('client/agency/index.html', locals(), context_instance=RequestContext(request))
+
+
+@login_required
+def newAgency(request):
+    my_agency = AdvertisingAgency(username=request.user)
+    ContactFormSet = inlineformset_factory(AdvertisingAgency, Contact, form=ContactForm, can_delete=False, max_num=1)
+    DetailsFormSet = inlineformset_factory(AdvertisingAgency, Details, form=DetailsForm, can_delete=False, max_num=1)
+    NegotiationResultFormSet = inlineformset_factory(AdvertisingAgency, NegotiationResult, form=NegotiationResultForm, can_delete=False, extra=1)
+    BrandFormSet = inlineformset_factory(AdvertisingAgency, Brand, form=BrandForm, can_delete=False, max_num=1)
+    PayerFormSet = inlineformset_factory(AdvertisingAgency, Payer, form=PayerForm, can_delete=False, max_num=1)
+    formAgency = AgencyForm(request.POST or None, request.FILES or None, instance=my_agency)
+    formContactSet = ContactFormSet(request.POST or None, instance=my_agency)
+    formDetailsSet = DetailsFormSet(request.POST or None, instance=my_agency)
+    formNegotiationResultSet = NegotiationResultFormSet(request.POST or None, instance=my_agency)
+    formBrandSet = BrandFormSet(request.POST or None, instance=my_agency)
+    formPayerSet = PayerFormSet(request.POST or None, instance=my_agency)
+    if formAgency.is_valid() and formContactSet.is_valid() and formDetailsSet.is_valid() and formNegotiationResultSet.is_valid() and formBrandSet.is_valid() and formPayerSet.is_valid():
+        formAgency.save()
+        formContactSet.save()
+        formDetailsSet.save()
+        formNegotiationResultSet.save()
+        formBrandSet.save()
+        formPayerSet.save()
+        error(request, 'Информация о рекламном агенстве успешно добавлена.')
+        return redirect('agency-index')
+    var = {'formAgency': formAgency, 'formContactSet': formContactSet, 'formDetailsSet': formDetailsSet, 'formNegotiationResultSet': formNegotiationResultSet, 'formBrandSet': formBrandSet, 'formPayerSet': formPayerSet}
+
+    return render_to_response('client/agency/edit.html', var, context_instance=RequestContext(request))
+
+
+@login_required
+def editAgency(request, id):
+    my_agency = AdvertisingAgency.objects.get(id=id)
+    neg_results = NegotiationResult.objects.filter(agency=my_agency)
+    ContactFormSet = inlineformset_factory(AdvertisingAgency, Contact, form=ContactForm, can_delete=False, max_num=1)
+    DetailsFormSet = inlineformset_factory(AdvertisingAgency, Details, form=DetailsForm, can_delete=False, max_num=1)
+    NegotiationResultFormSet = inlineformset_factory(AdvertisingAgency, NegotiationResult, form=NegotiationResultForm, can_delete=False, extra=1)
+    BrandFormSet = inlineformset_factory(AdvertisingAgency, Brand, form=BrandForm, can_delete=False, max_num=1)
+    PayerFormSet = inlineformset_factory(AdvertisingAgency, Payer, form=PayerForm, can_delete=False, max_num=1)
+    formAgency = AgencyForm(request.POST or None, request.FILES or None, instance=my_agency)
+    formContactSet = ContactFormSet(request.POST or None, instance=my_agency)
+    formDetailsSet = DetailsFormSet(request.POST or None, instance=my_agency)
+    formNegotiationResultSet = NegotiationResultFormSet(request.POST or None, instance=my_agency)
+    formBrandSet = BrandFormSet(request.POST or None, instance=my_agency)
+    formPayerSet = PayerFormSet(request.POST or None, instance=my_agency)
+    if formAgency.is_valid() and formContactSet.is_valid() and formDetailsSet.is_valid() and formNegotiationResultSet.is_valid() and formBrandSet.is_valid() and formPayerSet.is_valid():
+        formAgency.save()
+        formContactSet.save()
+        formDetailsSet.save()
+        formNegotiationResultSet.save()
+        formBrandSet.save()
+        formPayerSet.save()
+        error(request, 'Информация о рекламном агенстве успешно изменена.')
+        return redirect('agency-index')
+    var = {'agency': my_agency, 'neg_results': neg_results, 'formAgency': formAgency, 'formContactSet': formContactSet, 'formDetailsSet': formDetailsSet, 'formNegotiationResultSet': formNegotiationResultSet, 'formBrandSet': formBrandSet, 'formPayerSet': formPayerSet}
+
+    return render_to_response('client/agency/edit.html', var, context_instance=RequestContext(request))
+
+
+@login_required
+def deleteAgency(request, id):
+    agency = AdvertisingAgency.objects.get(id=id)
+    agency.delete()
+    error(request, 'Информация о рекламном агенстве успешно удалена.')
+
+    return redirect('agency-index')
 
 
 @login_required

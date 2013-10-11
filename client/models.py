@@ -70,7 +70,7 @@ class Client(models.Model):
 
     @property
     def status_verbose(self):
-        return get_display(self.status, self.STATUS)
+        return get_display(self.status, STATUS)
 
     @property
     def payer_vat_verbose(self):

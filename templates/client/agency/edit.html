@@ -3,7 +3,7 @@
 {% load floppyforms %}
 
 {% block title %}
-    {% if client %}{{ client }}{% else %}Новый клиент{% endif %} | Клиенты
+    {% if agency %}{{ agency }}{% else %}Новое агенство{% endif %} | Клиенты
 {% endblock title %}
 
 {% block head %}
@@ -16,14 +16,14 @@
             <div class="span3">
                 <div class="well pull-left" style="margin: 5px; padding: 8px 0;">
                     <ul class="nav nav-list" id="myTab">
-                        <li class="nav-header">{% if client %}{{ client.name }}{% else %}Новый клиент{% endif %}</li>
+                        <li class="nav-header">{% if agency %}{{ agency.name }}{% else %}Новое агенство{% endif %}</li>
                         <li class="active"><a class="tab" href="#total">Общая информация</a></li>
                         <li><a class="tab" href="#juridical">Юр. информация</a></li>
                         <li><a class="tab" href="#results">Результаты</a></li>
                         <li><a class="tab" href="#contacts">Контакты</a></li>
                         <li class="divider"></li>
                         <div style="text-align:center;">
-                            <a href="{% url 'client-index' %}" class="btn btn-small">Отменить</a>
+                            <a href="{% url 'agency-index' %}" class="btn btn-small">Отменить</a>
                             <button type="submit" class="btn btn-primary btn-small" form="grew_form">Сохранить</button>
                         </div>
                     </ul>
@@ -32,7 +32,7 @@
             <div class="span9">
                 <form enctype="multipart/form-data" action="" method="post" class="form-horizontal" id="grew_form">
                     {% csrf_token %}
-                    {% form formClient using "floppyforms/layouts/client.html" %}
+                    {% form formAgency using "floppyforms/layouts/agency.html" %}
                 </form>
             </div>
         </div>

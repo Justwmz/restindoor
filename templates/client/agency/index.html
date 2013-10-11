@@ -1,13 +1,8 @@
 {% extends "client/index.html" %}
-{% load staticfiles %}
 
 {% block title %}
-    Контакты | Клиенты
+    Клиенты | Рекламные агенства
 {% endblock title %}
-
-{% block head %}
-    <link href="{% static 'css/bootstrap-formhelpers.css' %}" rel="stylesheet" media="screen">
-{% endblock head %}
 
 {% block content %}
     <div class="container" style="padding-top: 20px">
@@ -17,8 +12,8 @@
                     <ul class="nav nav-list">
                         <li class="nav-header"></li>
                         <li><a href="{% url 'client-index' %}"><i class="icon-home"></i> Клиенты</a></li>
-                        <li><a href="{% url 'agency-index' %}"><i class="icon-home"></i> Рекламные агенства</a></li>
-                        <li class="active"><a href="#"><i class="icon-user"></i> Контакты</a></li>
+                        <li class="active"><a href="#"><i class="icon-home"></i> Рекламные агенства</a></li>
+                        <li><a href="{% url 'client-contact-index' %}"><i class="icon-user"></i> Контакты</a></li>
                         <!--<li><a href="{% url 'client-ac-index' %}"><i class="icon-facetime-video"></i> Запуск РК</a></li>-->
                         <li><a href="{% url 'client-branch-index' %}"><i class="icon-edit"></i> Отрасли</a></li>
                     </ul>
@@ -28,10 +23,10 @@
                         <li class="nav-header">Фильтры</li>
                         <li class="divider"></li>
                         <form action="" method="get">
-                            <select name="client" style="width:180px">
-                                <option value="">Клиент</option>
-                                {% for client in clients %}
-                                    <option {% ifequal client_act client.id %}selected{% endifequal %} value="{{ client.id }}">{{ client.name }}</option>
+                            <select name="manager" style="width:180px">
+                                <option value="">Менеджер</option>
+                                {% for manager in managers %}
+                                    <option {% ifequal manager_act manager.id %}selected{% endifequal %} value="{{ manager.id }}">{{ manager.last_name }} {{ manager.first_name }}</option>
                                 {% endfor %}
                             </select>
                             <button type="submit" class="btn btn-small">Продолжить</button>
@@ -49,24 +44,26 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Клиент</th>
-                            <th>Ф.И.О.</th>
-                            <th>Должность</th>
-                            <th>Мобильный тел.</th>
-                            <th style="width:92px"><a href="{% url 'client-contact-new' %}" class="btn btn-success btn-mini" style="width:78px"><i class="icon-plus icon-white"></i></a></th>
+                            <th>Агенство</th>
+                            <th>Отрасль</th>
+                            <th>Статус</th>
+                            <th>Дата контакта</th>
+                            <th>Менеджер</th>
+                            <th style="width:92px"><a href="{% url 'agency-new' %}" class="btn btn-success btn-mini" style="width:78px"><i class="icon-plus icon-white"></i></a></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for contact in contacts %}
+                        {% for agency in agencies %}
                             <tr>
-                                <td>{{ contact.client }}</td>
-                                <td>{{ contact.name }}</td>
-                                <td>{{ contact.position }}</td>
-                                <td>{{ contact.phone_cell }}</td>
+                                <td>{{ agency.name }}</td>
+                                <td>{{ agency.branch }}</td>
+                                <td>{{ agency.status_verbose }}</td>
+                                <td></td>
+                                <td>{{ agency.username.last_name }} {{ agency.username.first_name }}</td>
                                 <td>
-                                    <a href="#myModal_{{ contact.id }}_browse" role="button" class="btn btn-info btn-mini" data-toggle="modal"><i class="icon-zoom-in icon-white"></i></a>
-                                    <a href="{% url 'client-contact-edit' contact.id %}" class="btn btn-warning btn-mini"><i class="icon-edit icon-white"></i></a>
-                                    <a href="#myModal_{{ contact.id }}_delete" role="button" class="btn btn-danger btn-mini" data-toggle="modal"><i class="icon-remove icon-white"></i></a>
+                                    <a href="#myModal_{{ agency.id }}_browse" role="button" class="btn btn-info btn-mini" data-toggle="modal"><i class="icon-zoom-in icon-white"></i></a>
+                                    <a href="{% url 'agency-edit' agency.id %}" class="btn btn-warning btn-mini"><i class="icon-edit icon-white"></i></a>
+                                    <a href="#myModal_{{ agency.id }}_delete" role="button" class="btn btn-danger btn-mini" data-toggle="modal"><i class="icon-remove icon-white"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -74,9 +71,9 @@
                 </table>
             </div>
         </div>
-        {% for contact in contacts %}
-            {% include "client/contact/browse.html" %}
-            {% include "client/contact/delete.html" %}
+        {% for agency in agencies %}
+            {% include "client/agency/browse.html" %}
+            {% include "client/agency/delete.html" %}
         {% endfor %}
     </div>
 {% endblock content %}

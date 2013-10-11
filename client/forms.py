@@ -2,12 +2,14 @@ from django.forms import ModelForm
 #from django import forms
 import floppyforms as forms
 from restaurant.widgets import SelectWithPop, PhoneInput
-from client.models import Contact, Client, AdvertisingCampaign, Branch, Details, NegotiationResult
+from client.models import Contact, Client, AdvertisingCampaign, Branch, Details, NegotiationResult, Brand, Payer, AdvertisingAgency
 
 class ContactForm(ModelForm):
     class Meta:
         model = Contact
         widgets = {
+            'client': forms.HiddenInput(),
+            'agency': forms.HiddenInput(),
             'position': forms.TextInput(),
             'characteristic': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
             'phone_work': PhoneInput(attrs={'class': 'bfh-phone', 'data-format': '(ddd) ddd-dd-dd'}),
@@ -16,6 +18,24 @@ class ContactForm(ModelForm):
             'additional': forms.Textarea(attrs={'style': 'resize:none; height:80px'}),
             'username': forms.HiddenInput(),
             'is_active': forms.HiddenInput(),
+        }
+
+class BrandForm(ModelForm):
+    class Meta:
+        model = Brand
+        widgets = {
+            'client': forms.HiddenInput(),
+            'agency': forms.HiddenInput(),
+            'brand': forms.TextInput(attrs={'style': 'width:233px'}),
+        }
+
+class PayerForm(ModelForm):
+    class Meta:
+        model = Brand
+        widgets = {
+            'client': forms.HiddenInput(),
+            'agency': forms.HiddenInput(),
+            'payer': forms.TextInput(attrs={'style': 'width:233px'}),
         }
 
 class DetailsForm(ModelForm):
@@ -50,12 +70,21 @@ class ClientForm(ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'style': 'width:233px'}),
             'adv_ag': forms.Select(attrs={'style': 'width:247px'}),
-            'payer': forms.TextInput(attrs={'style': 'width:233px'}),
-            'brand': forms.TextInput(attrs={'style': 'width:233px'}),
             'branch': forms.Select(attrs={'style': 'width:247px'}),
             'notes': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
             'status': forms.Select(attrs={'style': 'width:247px'}),
-#            'payer_vat': forms.Select(attrs={'style': 'width:247px'}),
+            'username': forms.HiddenInput(),
+            'is_active': forms.HiddenInput(),
+        }
+
+class AgencyForm(ModelForm):
+    class Meta:
+        model = AdvertisingAgency
+        widgets = {
+            'name': forms.TextInput(attrs={'style': 'width:233px'}),
+            'branch': forms.Select(attrs={'style': 'width:247px'}),
+            'notes': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
+            'status': forms.Select(attrs={'style': 'width:247px'}),
             'username': forms.HiddenInput(),
             'is_active': forms.HiddenInput(),
         }
@@ -72,6 +101,8 @@ class NegotiationResultForm(ModelForm):
     class Meta:
         model = NegotiationResult
         widgets = {
+            'client': forms.HiddenInput(),
+            'agency': forms.HiddenInput(),
             'negot_res': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
             'contact_plan': forms.Textarea(attrs={'style': 'resize:none; height:80px; width:233px'}),
             'username': forms.HiddenInput(),
