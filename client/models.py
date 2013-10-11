@@ -142,7 +142,7 @@ class Payer(models.Model):
         return self.payer
 
 
-class ClientBrand(models.Model):
+class Brand(models.Model):
     client = models.ForeignKey(Client, null=True, blank=True, related_name='client_brand')
     agency = models.ForeignKey(AdvertisingAgency, null=True, blank=True, related_name='agency_brand')
     brand = models.CharField(max_length=200, blank=True, verbose_name=u'Бренд')
