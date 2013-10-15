@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 #from django import forms
 import floppyforms as forms
-from restaurant.widgets import SelectWithPop, PhoneInput
+from restaurant.widgets import SelectWithPop, PhoneInput, InlineInput
 from client.models import Contact, Client, AdvertisingCampaign, Branch, Details, NegotiationResult, Brand, Payer, AdvertisingAgency
 
 class ContactForm(ModelForm):
@@ -26,7 +26,7 @@ class BrandForm(ModelForm):
         widgets = {
             'client': forms.HiddenInput(),
             'agency': forms.HiddenInput(),
-            'brand': forms.TextInput(attrs={'style': 'width:233px'}),
+            'brand': InlineInput(),
         }
 
 class PayerForm(ModelForm):
@@ -35,7 +35,7 @@ class PayerForm(ModelForm):
         widgets = {
             'client': forms.HiddenInput(),
             'agency': forms.HiddenInput(),
-            'payer': forms.TextInput(attrs={'style': 'width:233px'}),
+            'payer': InlineInput(),
         }
 
 class DetailsForm(ModelForm):

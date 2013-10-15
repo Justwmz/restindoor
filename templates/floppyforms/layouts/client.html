@@ -1,4 +1,4 @@
-{% extends "floppyforms/layouts/bootstrap.html" %}{% load floppyforms %}
+{% extends "floppyforms/layouts/bootstrap.html" %}{% load floppyforms %}{% load formset_tags %}
 
 {% block rows %}
 <div class="tab-content">
@@ -6,12 +6,50 @@
         <h4>Общая информация</h4>
         {% formrow form.name %}
         {% formrow form.adv_ag %}
-        {{ formPayerSet.management_form }}
-        {% form formPayerSet.forms using "floppyforms/layouts/bootstrap.html" %}
-        {{ formBrandSet.management_form }}
-        {% form formBrandSet.forms using "floppyforms/layouts/bootstrap.html" %}
-        {% formrow form.payer %}
-        {% formrow form.brand %}
+        <div id="formPayerSet" data-formset-prefix="{{ formPayerSet.prefix }}">
+            {{ formPayerSet.management_form }}
+            <div data-formset-body>
+                {% for form in formPayerSet %}
+                    <div data-formset-form>
+                        {% if forloop.last %}{% form form using "floppyforms/layouts/payer.html" with res='1' %}{% else %}{% form form using "floppyforms/layouts/payer.html" %}{% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <script type="form-template" data-formset-empty-form>
+                {% escapescript %}
+                    <div data-formset-form>
+                        {% form formPayerSet.empty_form using "floppyforms/layouts/payer.html" %}
+                    </div>
+                {% endescapescript %}
+            </script>
+
+            <script>jQuery(function($) {
+                $("#formPayerSet").formset();
+            });</script>
+        </div>
+        <div id="formBrandSet" data-formset-prefix="{{ formBrandSet.prefix }}">
+            {{ formBrandSet.management_form }}
+            <div data-formset-body>
+                {% for form in formBrandSet %}
+                    <div data-formset-form>
+                        {% if forloop.last %}{% form form using "floppyforms/layouts/brand.html" with res='1' %}{% else %}{% form form using "floppyforms/layouts/brand.html" %}{% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <script type="form-template" data-formset-empty-form>
+                {% escapescript %}
+                    <div data-formset-form>
+                        {% form formBrandSet.empty_form using "floppyforms/layouts/brand.html" %}
+                    </div>
+                {% endescapescript %}
+            </script>
+
+            <script>jQuery(function($) {
+                $("#formBrandSet").formset();
+            });</script>
+        </div>
         {% formrow form.branch %}
         {% formrow form.site using 'floppyforms/rows/restaurant/site.html' %}
         {% formrow form.notes %}

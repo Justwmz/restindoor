@@ -16,3 +16,7 @@ class MultipleSelectWithPop(forms.SelectMultiple):
 
 class PhoneInput(forms.TextInput):
     template_name = 'floppyforms/phoneinput.html'
+
+class InlineInput(forms.TextInput):
+    template_name = 'floppyforms/inlineinput.html'
+    

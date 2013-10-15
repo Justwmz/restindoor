@@ -1,0 +1,7 @@
+{% extends "floppyforms/layouts/bootstrap.html" %}{% load floppyforms %}
+
+{% block rows %}
+    {% formrow form.payer %}
+    <div style="display: none;">{% formfield form.DELETE %}</div>
+    {% for field in form.hidden_fields %}{% formfield field %}{% endfor %}
+{% endblock %}

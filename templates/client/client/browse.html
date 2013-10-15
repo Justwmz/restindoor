@@ -26,7 +26,7 @@
                     {% for item in client.client_payer.all %}
                         <tr>
                             {% if forloop.first %}<td>Плательщик</td>{% else %}<td></td>{% endif %}
-                            <td>{{ client.client_payer.get }}</td>
+                            <td>{{ item }}</td>
                         </tr>
                     {% endfor %}
                 {% endif %}
