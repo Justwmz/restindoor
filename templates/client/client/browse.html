@@ -17,35 +17,45 @@
                     <td>{{ client.name }}</td>
                 </tr>
                 {% if client.adv_ag %}
-                <tr>
-                    <td>Рекламное агенство</td>
-                    <td>{{ client.adv_ag }}</td>
-                </tr>
+                    <tr>
+                        <td>Рекламное агенство</td>
+                        <td>{{ client.adv_ag }}</td>
+                    </tr>
                 {% endif %}
-                {% if client.payer %}
-                <tr>
-                    <td>Плательщик</td>
-                    <td>{{ client.payer }}</td>
-                </tr>
+                {% if client.client_payer.all %}
+                    {% for item in client.client_payer.all %}
+                        <tr>
+                            {% if forloop.first %}<td>Плательщик</td>{% else %}<td></td>{% endif %}
+                            <td>{{ client.client_payer.get }}</td>
+                        </tr>
+                    {% endfor %}
                 {% endif %}
-                {% if client.brand %}
-                <tr>
-                    <td>Бренд</td>
-                    <td>{{ client.brand }}</td>
-                </tr>
+                {% if client.client_brand.all %}
+                    {% for item in client.client_brand.all %}
+                        <tr>
+                            {% if forloop.first %}<td>Бренд</td>{% else %}<td></td>{% endif %}
+                            <td>{{ item }}</td>
+                        </tr>
+                    {% endfor %}
                 {% endif %}
-                <tr>
-                    <td>Отрасль</td>
-                    <td>{{ client.branch }}</td>
-                </tr>
-                <tr>
-                    <td>Сайт</td>
-                    <td><a href="{{ client.site }}" target="_blank">{{ client.site }}</a></td>
-                </tr>
-                <tr>
-                    <td>Примечания</td>
-                    <td>{{ client.notes }}</td>
-                </tr>
+                {% if client.branch %}
+                    <tr>
+                        <td>Отрасль</td>
+                        <td>{{ client.branch }}</td>
+                    </tr>
+                {% endif %}
+                {% if client.site %}
+                    <tr>
+                        <td>Сайт</td>
+                        <td><a href="{{ client.site }}" target="_blank">{{ client.site }}</a></td>
+                    </tr>
+                {% endif %}
+                {% if client.notes %}
+                    <tr>
+                        <td>Примечания</td>
+                        <td>{{ client.notes }}</td>
+                    </tr>
+                {% endif %}
                 <tr>
                     <td>Статус</td>
                     <td>{{ client.status_verbose }}</td>
@@ -58,42 +68,32 @@
                     <td>Плательщик НДС</td>
                     <td>{{ client.payer_vat_verbose }}</td>
                 </tr>
-                {% if client.payer_cert %}
-                <tr>
-                    <td>Плательщик</td>
-                    <td>{{ client.payer_cert }}</td>
-                </tr>
+                {% if client.client_neg_res.all %}
+                    <tr>
+                        <th>Результаты</th>
+                        <th></th>
+                    </tr>
+                    {% for item in client.client_neg_res.all %}
+                        {% if forloop.last %}
+                            <tr>
+                                <td>Результаты переговоров</td>
+                                <td>{{ item.negot_res }}</td>
+                            </tr>
+                            <tr>
+                                <td>Дата последнего контакта</td>
+                                <td>{{ item.last_cont_date }}</td>
+                            </tr>
+                            <tr>
+                                <td>План следующего контакта</td>
+                                <td>{{ item.contact_plan }}</td>
+                            </tr>
+                            <tr>
+                                <td>Дата следующего контакта</td>
+                                <td>{{ item.next_cont_date }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
                 {% endif %}
-                {% if client.details %}
-                <tr>
-                    <td>Плательщик</td>
-                    <td>{{ client.details }}</td>
-                </tr>
-                {% endif %}
-                <tr>
-                    <th>Результаты</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td>Дата внесения в базу</td>
-                    <td>{{ client.add_date }}</td>
-                </tr>
-                <tr>
-                    <td>Результаты переговоров</td>
-                    <td>{{ client.negot_res }}</td>
-                </tr>
-                <tr>
-                    <td>Дата последнего контакта</td>
-                    <td>{{ client.last_cont_date }}</td>
-                </tr>
-                <tr>
-                    <td>План следующего контакта</td>
-                    <td>{{ client.contact_plan }}</td>
-                </tr>
-                <tr>
-                    <td>Дата следующего контакта</td>
-                    <td>{{ client.next_cont_date }}</td>
-                </tr>
             </tbody>
         </table>
     </div>

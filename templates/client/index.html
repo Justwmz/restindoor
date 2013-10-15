@@ -84,3 +84,11 @@
         {% endfor %}
     </div>
 {% endblock content %}
+
+{% block script %}
+    <script type="text/javascript">
+        $(function(){
+            $('a').popover();
+        })
+    </script>
+{% endblock script %}
