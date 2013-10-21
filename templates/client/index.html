@@ -76,6 +76,29 @@
                         {% endfor %}
                     </tbody>
                 </table>
+                <div style="text-align: center;">
+                    <div class="pagination pagination-small">
+                        <ul>
+                            {% if clients.has_previous %}
+                                <li><a href="?page={{ clients.previous_page_number }}">&laquo;</a></li>
+                            {% else %}
+                                <li class="disabled"><span>&laquo;</span></li>
+                            {% endif %}
+                            {% for page in clients.paginator.page_range %}
+                                {% if page == clients.number %}
+                                    <li class="disabled"><span>{{ page }}</span></li>
+                                {% else %}
+                                    <li><a href="?page={{ page }}">{{ page }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if clients.has_next %}
+                                <li><a href="?page={{ clients.next_page_number }}">&raquo;</a></li>
+                            {% else %}
+                                <li class="disabled"><span>&raquo;</span></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
         {% for client in clients %}

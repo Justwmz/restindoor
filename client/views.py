@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.messages import error
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from client.models import Client, Contact, AdvertisingCampaign, Branch, Details, NegotiationResult, Brand, Payer, AdvertisingAgency
 from client.forms import ClientForm, ContactForm, AdvertisingCampaignForm, BranchForm, DetailsForm, NegotiationResultForm, BrandForm, PayerForm, AgencyForm
 
@@ -14,9 +15,18 @@ def index(request):
     managers = User.objects.all()
     if request.GET.get('manager'):
         manager_act = int(request.GET['manager'])
-        clients = Client.objects.filter(username__id=manager_act)
+        client_list = Client.objects.filter(username__id=manager_act)
     else:
-        clients = Client.objects.all()
+        client_list = Client.objects.all()
+
+    paginator = Paginator(client_list, 10)
+    page = request.GET.get('page')
+    try:
+        clients = paginator.page(page)
+    except PageNotAnInteger:
+        clients = paginator.page(1)
+    except EmptyPage:
+        clients = paginator.page(paginator.num_pages)
 
     return render_to_response('client/index.html', locals(), context_instance=RequestContext(request))
 
