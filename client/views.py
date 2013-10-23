@@ -34,7 +34,7 @@ def index(request):
 @login_required
 def newClient(request):
     my_client = Client(username=request.user)
-    ContactFormSet = inlineformset_factory(Client, Contact, form=ContactForm, can_delete=False, max_num=1)
+    ContactFormSet = inlineformset_factory(Client, Contact, form=ContactForm, can_delete=False, extra=1)
     DetailsFormSet = inlineformset_factory(Client, Details, form=DetailsForm, can_delete=False, max_num=1)
     NegotiationResultFormSet = inlineformset_factory(Client, NegotiationResult, form=NegotiationResultForm, can_delete=False, extra=1)
     BrandFormSet = inlineformset_factory(Client, Brand, form=BrandForm, can_delete=True, extra=1)
@@ -63,7 +63,7 @@ def newClient(request):
 def editClient(request, id):
     my_client = Client.objects.get(id=id)
     neg_results = NegotiationResult.objects.filter(client=my_client)
-    ContactFormSet = inlineformset_factory(Client, Contact, form=ContactForm, can_delete=False, max_num=1)
+    ContactFormSet = inlineformset_factory(Client, Contact, form=ContactForm, can_delete=False, extra=1)
     DetailsFormSet = inlineformset_factory(Client, Details, form=DetailsForm, can_delete=False, max_num=1)
     NegotiationResultFormSet = inlineformset_factory(Client, NegotiationResult, form=NegotiationResultForm, can_delete=False, extra=1)
     try:
@@ -122,11 +122,11 @@ def indexAgency(request):
 @login_required
 def newAgency(request):
     my_agency = AdvertisingAgency(username=request.user)
-    ContactFormSet = inlineformset_factory(AdvertisingAgency, Contact, form=ContactForm, can_delete=False, max_num=1)
+    ContactFormSet = inlineformset_factory(AdvertisingAgency, Contact, form=ContactForm, can_delete=False, extra=1)
     DetailsFormSet = inlineformset_factory(AdvertisingAgency, Details, form=DetailsForm, can_delete=False, max_num=1)
     NegotiationResultFormSet = inlineformset_factory(AdvertisingAgency, NegotiationResult, form=NegotiationResultForm, can_delete=False, extra=1)
-    BrandFormSet = inlineformset_factory(AdvertisingAgency, Brand, form=BrandForm, can_delete=False, max_num=1)
-    PayerFormSet = inlineformset_factory(AdvertisingAgency, Payer, form=PayerForm, can_delete=False, max_num=1)
+    BrandFormSet = inlineformset_factory(AdvertisingAgency, Brand, form=BrandForm, can_delete=True, extra=1)
+    PayerFormSet = inlineformset_factory(AdvertisingAgency, Payer, form=PayerForm, can_delete=True, extra=1)
     formAgency = AgencyForm(request.POST or None, request.FILES or None, instance=my_agency)
     formContactSet = ContactFormSet(request.POST or None, instance=my_agency)
     formDetailsSet = DetailsFormSet(request.POST or None, instance=my_agency)
@@ -151,11 +151,21 @@ def newAgency(request):
 def editAgency(request, id):
     my_agency = AdvertisingAgency.objects.get(id=id)
     neg_results = NegotiationResult.objects.filter(agency=my_agency)
-    ContactFormSet = inlineformset_factory(AdvertisingAgency, Contact, form=ContactForm, can_delete=False, max_num=1)
+    ContactFormSet = inlineformset_factory(AdvertisingAgency, Contact, form=ContactForm, can_delete=False, extra=1)
     DetailsFormSet = inlineformset_factory(AdvertisingAgency, Details, form=DetailsForm, can_delete=False, max_num=1)
     NegotiationResultFormSet = inlineformset_factory(AdvertisingAgency, NegotiationResult, form=NegotiationResultForm, can_delete=False, extra=1)
-    BrandFormSet = inlineformset_factory(AdvertisingAgency, Brand, form=BrandForm, can_delete=False, max_num=1)
-    PayerFormSet = inlineformset_factory(AdvertisingAgency, Payer, form=PayerForm, can_delete=False, max_num=1)
+    try:
+        Brand.objects.get(agency=my_agency)
+    except Exception, e:
+        BrandFormSet = inlineformset_factory(AdvertisingAgency, Brand, form=BrandForm, can_delete=True, extra=1)
+    else:
+        BrandFormSet = inlineformset_factory(AdvertisingAgency, Brand, form=BrandForm, can_delete=True, extra=0)
+    try:
+        Payer.objects.get(agency=my_agency)
+    except Exception, e:
+        PayerFormSet = inlineformset_factory(AdvertisingAgency, Payer, form=PayerForm, can_delete=True, extra=1)
+    else:
+        PayerFormSet = inlineformset_factory(AdvertisingAgency, Payer, form=PayerForm, can_delete=True, extra=0)
     formAgency = AgencyForm(request.POST or None, request.FILES or None, instance=my_agency)
     formContactSet = ContactFormSet(request.POST or None, instance=my_agency)
     formDetailsSet = DetailsFormSet(request.POST or None, instance=my_agency)

@@ -91,7 +91,26 @@
     <div class="tab-pane" id="contacts">
         <h4>Контакты</h4>
         {{ formContactSet.management_form }}
-        {% form formContactSet.forms using "floppyforms/layouts/bootstrap.html" with style_div="margin-left:220px" style_label="width:200px" %}
+        <div class="tabbable tabs-right">
+            <ul class="nav nav-tabs">
+                {% for form in formContactSet %}
+                    {% if forloop.first %}
+                        <li class="active"><a href="#tab1" data-toggle="tab">Контакт 1</a></li>
+                    {% elif forloop.last %}
+                        <li><a href="#tab{{ forloop.count }}" data-toggle="tab">Добавить контакт</a></li>
+                    {% else %}
+                        <li><a href="#tab{{ forloop.count }}" data-toggle="tab">Контакт {{ forloop.count }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <div class="tab-content">
+                {% for form in formContactSet %}
+                    {% if forloop.first %}<div class="tab-pane active" id="tab1">{% else %}<div class="tab-pane" id="tab{{ forloop.count }}">{% endif %}
+                        {% form form using "floppyforms/layouts/bootstrap.html" with style_div="margin-left:220px" style_label="width:200px" %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
