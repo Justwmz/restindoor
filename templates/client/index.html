@@ -48,13 +48,12 @@
                         <strong>Выполнено!</strong> {{ message }}
                     </div>
                 {% endfor %}
-                <table class="table table-striped">
+                <table class="table table-striped table-condensed">
                     <thead>
                         <tr>
                             <th>Клиент</th>
-                            <th>Отрасль</th>
                             <th>Статус</th>
-                            <th>Дата контакта</th>
+                            <th style="width:130px">Ближ. контакт</th>
                             <th>Менеджер</th>
                             <th style="width:92px"><a href="{% url 'client-new' %}" class="btn btn-success btn-mini" style="width:78px"><i class="icon-plus icon-white"></i></a></th>
                         </tr>
@@ -63,9 +62,10 @@
                         {% for client in clients %}
                             <tr>
                                 <td>{{ client.name }}</td>
-                                <td>{{ client.branch }}</td>
                                 <td>{{ client.status_verbose }}</td>
-                                <td></td>
+                                {% for item in client.client_neg_res.all %}
+                                    {% if forloop.last %}<td>{% if item.next_cont_date %}{{ item.next_cont_date }}{% endif %}</td>{% endif %}
+                                {% endfor %}
                                 <td>{{ client.username.last_name }} {{ client.username.first_name }}</td>
                                 <td>
                                     <a href="#myModal_{{ client.id }}_browse" role="button" class="btn btn-info btn-mini" data-toggle="modal"><i class="icon-zoom-in icon-white"></i></a>

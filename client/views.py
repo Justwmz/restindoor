@@ -198,7 +198,7 @@ def indexContact(request, page=1):
     else:
         contact_list = Contact.objects.all()
 
-    paginator = Paginator(contact_list, 10)
+    paginator = Paginator(contact_list, 15)
     contacts = paginator.page(page)
 
     return render_to_response('client/contact/index.html', locals(), context_instance=RequestContext(request))
