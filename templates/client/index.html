@@ -80,20 +80,24 @@
                     <div class="pagination pagination-small">
                         <ul>
                             {% if clients.has_previous %}
-                                <li><a href="?page={{ clients.previous_page_number }}">&laquo;</a></li>
+                                <li><a href="{% url 'client-index' page=1 %}">&laquo;</a></li>
+                                <li><a href="{% url 'client-index' page=clients.previous_page_number %}">&lt;</a></li>
                             {% else %}
                                 <li class="disabled"><span>&laquo;</span></li>
+                                <li class="disabled"><span>&lt;</span></li>
                             {% endif %}
                             {% for page in clients.paginator.page_range %}
                                 {% if page == clients.number %}
                                     <li class="disabled"><span>{{ page }}</span></li>
                                 {% else %}
-                                    <li><a href="?page={{ page }}">{{ page }}</a></li>
+                                    <li><a href="{% url 'client-index' page=page %}">{{ page }}</a></li>
                                 {% endif %}
                             {% endfor %}
                             {% if clients.has_next %}
-                                <li><a href="?page={{ clients.next_page_number }}">&raquo;</a></li>
+                                <li><a href="{% url 'client-index' page=clients.next_page_number %}">&gt;</a></li>
+                                <li><a href="{% url 'client-index' page=clients.paginator.num_pages %}">&raquo;</a></li>
                             {% else %}
+                                <li class="disabled"><span>&gt;</span></li>
                                 <li class="disabled"><span>&raquo;</span></li>
                             {% endif %}
                         </ul>

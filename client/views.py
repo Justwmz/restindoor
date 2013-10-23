@@ -11,7 +11,7 @@ from client.forms import ClientForm, ContactForm, AdvertisingCampaignForm, Branc
 
 
 @login_required
-def index(request):
+def index(request, page=1):
     managers = User.objects.all()
     if request.GET.get('manager'):
         manager_act = int(request.GET['manager'])
@@ -20,13 +20,7 @@ def index(request):
         client_list = Client.objects.all()
 
     paginator = Paginator(client_list, 10)
-    page = request.GET.get('page')
-    try:
-        clients = paginator.page(page)
-    except PageNotAnInteger:
-        clients = paginator.page(1)
-    except EmptyPage:
-        clients = paginator.page(paginator.num_pages)
+    clients = paginator.page(page)
 
     return render_to_response('client/index.html', locals(), context_instance=RequestContext(request))
 
@@ -196,13 +190,16 @@ def deleteAgency(request, id):
 
 
 @login_required
-def indexContact(request):
+def indexContact(request, page=1):
     clients = Client.objects.all()
     if request.GET.get('client'):
         client_act = int(request.GET['client'])
-        contacts = Contact.objects.filter(client__id=client_act)
+        contact_list = Contact.objects.filter(client__id=client_act)
     else:
-        contacts = Contact.objects.all()
+        contact_list = Contact.objects.all()
+
+    paginator = Paginator(contact_list, 10)
+    contacts = paginator.page(page)
 
     return render_to_response('client/contact/index.html', locals(), context_instance=RequestContext(request))
 
@@ -213,7 +210,7 @@ def newContact(request):
     if formCont.is_valid():
         formCont.save()
         error(request, 'Информация о контакте успешно добавлена.')
-        return redirect('contact-index')
+        return redirect('client-contact-index')
     var = {'formCont': formCont}
 
     return render_to_response('client/contact/edit.html', var, context_instance=RequestContext(request))
@@ -226,7 +223,7 @@ def editContact(request, id):
     if formCont.is_valid():
         formCont.save()
         error(request, 'Информация о контакте успешно изменена.')
-        return redirect('contact-index')
+        return redirect('client-contact-index')
     var = {'contact': contact, 'formCont': formCont}
 
     return render_to_response('client/contact/edit.html', var, context_instance=RequestContext(request))
@@ -238,7 +235,7 @@ def deleteContact(request, id):
     contact.delete()
     error(request, 'Информация о контакте успешно удалена.')
 
-    return redirect('contact-index')
+    return redirect('client-contact-index')
 
 
 @login_required

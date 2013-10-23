@@ -23,6 +23,7 @@
                         <li><a href="{% url 'client-branch-index' %}"><i class="icon-edit"></i> Отрасли</a></li>
                     </ul>
                 </div>
+<!--                
                 <div class="well pull-left" style="min-width: 210px; margin: 5px; padding: 8px 0;">
                     <ul class="nav nav-list">
                         <li class="nav-header">Фильтры</li>
@@ -38,6 +39,7 @@
                         </form>
                     </ul>
                 </div>
+-->
             </div>
             <div class="span9">
                 {% for message in messages %}
@@ -49,29 +51,58 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Клиент</th>
+                            <th>Клиент/Агенство</th>
                             <th>Ф.И.О.</th>
-                            <th>Должность</th>
-                            <th>Мобильный тел.</th>
-                            <th style="width:92px"><a href="{% url 'client-contact-new' %}" class="btn btn-success btn-mini" style="width:78px"><i class="icon-plus icon-white"></i></a></th>
+                            <th style="width:105px;">Раб. тел.</th>
+                            <th style="width:105px;">Моб. тел.</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for contact in contacts %}
                             <tr>
-                                <td>{{ contact.client }}</td>
+                                {% if contact.client %}
+                                    <td>{{ contact.client }}</td>
+                                {% elif contact.agency %}
+                                    <td>{{ contact.agency }}</td>
+                                {% endif %}
                                 <td>{{ contact.name }}</td>
-                                <td>{{ contact.position }}</td>
+                                <td>{{ contact.phone_work }}</td>
                                 <td>{{ contact.phone_cell }}</td>
-                                <td>
+                                <td style="text-align:right;">
                                     <a href="#myModal_{{ contact.id }}_browse" role="button" class="btn btn-info btn-mini" data-toggle="modal"><i class="icon-zoom-in icon-white"></i></a>
-                                    <a href="{% url 'client-contact-edit' contact.id %}" class="btn btn-warning btn-mini"><i class="icon-edit icon-white"></i></a>
-                                    <a href="#myModal_{{ contact.id }}_delete" role="button" class="btn btn-danger btn-mini" data-toggle="modal"><i class="icon-remove icon-white"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+                <div style="text-align: center;">
+                    <div class="pagination pagination-small">
+                        <ul>
+                            {% if contacts.has_previous %}
+                                <li><a href="{% url 'client-contact-index' page=1 %}">&laquo;</a></li>
+                                <li><a href="{% url 'client-contact-index' page=contacts.previous_page_number %}">&lt;</a></li>
+                            {% else %}
+                                <li class="disabled"><span>&laquo;</span></li>
+                                <li class="disabled"><span>&lt;</span></li>
+                            {% endif %}
+                            {% for page in contacts.paginator.page_range %}
+                                {% if page == contacts.number %}
+                                    <li class="disabled"><span>{{ page }}</span></li>
+                                {% else %}
+                                    <li><a href="{% url 'client-contact-index' page=page %}">{{ page }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if contacts.has_next %}
+                                <li><a href="{% url 'client-contact-index' page=contacts.next_page_number %}">&gt;</a></li>
+                                <li><a href="{% url 'client-contact-index' page=contacts.paginator.num_pages %}">&raquo;</a></li>
+                            {% else %}
+                                <li class="disabled"><span>&gt;</span></li>
+                                <li class="disabled"><span>&raquo;</span></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
         {% for contact in contacts %}
