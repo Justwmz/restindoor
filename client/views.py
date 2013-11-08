@@ -205,18 +205,6 @@ def indexContact(request, page=1):
 
 
 @login_required
-def newContact(request):
-    formCont = ContactForm(request.POST or None)
-    if formCont.is_valid():
-        formCont.save()
-        error(request, 'Информация о контакте успешно добавлена.')
-        return redirect('client-contact-index')
-    var = {'formCont': formCont}
-
-    return render_to_response('client/contact/edit.html', var, context_instance=RequestContext(request))
-
-
-@login_required
 def editContact(request, id):
     contact = Contact.objects.get(id=id)
     formCont = ContactForm(request.POST or None, instance=contact)

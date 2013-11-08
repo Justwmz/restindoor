@@ -65,16 +65,31 @@
     </div>
     <div class="tab-pane" id="results">
         <div class="row">
-            <div class="span6">
+            <div class="span9">
                 <h4>Результаты</h4>
                 {{ formNegotiationResultSet.management_form }}
-                {% for form in formNegotiationResultSet %}
-                    <div {% if not forloop.last %}style="display:none"{% endif %}>
-                        {% form form using "floppyforms/layouts/neg_results.html" with style_div="margin-left:220px" style_label="width:200px" %}
+                <div class="tabbable tabs-right">
+                    <ul class="nav nav-tabs">
+                        {% for form in formNegotiationResultSet %}
+                            {% if forloop.first %}
+                                <li class="active"><a href="#neg_result1" data-toggle="tab">Результат 1</a></li>
+                            {% elif forloop.last %}
+                                <li><a href="#neg_result{{ forloop.counter }}" data-toggle="tab">Новый</a></li>
+                            {% else %}
+                                <li><a href="#neg_result{{ forloop.counter }}" data-toggle="tab">Результат {{ forloop.counter }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <div class="tab-content">
+                        {% for form in formNegotiationResultSet %}
+                            {% if forloop.first %}<div class="tab-pane active" id="neg_result1">{% else %}<div class="tab-pane" id="neg_result{{ forloop.counter }}">{% endif %}
+                                {% form form using "floppyforms/layouts/neg_results.html" with style_div="margin-left:220px" style_label="width:200px" %}
+                            </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+                </div>
             </div>
-            {% if neg_results %}
+            {% if false %}
             <div class="span3">
                 <div class="well pull-right" style="margin: 5px; padding: 8px 0;">
                     <ul class="nav nav-list">
@@ -95,17 +110,17 @@
             <ul class="nav nav-tabs">
                 {% for form in formContactSet %}
                     {% if forloop.first %}
-                        <li class="active"><a href="#tab1" data-toggle="tab">Контакт 1</a></li>
+                        <li class="active"><a href="#contact1" data-toggle="tab">Контакт 1</a></li>
                     {% elif forloop.last %}
-                        <li><a href="#tab{{ forloop.count }}" data-toggle="tab">Добавить контакт</a></li>
+                        <li><a href="#contact{{ forloop.counter }}" data-toggle="tab">Добавить контакт</a></li>
                     {% else %}
-                        <li><a href="#tab{{ forloop.count }}" data-toggle="tab">Контакт {{ forloop.count }}</a></li>
+                        <li><a href="#contact{{ forloop.counter }}" data-toggle="tab">Контакт {{ forloop.counter }}</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <div class="tab-content">
                 {% for form in formContactSet %}
-                    {% if forloop.first %}<div class="tab-pane active" id="tab1">{% else %}<div class="tab-pane" id="tab{{ forloop.count }}">{% endif %}
+                    {% if forloop.first %}<div class="tab-pane active" id="contact1">{% else %}<div class="tab-pane" id="contact{{ forloop.counter }}">{% endif %}
                         {% form form using "floppyforms/layouts/bootstrap.html" with style_div="margin-left:220px" style_label="width:200px" %}
                     </div>
                 {% endfor %}
