@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from client.models import Client, Contact, AdvertisingCampaign, Branch, Details, NegotiationResult, Brand, Payer, AdvertisingAgency
 from client.forms import ClientForm, ContactForm, AdvertisingCampaignForm, BranchForm, DetailsForm, NegotiationResultForm, BrandForm, PayerForm, AgencyForm
+from datetime import date, timedelta
 
 
 @login_required
@@ -19,6 +20,8 @@ def index(request, page=1):
     else:
         client_list = Client.objects.all()
 
+    today = date.today()
+    last_week = today - timedelta(7)
     my_client_list = Client.objects.filter(username=request.user)
     paginator = Paginator(client_list, 10)
     clients = paginator.page(page)
