@@ -59,7 +59,7 @@ class Client(models.Model):
     site = models.URLField(blank=True, verbose_name=u'Сайт')
     notes = models.TextField(blank=True, verbose_name=u'Примечания')
     status = models.CharField(max_length=1, choices=STATUS, verbose_name=u'Статус')
-    payer_vat = models.CharField(max_length=1, choices=YN, verbose_name=u'Плательщик НДС')
+    payer_vat = models.CharField(blank=True, max_length=1, choices=YN, verbose_name=u'Плательщик НДС')
     payer_cert = models.FileField(upload_to=u'payer_cert', blank=True, verbose_name=u'Свидетельство плательщика')
     add_date = models.DateField(auto_now_add=True, verbose_name=u'Дата внесения в базу')
     username = models.ForeignKey(User, null=True, blank=True)
