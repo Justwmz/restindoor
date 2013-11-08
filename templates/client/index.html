@@ -60,7 +60,7 @@
                     </thead>
                     <tbody>
                         {% for client in clients %}
-                            <tr{% for item in client.client_neg_res.all %}{% if forloop.last %}{% if item.next_cont_date == today %} class="error"{% elif item.next_cont_date > last_week and item.next_cont_date < today %} class="warning"{% endif %}{% endif %}{% endfor %}>
+                            <tr{% for item in client.client_neg_res.all %}{% if forloop.last %}{% if item.next_cont_date == today %} class="error"{% elif item.next_cont_date < next_week and item.next_cont_date > today %} class="warning"{% endif %}{% endif %}{% endfor %}>
                                 <td>{{ client.name }}</td>
                                 <td>{{ client.status_verbose }}</td>
                                 {% for item in client.client_neg_res.all %}

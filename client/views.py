@@ -21,7 +21,7 @@ def index(request, page=1):
         client_list = Client.objects.all()
 
     today = date.today()
-    last_week = today - timedelta(7)
+    next_week = today + timedelta(7)
     my_client_list = Client.objects.filter(username=request.user)
     paginator = Paginator(client_list, 10)
     clients = paginator.page(page)
