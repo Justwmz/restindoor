@@ -19,6 +19,7 @@ def index(request, page=1):
     else:
         client_list = Client.objects.all()
 
+    my_client_list = Client.objects.filter(username=request.user)
     paginator = Paginator(client_list, 10)
     clients = paginator.page(page)
 

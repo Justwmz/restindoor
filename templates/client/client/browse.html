@@ -99,7 +99,9 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Закрыть</button>
-        <a href="{% url 'client-edit' client.id %}" class="btn btn-warning">Редактировать</a>
-        <a href="#myModal_{{ client.id }}_delete" role="button" class="btn btn-danger" data-toggle="modal" data-dismiss="modal" aria-hidden="true">Удалить</a>
+        {% if client in my_client_list %}
+            <a href="{% url 'client-edit' client.id %}" class="btn btn-warning">Редактировать</a>
+            <a href="#myModal_{{ client.id }}_delete" role="button" class="btn btn-danger" data-toggle="modal" data-dismiss="modal" aria-hidden="true">Удалить</a>
+        {% endif %}
     </div>
 </div>

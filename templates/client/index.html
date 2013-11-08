@@ -69,8 +69,8 @@
                                 <td>{{ client.username.last_name }} {{ client.username.first_name }}</td>
                                 <td>
                                     <a href="#myModal_{{ client.id }}_browse" role="button" class="btn btn-info btn-mini" data-toggle="modal"><i class="icon-zoom-in icon-white"></i></a>
-                                    <a href="{% url 'client-edit' client.id %}" class="btn btn-warning btn-mini"><i class="icon-edit icon-white"></i></a>
-                                    <a href="#myModal_{{ client.id }}_delete" role="button" class="btn btn-danger btn-mini" data-toggle="modal"><i class="icon-remove icon-white"></i></a>
+                                    <a href="{% if client in my_client_list %}{% url 'client-edit' client.id %}{% else %}#{% endif %}" class="btn btn-warning btn-mini{% if client not in my_client_list %} disabled{% endif %}"><i class="icon-edit icon-white"></i></a>
+                                    <a href="{% if client in my_client_list %}#myModal_{{ client.id }}_delete{% else %}#{% endif %}" role="button" class="btn btn-danger btn-mini{% if client not in my_client_list %} disabled{% endif %}" data-toggle="modal"><i class="icon-remove icon-white"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}
