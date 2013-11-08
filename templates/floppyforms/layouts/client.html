@@ -72,7 +72,11 @@
                     <ul class="nav nav-tabs">
                         {% for form in formNegotiationResultSet %}
                             {% if forloop.first %}
-                                <li><a href="#neg_result1" data-toggle="tab">Результат 1</a></li>
+                                {% if forloop.last %}
+                                    <li class="active"><a href="#neg_result1" data-toggle="tab">Результат 1</a></li>
+                                {% else %}
+                                    <li><a href="#neg_result1" data-toggle="tab">Результат 1</a></li>
+                                {% endif %}
                             {% elif forloop.last %}
                                 <li class="active"><a href="#neg_result{{ forloop.counter }}" data-toggle="tab">Новый</a></li>
                             {% else %}
