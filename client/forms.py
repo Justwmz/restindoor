@@ -29,7 +29,7 @@ class BrandForm(ModelForm):
 
 class PayerForm(ModelForm):
     class Meta:
-        model = Brand
+        model = Payer
         widgets = {
             'client': forms.HiddenInput(),
             'agency': forms.HiddenInput(),
