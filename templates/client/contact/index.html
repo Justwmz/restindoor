@@ -20,7 +20,9 @@
                         <li><a href="{% url 'agency-index' %}"><i class="icon-home"></i> Рекламные агенства</a></li>
                         <li class="active"><a href="#"><i class="icon-user"></i> Контакты</a></li>
                         <!--<li><a href="{% url 'client-ac-index' %}"><i class="icon-facetime-video"></i> Запуск РК</a></li>-->
-                        <li><a href="{% url 'client-branch-index' %}"><i class="icon-edit"></i> Отрасли</a></li>
+                        {% for group in request.user.groups.all %}
+                            {% if group.name == 'Руководство' %}<li><a href="{% url 'client-branch-index' %}"><i class="icon-edit"></i> Отрасли</a></li>{% endif %}
+                        {% endfor %}
                     </ul>
                 </div>
 <!--                

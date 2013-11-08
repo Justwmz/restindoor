@@ -13,7 +13,7 @@ from datetime import date, timedelta
 
 @login_required
 def index(request, page=1):
-    managers = User.objects.all()
+    managers = User.objects.filter(groups__name='Менеджеры')
     if request.GET.get('manager'):
         manager_act = int(request.GET['manager'])
         client_list = Client.objects.filter(username__id=manager_act)

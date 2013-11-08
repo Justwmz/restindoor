@@ -22,7 +22,9 @@
                         <li><a href="{% url 'agency-index' %}"><i class="icon-home"></i> Рекламные агенства</a></li>
                         <li><a href="{% url 'client-contact-index' %}"><i class="icon-user"></i> Контакты</a></li>
                         <!--<li><a href="{% url 'client-ac-index' %}"><i class="icon-facetime-video"></i> Запуск РК</a></li>-->
-                        <li><a href="{% url 'client-branch-index' %}"><i class="icon-edit"></i> Отрасли</a></li>
+                        {% for group in request.user.groups.all %}
+                            {% if group.name == 'Руководство' %}<li><a href="{% url 'client-branch-index' %}"><i class="icon-edit"></i> Отрасли</a></li>{% endif %}
+                        {% endfor %}
                     </ul>
                 </div>
                 <div class="well pull-left" style="min-width: 210px; margin: 5px; padding: 8px 0;">
@@ -80,8 +82,8 @@
                     <div class="pagination pagination-small">
                         <ul>
                             {% if clients.has_previous %}
-                                <li><a href="{% url 'client-index' page=1 %}">&laquo;</a></li>
-                                <li><a href="{% url 'client-index' page=clients.previous_page_number %}">&lt;</a></li>
+                                <li><a href="{% url 'client-index' page=1 %}?manager={{ manager_act }}">&laquo;</a></li>
+                                <li><a href="{% url 'client-index' page=clients.previous_page_number %}?manager={{ manager_act }}">&lt;</a></li>
                             {% else %}
                                 <li class="disabled"><span>&laquo;</span></li>
                                 <li class="disabled"><span>&lt;</span></li>
@@ -90,12 +92,12 @@
                                 {% if page == clients.number %}
                                     <li class="disabled"><span>{{ page }}</span></li>
                                 {% else %}
-                                    <li><a href="{% url 'client-index' page=page %}">{{ page }}</a></li>
+                                    <li><a href="{% url 'client-index' page=page %}?manager={{ manager_act }}">{{ page }}</a></li>
                                 {% endif %}
                             {% endfor %}
                             {% if clients.has_next %}
-                                <li><a href="{% url 'client-index' page=clients.next_page_number %}">&gt;</a></li>
-                                <li><a href="{% url 'client-index' page=clients.paginator.num_pages %}">&raquo;</a></li>
+                                <li><a href="{% url 'client-index' page=clients.next_page_number %}?manager={{ manager_act }}">&gt;</a></li>
+                                <li><a href="{% url 'client-index' page=clients.paginator.num_pages %}?manager={{ manager_act }}">&raquo;</a></li>
                             {% else %}
                                 <li class="disabled"><span>&gt;</span></li>
                                 <li class="disabled"><span>&raquo;</span></li>
