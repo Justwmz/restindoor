@@ -1,11 +1,11 @@
 from django.conf.urls import patterns, include, url
+
 from django.contrib import admin
-from django.conf import settings
-from django.conf.urls.static import static
 admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
+
     url(r'^login/$', 'django.contrib.auth.views.login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page':'/login/'}),
     url(r'^$', 'index.views.index', name='index'),
@@ -51,4 +51,4 @@ urlpatterns = patterns('',
     url(r'^tech/restaurant/(?P<id>\d+)/$', 'tech.views.editTech', name='tech-edit'),
     url(r'^analytics/$', 'analytics.views.index', name='analytics-index'),
     url(r'^add/contact/?$', 'restaurant.views.newCont'),
-) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+)
