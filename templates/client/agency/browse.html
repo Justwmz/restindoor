@@ -1,105 +1,111 @@
-<div class="modal hide fade" id="myModal_{{ agency.id }}_browse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ agency.id }}_browse" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3 id="myModalLabel_{{ agency.id }}_browse">Просмотр "{{ agency }}"</h3>
-    </div>
-    <div class="modal-body">
-        <table class="table table-condensed table-striped">
-            <thead>
-                <tr>
-                    <th style="width:220px">Общая информация</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Клиент</td>
-                    <td>{{ agency.name }}</td>
-                </tr>
-                {% if agency.adv_ag %}
-                <tr>
-                    <td>Рекламное агенство</td>
-                    <td>{{ agency.adv_ag }}</td>
-                </tr>
+<div class="modal fade" id="myModal_{{ agency.id }}_browse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ agency.id }}_browse" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 id="myModalLabel_{{ agency.id }}_browse">Просмотр "{{ agency }}"</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width:220px">Общая информация</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Клиент</td>
+                            <td>{{ agency.name }}</td>
+                        </tr>
+                        {% if agency.adv_ag %}
+                            <tr>
+                                <td>Рекламное агенство</td>
+                                <td>{{ agency.adv_ag }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if agency.agency_payer.all %}
+                            {% for item in agency.agency_payer.all %}
+                                <tr>
+                                    {% if forloop.first %}<td>Плательщик</td>{% else %}<td></td>{% endif %}
+                                    <td>{{ item }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                        {% if agency.agency_brand.all %}
+                            {% for item in agency.agency_brand.all %}
+                                <tr>
+                                    {% if forloop.first %}<td>Бренд</td>{% else %}<td></td>{% endif %}
+                                    <td>{{ item }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                        {% if agency.branch %}
+                            <tr>
+                                <td>Отрасль</td>
+                                <td>{{ agency.branch }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if agency.site %}
+                            <tr>
+                                <td>Сайт</td>
+                                <td><a href="{{ agency.site }}" target="_blank">{{ agency.site }}</a></td>
+                            </tr>
+                        {% endif %}
+                        {% if agency.notes %}
+                            <tr>
+                                <td>Примечания</td>
+                                <td>{{ agency.notes }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <td>Статус</td>
+                            <td>{{ agency.status_verbose }}</td>
+                        </tr>
+                        <tr>
+                            <th>Юридическая информация</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>Плательщик НДС</td>
+                            <td>{{ agency.payer_vat_verbose }}</td>
+                        </tr>
+                        {% if agency.agency_neg_res.all %}
+                            <tr>
+                                <th>Результаты</th>
+                                <th></th>
+                            </tr>
+                            {% for item in agency.agency_neg_res.all %}
+                                {% if forloop.last %}
+                                    <tr>
+                                        <td>Результаты переговоров</td>
+                                        <td>{{ item.negot_res }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Дата последнего контакта</td>
+                                        <td>{{ item.last_cont_date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>План следующего контакта</td>
+                                        <td>{{ item.contact_plan }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Дата следующего контакта</td>
+                                        <td>{{ item.next_cont_date }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Закрыть</button>
+                {% if agency in my_agency_list %}
+                    <a href="{% url 'agency-edit' agency.id %}" role="button" class="btn btn-warning btn-sm">Редактировать</a>
+                    <a href="#myModal_{{ agency.id }}_delete" role="button" class="btn btn-danger btn-sm" data-toggle="modal" data-dismiss="modal">Удалить</a>
                 {% endif %}
-                {% if agency.payer %}
-                <tr>
-                    <td>Плательщик</td>
-                    <td>{{ agency.payer }}</td>
-                </tr>
-                {% endif %}
-                {% if agency.brand %}
-                <tr>
-                    <td>Бренд</td>
-                    <td>{{ agency.brand }}</td>
-                </tr>
-                {% endif %}
-                <tr>
-                    <td>Отрасль</td>
-                    <td>{{ agency.branch }}</td>
-                </tr>
-                <tr>
-                    <td>Сайт</td>
-                    <td><a href="{{ agency.site }}" target="_blank">{{ agency.site }}</a></td>
-                </tr>
-                <tr>
-                    <td>Примечания</td>
-                    <td>{{ agency.notes }}</td>
-                </tr>
-                <tr>
-                    <td>Статус</td>
-                    <td>{{ agency.status_verbose }}</td>
-                </tr>
-                <tr>
-                    <th>Юридическая информация</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td>Плательщик НДС</td>
-                    <td>{{ agency.payer_vat_verbose }}</td>
-                </tr>
-                {% if agency.payer_cert %}
-                <tr>
-                    <td>Плательщик</td>
-                    <td>{{ agency.payer_cert }}</td>
-                </tr>
-                {% endif %}
-                {% if agency.details %}
-                <tr>
-                    <td>Плательщик</td>
-                    <td>{{ agency.details }}</td>
-                </tr>
-                {% endif %}
-                <tr>
-                    <th>Результаты</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td>Дата внесения в базу</td>
-                    <td>{{ agency.add_date }}</td>
-                </tr>
-                <tr>
-                    <td>Результаты переговоров</td>
-                    <td>{{ agency.negot_res }}</td>
-                </tr>
-                <tr>
-                    <td>Дата последнего контакта</td>
-                    <td>{{ agency.last_cont_date }}</td>
-                </tr>
-                <tr>
-                    <td>План следующего контакта</td>
-                    <td>{{ agency.contact_plan }}</td>
-                </tr>
-                <tr>
-                    <td>Дата следующего контакта</td>
-                    <td>{{ agency.next_cont_date }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Закрыть</button>
-        <a href="{% url 'agency-edit' agency.id %}" class="btn btn-warning">Редактировать</a>
-        <a href="#myModal_{{ agency.id }}_delete" role="button" class="btn btn-danger" data-toggle="modal" data-dismiss="modal" aria-hidden="true">Удалить</a>
+            </div>
+        </div>
     </div>
 </div>

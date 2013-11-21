@@ -5,75 +5,136 @@
 {% endblock title %}
 
 {% block content %}
-    <div class="container" style="padding-top: 20px">
+    <div class="container">
         <div class="row">
-            <div class="span3">
-                <div class="well pull-left" style="min-width: 210px; margin: 5px; padding: 8px 0;">
-                    <ul class="nav nav-list">
-                        <li class="nav-header"></li>
-                        <li><a href="{% url 'client-index' %}"><i class="icon-home"></i> Клиенты</a></li>
-                        <li class="active"><a href="#"><i class="icon-home"></i> Рекламные агенства</a></li>
-                        <li><a href="{% url 'client-contact-index' %}"><i class="icon-user"></i> Контакты</a></li>
-                        <!--<li><a href="{% url 'client-ac-index' %}"><i class="icon-facetime-video"></i> Запуск РК</a></li>-->
-                        {% for group in request.user.groups.all %}
-                            {% if group.name == 'Руководство' %}<li><a href="{% url 'client-branch-index' %}"><i class="icon-edit"></i> Отрасли</a></li>{% endif %}
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="well pull-left" style="min-width: 210px; margin: 5px; padding: 8px 0;">
-                    <ul class="nav nav-list">
-                        <li class="nav-header">Фильтры</li>
-                        <li class="divider"></li>
-                        <form action="" method="get">
-                            <select name="manager" style="width:180px">
-                                <option value="">Менеджер</option>
-                                {% for manager in managers %}
-                                    <option {% ifequal manager_act manager.id %}selected{% endifequal %} value="{{ manager.id }}">{{ manager.last_name }} {{ manager.first_name }}</option>
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-briefcase"></span> <b>Рекламные агенства</b> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{% url 'client-index' %}"><span class="glyphicon glyphicon-home"></span> Клиенты</a></li>
+                                <li><a href="{% url 'client-contact-index' %}"><span class="glyphicon glyphicon-user"></span> Контакты</a></li>
+                                {% for group in user.groups.all %}
+                                    {% if group.name == 'Руководство' %}
+                                        <li><a href="{% url 'client-branch-index' %}"><span class="glyphicon glyphicon-edit"></span> Отрасли</a></li>
+                                    {% endif %}
                                 {% endfor %}
-                            </select>
-                            <button type="submit" class="btn btn-small">Продолжить</button>
+                            </ul>
+                        </div>
+                        <form action="" class="form-inline pull-right" role="form">
+                            <div class="form-group">
+                                <label class="sr-only" for="selectManager">Manager</label>
+                                <select class="form-control input-sm" name="manager" id="selectManager">
+                                    <option value="">Менеджер</option>
+                                    {% for manager in manager_list %}
+                                        <option {% ifequal manager_act manager.id %}selected{% endifequal %} value="{{ manager.id }}">{{ manager.last_name }} {{ manager.first_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="selectStatus">Status</label>
+                                <select class="form-control input-sm" name="status" id="selectStatus">
+                                    <option value="">Статус</option>
+                                    {% for status in status_list %}
+                                        <option {% ifequal status_act status.0 %}selected{% endifequal %} value="{{ status.0 }}">{{ status.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="selectBranch">Branch</label>
+                                <select class="form-control input-sm" name="branch" id="selectBranch">
+                                    <option value="">Отрасль</option>
+                                    {% for branch in branch_list %}
+                                        <option {% ifequal branch_act branch.id %}selected{% endifequal %} value="{{ branch.id }}">{{ branch.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-search"></span></button>
                         </form>
+                    </div>
+                    <div class="panel-body" style="min-height: 413px;">
+                        {% for message in messages %}
+                            <div class="alert alert-success">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <strong>Выполнено!</strong> {{ message }}
+                            </div>
+                        {% endfor %}
+                        <table class="table table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Агенство</th>
+                                    <th>Отрасль</th>
+                                    <th>Статус</th>
+                                    <th>Ближ. контакт</th>
+                                    <th>Менеджер</th>
+                                    <th style="width: 90px;"><a href="{% url 'agency-new' %}" class="btn btn-success btn-xs btn-block" role="button"><span class="glyphicon glyphicon-plus"></span></a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for agency in agency_list %}
+                                    <tr{% for item in agency.agency_neg_res.all %}{% if forloop.last %}{% if item.next_cont_date == today %} class="danger"{% elif item.next_cont_date < next_week and item.next_cont_date > today %} class="warning"{% endif %}{% endif %}{% endfor %}>
+                                        {% for item in agency.agency_neg_res.all %}
+                                            {% if forloop.last %}
+                                                <td>
+                                                    {% if item.next_cont_date == today %}
+                                                        <span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign"></span></span>
+                                                    {% elif item.next_cont_date < next_week and item.next_cont_date > today %}
+                                                        <span class="label label-warning"><span class="glyphicon glyphicon-time"></span></span>
+                                                    {% endif %}
+                                                    {{ agency.name }}
+                                                </td>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <td>{% if agency.branch %}{{ agency.branch }}{% endif %}</td>
+                                        <td>{{ agency.status_verbose }}</td>
+                                        {% for item in agency.agency_neg_res.all %}
+                                            {% if forloop.last %}
+                                                <td>{% if item.next_cont_date %}{{ item.next_cont_date }}{% endif %}</td>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <td>{{ agency.username.last_name }} {{ agency.username.first_name }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal_{{ agency.id }}_browse"><span class="glyphicon glyphicon-zoom-in"></span></button>
+                                            <a href="{% url 'agency-edit' agency.id %}" class="btn btn-warning btn-xs{% if agency not in my_agency_list %} disabled{% endif %}" role="button"><span class="glyphicon glyphicon-edit"></span></a>
+                                            <button type="button" class="btn btn-danger btn-xs{% if agency not in my_agency_list %} disabled{% endif %}" data-toggle="modal" data-target="#myModal_{{ agency.id }}_delete"><span class="glyphicon glyphicon-remove"></span></button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <ul class="pagination pagination-sm">
+                        {% if agency_list.has_previous %}
+                            <li><a href="{% url 'agency-index' page=1 %}">&laquo;</a></li>
+                            <li><a href="{% url 'agency-index' page=agency_list.previous_page_number %}">&lt;</a></li>
+                        {% else %}
+                            <li class="disabled"><span>&laquo;</span></li>
+                            <li class="disabled"><span>&lt;</span></li>
+                        {% endif %}
+                        {% for page in agency_list.paginator.page_range %}
+                            {% if page == agency_list.number %}
+                                <li class="active"><span>{{ page }}</span></li>
+                            {% else %}
+                                <li><a href="{% url 'agency-index' page=page %}">{{ page }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if agency_list.has_next %}
+                            <li><a href="{% url 'agency-index' page=agency_list.next_page_number %}">&gt;</a></li>
+                            <li><a href="{% url 'agency-index' page=agency_list.paginator.num_pages %}">&raquo;</a></li>
+                        {% else %}
+                            <li class="disabled"><span>&gt;</span></li>
+                            <li class="disabled"><span>&raquo;</span></li>
+                        {% endif %}
                     </ul>
                 </div>
-            </div>
-            <div class="span9">
-                {% for message in messages %}
-                    <div class="alert alert-success">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <strong>Выполнено!</strong> {{ message }}
-                    </div>
-                {% endfor %}
-                <table class="table table-striped table-condensed">
-                    <thead>
-                        <tr>
-                            <th>Агенство</th>
-                            <th>Отрасль</th>
-                            <th>Статус</th>
-                            <th>Дата контакта</th>
-                            <th>Менеджер</th>
-                            <th style="width:92px"><a href="{% url 'agency-new' %}" class="btn btn-success btn-mini" style="width:78px"><i class="icon-plus icon-white"></i></a></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for agency in agencies %}
-                            <tr>
-                                <td>{{ agency.name }}</td>
-                                <td>{{ agency.branch }}</td>
-                                <td>{{ agency.status_verbose }}</td>
-                                <td></td>
-                                <td>{{ agency.username.last_name }} {{ agency.username.first_name }}</td>
-                                <td>
-                                    <a href="#myModal_{{ agency.id }}_browse" role="button" class="btn btn-info btn-mini" data-toggle="modal"><i class="icon-zoom-in icon-white"></i></a>
-                                    <a href="{% url 'agency-edit' agency.id %}" class="btn btn-warning btn-mini"><i class="icon-edit icon-white"></i></a>
-                                    <a href="#myModal_{{ agency.id }}_delete" role="button" class="btn btn-danger btn-mini" data-toggle="modal"><i class="icon-remove icon-white"></i></a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
             </div>
         </div>
-        {% for agency in agencies %}
+        {% for agency in agency_list %}
             {% include "client/agency/browse.html" %}
             {% include "client/agency/delete.html" %}
         {% endfor %}

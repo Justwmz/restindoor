@@ -1,115 +1,114 @@
 {% extends "floppyforms/layouts/bootstrap.html" %}{% load floppyforms %}{% load formset_tags %}
 
 {% block rows %}
-<div class="tab-content">
-    <div class="tab-pane active" id="total">
-        <h4>Общая информация</h4>
-        {% formrow form.name %}
-        {% formrow form.is_client %}
-        <div id="formPayerSet" data-formset-prefix="{{ formPayerSet.prefix }}">
-            {{ formPayerSet.management_form }}
-            <div data-formset-body>
-                {% for form in formPayerSet %}
-                    <div data-formset-form>
-                        {% if forloop.last %}{% form form using "floppyforms/layouts/payer.html" with res='1' %}{% else %}{% form form using "floppyforms/layouts/payer.html" %}{% endif %}
-                    </div>
-                {% endfor %}
-            </div>
-            
-            <script type="form-template" data-formset-empty-form>
-                {% escapescript %}
-                    <div data-formset-form>
-                        {% form formPayerSet.empty_form using "floppyforms/layouts/payer.html" %}
-                    </div>
-                {% endescapescript %}
-            </script>
-
-            <script>jQuery(function($) {
-                $("#formPayerSet").formset();
-            });</script>
-        </div>
-        <div id="formBrandSet" data-formset-prefix="{{ formBrandSet.prefix }}">
-            {{ formBrandSet.management_form }}
-            <div data-formset-body>
-                {% for form in formBrandSet %}
-                    <div data-formset-form>
-                        {% if forloop.last %}{% form form using "floppyforms/layouts/brand.html" with res='1' %}{% else %}{% form form using "floppyforms/layouts/brand.html" %}{% endif %}
-                    </div>
-                {% endfor %}
-            </div>
-            
-            <script type="form-template" data-formset-empty-form>
-                {% escapescript %}
-                    <div data-formset-form>
-                        {% form formBrandSet.empty_form using "floppyforms/layouts/brand.html" %}
-                    </div>
-                {% endescapescript %}
-            </script>
-
-            <script>jQuery(function($) {
-                $("#formBrandSet").formset();
-            });</script>
-        </div>
-        {% formrow form.branch %}
-        {% formrow form.site using 'floppyforms/rows/restaurant/site.html' %}
-        {% formrow form.notes %}
-        {% formrow form.status %}
-        {% formfield form.username %}
-    </div>
-    <div class="tab-pane" id="juridical">
-        <h4>Юридическая информация</h4>
-        {% formrow form.payer_vat with div_id='div_payer_vat' %}
-        {% formrow form.payer_cert with div_id='div_payer_cert' %}
-        {{ formDetailsSet.management_form }}
-        {% form formDetailsSet.forms using "floppyforms/layouts/details_client.html" %}
-    </div>
-    <div class="tab-pane" id="results">
-        <div class="row">
-            <div class="span6">
-                <h4>Результаты</h4>
-                {{ formNegotiationResultSet.management_form }}
-                {% for form in formNegotiationResultSet %}
-                    <div {% if not forloop.last %}style="display:none"{% endif %}>
-                        {% form form using "floppyforms/layouts/neg_results.html" with style_div="margin-left:220px" style_label="width:200px" %}
-                    </div>
-                {% endfor %}
-            </div>
-            {% if neg_results %}
-            <div class="span3">
-                <div class="well pull-right" style="margin: 5px; padding: 8px 0;">
-                    <ul class="nav nav-list">
-                        <li class="nav-header">История переговоров</li>
-                        {% for neg_result in neg_results %}
-                            <li><a href="#" data-toggle="popover" data-html="true" data-placement="left" data-trigger="hover" data-content="{{ neg_result.negot_res }}<br><br><b>{{ neg_result.next_cont_date }}:</b><br>{{ neg_result.contact_plan }}" title="{{ neg_result.last_cont_date }}">{{ neg_result.last_cont_date }}</a></li>
+<div class="row">
+    <div class="col-md-6">
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="total">
+                <h4>Общая информация</h4>
+                {% formrow form.name %}
+                {% formrow form.is_client %}
+                <div id="formPayerSet" data-formset-prefix="{{ formPayerSet.prefix }}">
+                    {{ formPayerSet.management_form }}
+                    <div data-formset-body>
+                        {% for form in formPayerSet %}
+                            <div data-formset-form>
+                                {% if forloop.last %}{% form form using "floppyforms/layouts/payer.html" with res='1' %}{% else %}{% form form using "floppyforms/layouts/payer.html" %}{% endif %}
+                            </div>
                         {% endfor %}
-                    </ul>
+                    </div>
+                    
+                    <script type="form-template" data-formset-empty-form>
+                        {% escapescript %}
+                            <div data-formset-form>
+                                {% form formPayerSet.empty_form using "floppyforms/layouts/payer.html" %}
+                            </div>
+                        {% endescapescript %}
+                    </script>
+
+                    <script>jQuery(function($) {
+                        $("#formPayerSet").formset();
+                    });</script>
+                </div>
+                <div id="formBrandSet" data-formset-prefix="{{ formBrandSet.prefix }}">
+                    {{ formBrandSet.management_form }}
+                    <div data-formset-body>
+                        {% for form in formBrandSet %}
+                            <div data-formset-form>
+                                {% if forloop.last %}{% form form using "floppyforms/layouts/brand.html" with res='1' %}{% else %}{% form form using "floppyforms/layouts/brand.html" %}{% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <script type="form-template" data-formset-empty-form>
+                        {% escapescript %}
+                            <div data-formset-form>
+                                {% form formBrandSet.empty_form using "floppyforms/layouts/brand.html" %}
+                            </div>
+                        {% endescapescript %}
+                    </script>
+
+                    <script>jQuery(function($) {
+                        $("#formBrandSet").formset();
+                    });</script>
+                </div>
+                {% formrow form.branch %}
+                {% formrow form.site using 'floppyforms/rows/site.html' %}
+                {% formrow form.notes %}
+                {% formrow form.status %}
+                {% formfield form.username %}
+            </div>
+            <div class="tab-pane fade" id="juridical">
+                <h4>Юридическая информация</h4>
+                {% formrow form.payer_vat with div_id='div_payer_vat' %}
+                {% formrow form.payer_cert with div_id='div_payer_cert' %}
+                {{ formDetailsSet.management_form }}
+                {% form formDetailsSet.forms using "floppyforms/layouts/details_client.html" %}
+            </div>
+            <div class="tab-pane fade" id="contacts">
+                <h4>Контакты</h4>
+                <div class="panel-group" id="accordion1">
+                    {{ formContactSet.management_form }}
+                    {% for form in formContactSet %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion1" href="#contact_{{ forloop.counter }}">
+                                        {% if forloop.last %}Новый контакт{% else %}Контакт {{ forloop.counter }}{% endif %}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="contact_{{ forloop.counter }}" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    {% form form using "floppyforms/layouts/bootstrap.html" %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
-            {% endif %}
         </div>
     </div>
-    <div class="tab-pane" id="contacts">
-        <h4>Контакты</h4>
-        {{ formContactSet.management_form }}
-        <div class="tabbable tabs-right">
-            <ul class="nav nav-tabs">
-                {% for form in formContactSet %}
-                    {% if forloop.first %}
-                        <li class="active"><a href="#tab1" data-toggle="tab">Контакт 1</a></li>
-                    {% elif forloop.last %}
-                        <li><a href="#tab{{ forloop.count }}" data-toggle="tab">Добавить контакт</a></li>
-                    {% else %}
-                        <li><a href="#tab{{ forloop.count }}" data-toggle="tab">Контакт {{ forloop.count }}</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <div class="tab-content">
-                {% for form in formContactSet %}
-                    {% if forloop.first %}<div class="tab-pane active" id="tab1">{% else %}<div class="tab-pane" id="tab{{ forloop.count }}">{% endif %}
-                        {% form form using "floppyforms/layouts/bootstrap.html" with style_div="margin-left:220px" style_label="width:200px" %}
+    <div class="col-md-6">
+        <h4>Результаты переговоров</h4>
+        <div class="panel-group" id="accordion2">
+            {{ formNegotiationResultSet.management_form }}
+            {% for form in formNegotiationResultSet %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion2" href="#neg_res_{{ forloop.counter }}">
+                                {% if forloop.last %}Новые переговоры{% else %}Переговоры {{ forloop.counter }}{% endif %}
+                            </a>
+                        </h4>
                     </div>
-                {% endfor %}
-            </div>
+                    <div id="neg_res_{{ forloop.counter }}" class="panel-collapse collapse{% if forloop.last %} in{% endif %}">
+                        <div class="panel-body">
+                            {% form form using "floppyforms/layouts/neg_results.html" %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 </div>

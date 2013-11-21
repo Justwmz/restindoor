@@ -6,25 +6,28 @@ from django.contrib.messages import error
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from client.models import Client, Contact, AdvertisingCampaign, Branch, Details, NegotiationResult, Brand, Payer, AdvertisingAgency
+from client.models import STATUS, Client, Contact, AdvertisingCampaign, Branch, Details, NegotiationResult, Brand, Payer, AdvertisingAgency
 from client.forms import ClientForm, ContactForm, AdvertisingCampaignForm, BranchForm, DetailsForm, NegotiationResultForm, BrandForm, PayerForm, AgencyForm
 from datetime import date, timedelta
 
 
 @login_required
 def index(request, page=1):
-    managers = User.objects.filter(groups__name='Менеджеры')
+    manager_list = User.objects.filter(groups__name='Менеджеры')
+    branch_list = Branch.objects.all()
+    status_list = STATUS
+
     if request.GET.get('manager'):
         manager_act = int(request.GET['manager'])
-        client_list = Client.objects.filter(username__id=manager_act)
+        client_list_tmp = Client.objects.filter(username__id=manager_act)
     else:
-        client_list = Client.objects.all()
+        client_list_tmp = Client.objects.all()
 
     today = date.today()
     next_week = today + timedelta(7)
     my_client_list = Client.objects.filter(username=request.user)
-    paginator = Paginator(client_list, 10)
-    clients = paginator.page(page)
+    paginator = Paginator(client_list_tmp, 10)
+    client_list = paginator.page(page)
 
     return render_to_response('client/index.html', locals(), context_instance=RequestContext(request))
 
@@ -106,13 +109,22 @@ def deleteClient(request, id):
 
 
 @login_required
-def indexAgency(request):
-    managers = User.objects.all()
+def indexAgency(request, page=1):
+    manager_list = User.objects.all()
+    branch_list = Branch.objects.all()
+    status_list = STATUS
+
     if request.GET.get('manager'):
         manager_act = int(request.GET['manager'])
-        agencies = AdvertisingAgency.objects.filter(username__id=manager_act)
+        agency_list_tmp = AdvertisingAgency.objects.filter(username__id=manager_act)
     else:
-        agencies = AdvertisingAgency.objects.all()
+        agency_list_tmp = AdvertisingAgency.objects.all()
+
+    today = date.today()
+    next_week = today + timedelta(7)
+    my_agency_list = AdvertisingAgency.objects.filter(username=request.user)
+    paginator = Paginator(agency_list_tmp, 10)
+    agency_list = paginator.page(page)
 
     return render_to_response('client/agency/index.html', locals(), context_instance=RequestContext(request))
 
@@ -202,7 +214,7 @@ def indexContact(request, page=1):
     else:
         contact_list = Contact.objects.all()
 
-    paginator = Paginator(contact_list, 15)
+    paginator = Paginator(contact_list, 10)
     contacts = paginator.page(page)
 
     return render_to_response('client/contact/index.html', locals(), context_instance=RequestContext(request))

@@ -11,26 +11,25 @@
 {% endblock head %}
 
 {% block content %}
-    <div class="container" style="padding-top: 20px">
+    <div class="container">
         <div class="row">
-            <div class="span3">
-                <div class="well pull-left" style="margin: 5px; padding: 8px 0;">
-                    <ul class="nav nav-list" id="myTab">
-                        <li class="nav-header">{% if client %}{{ client.name }}{% else %}Новый клиент{% endif %}</li>
-                        <li class="active"><a class="tab" href="#total">Общая информация</a></li>
-                        <li><a class="tab" href="#juridical">Юр. информация</a></li>
-                        <li><a class="tab" href="#results">Результаты</a></li>
-                        <li><a class="tab" href="#contacts">Контакты</a></li>
-                        <li class="divider"></li>
-                        <div style="text-align:center;">
-                            <a href="{% url 'client-index' %}" class="btn btn-small">Отменить</a>
-                            <button type="submit" class="btn btn-primary btn-small" form="grew_form">Сохранить</button>
-                        </div>
-                    </ul>
+            <div class="col-md-3">
+                <div class="well well-sm">
+                    <span class="text-muted"><strong>{% if client %}{{ client.name }}{% else %}Новый клиент{% endif %}</strong></span>
+                </div>
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a href="#total" data-toggle="tab">Общая информация</a></li>
+                    <li><a href="#juridical" data-toggle="tab">Юр. информация</a></li>
+                    <li><a href="#contacts" data-toggle="tab">Контакты</a></li>
+                </ul>
+                <br />
+                <div style="text-align:center;">
+                    <a href="{% url 'client-index' %}" class="btn btn-sm btn-default" role="button">Отменить</a>
+                    <button type="submit" class="btn btn-primary btn-sm" form="grew_form">Сохранить</button>
                 </div>
             </div>
-            <div class="span9">
-                <form enctype="multipart/form-data" action="" method="post" class="form-horizontal" id="grew_form">
+            <div class="col-md-9">
+                <form enctype="multipart/form-data" action="" method="post" class="form-horizontal" role="form" id="grew_form">
                     {% csrf_token %}
                     {% form formClient using "floppyforms/layouts/client.html" %}
                 </form>
@@ -45,32 +44,23 @@
     <script src="{% static 'js/jquery.grewform.min.js' %}"></script>
     <script type="text/javascript">
         $(function(){
-            $('.datetimepicker').datetimepicker({
-                format: 'dd.MM.yyyy',
+            $('.form_datetime').datetimepicker({
+                format: 'dd-mm-yyyy',
                 language: 'ru',
                 weekStart: 1,
-                pickTime: false
+                pickerPosition: 'bottom-left',
+                autoclose: true,
+                minView: 3,
+                todayHighlight: true
             });
         });
     </script>
     <script type="text/javascript">
-        $('#myTab a.tab').click(function (e) {
-            e.preventDefault();
-            $(this).tab('show');
-        })
-    </script>
-    <script type="text/javascript">
         $(function(){
-            $('#div_payer_cert, #code_1, #vat_inn_1, #code_2, #vat_inn_2').hide();
+            $('#div_payer_cert').hide();
             $('#grew_form').grewform({
-                '#div_payer_vat option[value=0]:selected':{show:'#code_2, #vat_inn_2'},
-                '#div_payer_vat option[value=1]:selected':{show:'#div_payer_cert, #code_1, #vat_inn_1'}
+                '#div_payer_vat option[value=1]:selected':{show:'#div_payer_cert'}
             });
         });
-    </script>
-    <script type="text/javascript">
-        $(function(){
-            $('a').popover();
-        })
     </script>
 {% endblock script %}

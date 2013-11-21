@@ -8,8 +8,8 @@ urlpatterns = patterns('',
 
     url(r'^login/$', 'django.contrib.auth.views.login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page':'/login/'}),
-    url(r'^$', 'index.views.index', name='index'),
     url(r'^chpass/$', 'index.views.chpass'),
+    url(r'^$', 'index.views.index', name='index'),
 
     url(r'^client/$', 'client.views.index', name='client-index'),
     url(r'^client/page(?P<page>\d+)/$', 'client.views.index', name='client-index'),

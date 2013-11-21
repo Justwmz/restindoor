@@ -1,7 +1,6 @@
-<div class="input-append">
-    <input type="{{ type }}" name="{{ name }}"{% if value %} value="{{ value }}"{% endif %}{% include "floppyforms/attrs.html" %}{% if datalist %} list="{{ attrs.id }}_list"{% endif %}><a href="#" data-formset-delete-button><span class="add-on"><i class="icon-remove"></i></span></a>{% if datalist %}
+<div class="input-group">
+    <input type="{{ type }}" name="{{ name }}"{% if value %} value="{{ value }}"{% endif %}{% include "floppyforms/attrs.html" %}{% if datalist %} list="{{ attrs.id }}_list"{% endif %}><span class="input-group-addon"><a href="#" class="text-danger" data-formset-delete-button><span class="glyphicon glyphicon-remove"></span></a></span>{% if res %}<span class="input-group-addon"><a href="#" class="text-success" data-formset-add><span class="glyphicon glyphicon-plus"></span></a></span>{% endif %}{% if datalist %}
     <datalist id="{{ attrs.id }}_list">{% for item in datalist %}
         <option value="{{ item }}">{% endfor %}
     </datalist>{% endif %}
 </div>
-{% if res %}<a href="#" class="btn" data-formset-add><i class="icon-plus"></i></a>{% endif %}

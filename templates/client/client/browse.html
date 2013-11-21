@@ -1,107 +1,111 @@
-<div class="modal hide fade" id="myModal_{{ client.id }}_browse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ client.id }}_browse" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3 id="myModalLabel_{{ client.id }}_browse">Просмотр "{{ client }}"</h3>
-    </div>
-    <div class="modal-body">
-        <table class="table table-condensed table-striped">
-            <thead>
-                <tr>
-                    <th style="width:220px">Общая информация</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Клиент</td>
-                    <td>{{ client.name }}</td>
-                </tr>
-                {% if client.adv_ag %}
-                    <tr>
-                        <td>Рекламное агенство</td>
-                        <td>{{ client.adv_ag }}</td>
-                    </tr>
-                {% endif %}
-                {% if client.client_payer.all %}
-                    {% for item in client.client_payer.all %}
+<div class="modal fade" id="myModal_{{ client.id }}_browse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ client.id }}_browse" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 id="myModalLabel_{{ client.id }}_browse">Просмотр "{{ client }}"</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-condensed table-striped">
+                    <thead>
                         <tr>
-                            {% if forloop.first %}<td>Плательщик</td>{% else %}<td></td>{% endif %}
-                            <td>{{ item }}</td>
+                            <th style="width:220px">Общая информация</th>
+                            <th></th>
                         </tr>
-                    {% endfor %}
-                {% endif %}
-                {% if client.client_brand.all %}
-                    {% for item in client.client_brand.all %}
+                    </thead>
+                    <tbody>
                         <tr>
-                            {% if forloop.first %}<td>Бренд</td>{% else %}<td></td>{% endif %}
-                            <td>{{ item }}</td>
+                            <td>Клиент</td>
+                            <td>{{ client.name }}</td>
                         </tr>
-                    {% endfor %}
-                {% endif %}
-                {% if client.branch %}
-                    <tr>
-                        <td>Отрасль</td>
-                        <td>{{ client.branch }}</td>
-                    </tr>
-                {% endif %}
-                {% if client.site %}
-                    <tr>
-                        <td>Сайт</td>
-                        <td><a href="{{ client.site }}" target="_blank">{{ client.site }}</a></td>
-                    </tr>
-                {% endif %}
-                {% if client.notes %}
-                    <tr>
-                        <td>Примечания</td>
-                        <td>{{ client.notes }}</td>
-                    </tr>
-                {% endif %}
-                <tr>
-                    <td>Статус</td>
-                    <td>{{ client.status_verbose }}</td>
-                </tr>
-                <tr>
-                    <th>Юридическая информация</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td>Плательщик НДС</td>
-                    <td>{{ client.payer_vat_verbose }}</td>
-                </tr>
-                {% if client.client_neg_res.all %}
-                    <tr>
-                        <th>Результаты</th>
-                        <th></th>
-                    </tr>
-                    {% for item in client.client_neg_res.all %}
-                        {% if forloop.last %}
+                        {% if client.adv_ag %}
                             <tr>
-                                <td>Результаты переговоров</td>
-                                <td>{{ item.negot_res }}</td>
-                            </tr>
-                            <tr>
-                                <td>Дата последнего контакта</td>
-                                <td>{{ item.last_cont_date }}</td>
-                            </tr>
-                            <tr>
-                                <td>План следующего контакта</td>
-                                <td>{{ item.contact_plan }}</td>
-                            </tr>
-                            <tr>
-                                <td>Дата следующего контакта</td>
-                                <td>{{ item.next_cont_date }}</td>
+                                <td>Рекламное агенство</td>
+                                <td>{{ client.adv_ag }}</td>
                             </tr>
                         {% endif %}
-                    {% endfor %}
+                        {% if client.client_payer.all %}
+                            {% for item in client.client_payer.all %}
+                                <tr>
+                                    {% if forloop.first %}<td>Плательщик</td>{% else %}<td></td>{% endif %}
+                                    <td>{{ item }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                        {% if client.client_brand.all %}
+                            {% for item in client.client_brand.all %}
+                                <tr>
+                                    {% if forloop.first %}<td>Бренд</td>{% else %}<td></td>{% endif %}
+                                    <td>{{ item }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                        {% if client.branch %}
+                            <tr>
+                                <td>Отрасль</td>
+                                <td>{{ client.branch }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if client.site %}
+                            <tr>
+                                <td>Сайт</td>
+                                <td><a href="{{ client.site }}" target="_blank">{{ client.site }}</a></td>
+                            </tr>
+                        {% endif %}
+                        {% if client.notes %}
+                            <tr>
+                                <td>Примечания</td>
+                                <td>{{ client.notes }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <td>Статус</td>
+                            <td>{{ client.status_verbose }}</td>
+                        </tr>
+                        <tr>
+                            <th>Юридическая информация</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>Плательщик НДС</td>
+                            <td>{{ client.payer_vat_verbose }}</td>
+                        </tr>
+                        {% if client.client_neg_res.all %}
+                            <tr>
+                                <th>Результаты</th>
+                                <th></th>
+                            </tr>
+                            {% for item in client.client_neg_res.all %}
+                                {% if forloop.last %}
+                                    <tr>
+                                        <td>Результаты переговоров</td>
+                                        <td>{{ item.negot_res }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Дата последнего контакта</td>
+                                        <td>{{ item.last_cont_date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>План следующего контакта</td>
+                                        <td>{{ item.contact_plan }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Дата следующего контакта</td>
+                                        <td>{{ item.next_cont_date }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Закрыть</button>
+                {% if client in my_client_list %}
+                    <a href="{% url 'client-edit' client.id %}" role="button" class="btn btn-warning btn-sm">Редактировать</a>
+                    <a href="#myModal_{{ client.id }}_delete" role="button" class="btn btn-danger btn-sm" data-toggle="modal" data-dismiss="modal">Удалить</a>
                 {% endif %}
-            </tbody>
-        </table>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Закрыть</button>
-        {% if client in my_client_list %}
-            <a href="{% url 'client-edit' client.id %}" class="btn btn-warning">Редактировать</a>
-            <a href="#myModal_{{ client.id }}_delete" role="button" class="btn btn-danger" data-toggle="modal" data-dismiss="modal" aria-hidden="true">Удалить</a>
-        {% endif %}
+            </div>
+        </div>
     </div>
 </div>

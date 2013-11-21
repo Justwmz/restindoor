@@ -1,10 +1,10 @@
-{% extends "floppyforms/layouts/bootstrap.html" %}{% load floppyforms %}
+{% load floppyforms %}
 
 {% block rows %}
     {% formrow form.negot_res %}
-    {% formrow form.last_cont_date using 'floppyforms/rows/restaurant/add_date.html' %}
+    {% formrow form.last_cont_date using 'floppyforms/rows/add_date.html' %}
     {% formrow form.contact_plan %}
-    {% formrow form.next_cont_date using 'floppyforms/rows/restaurant/add_date.html' %}
+    {% formrow form.next_cont_date using 'floppyforms/rows/add_date.html' %}
     {% formfield form.id %}
     {% formfield form.client %}
     {% formfield form.agency %}
