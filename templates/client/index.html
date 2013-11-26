@@ -91,25 +91,27 @@
                             <tbody>
                                 {% for client in client_list %}
                                     <tr{% for item in client.client_neg_res.all %}{% if forloop.last %}{% if item.next_cont_date == today %} class="danger"{% elif item.next_cont_date < next_week and item.next_cont_date > today %} class="warning"{% endif %}{% endif %}{% endfor %}>
-                                        {% for item in client.client_neg_res.all %}
-                                            {% if forloop.last %}
-                                                <td>
+                                        <td>
+                                            {% for item in client.client_neg_res.all %}
+                                                {% if forloop.last %}
                                                     {% if item.next_cont_date == today %}
                                                         <span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign"></span></span>
                                                     {% elif item.next_cont_date < next_week and item.next_cont_date > today %}
                                                         <span class="label label-warning"><span class="glyphicon glyphicon-time"></span></span>
                                                     {% endif %}
                                                     {{ client.name }}
-                                                </td>
-                                            {% endif %}
-                                        {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
                                         <td>{% if client.branch %}{{ client.branch }}{% endif %}</td>
                                         <td>{{ client.status_verbose }}</td>
-                                        {% for item in client.client_neg_res.all %}
-                                            {% if forloop.last %}
-                                                <td>{% if item.next_cont_date %}{{ item.next_cont_date }}{% endif %}</td>
-                                            {% endif %}
-                                        {% endfor %}
+                                        <td>
+                                            {% for item in client.client_neg_res.all %}
+                                                {% if forloop.last %}
+                                                    {% if item.next_cont_date %}{{ item.next_cont_date }}{% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
                                         <td>{{ client.username.last_name }} {{ client.username.first_name }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal_{{ client.id }}_browse"><span class="glyphicon glyphicon-zoom-in"></span></button>
