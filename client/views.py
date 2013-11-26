@@ -67,18 +67,14 @@ def editClient(request, id):
     ContactFormSet = inlineformset_factory(Client, Contact, form=ContactForm, can_delete=False, extra=1)
     DetailsFormSet = inlineformset_factory(Client, Details, form=DetailsForm, can_delete=False, max_num=1)
     NegotiationResultFormSet = inlineformset_factory(Client, NegotiationResult, form=NegotiationResultForm, can_delete=False, extra=1)
-    try:
-        Brand.objects.get(client=my_client)
-    except Exception, e:
-        BrandFormSet = inlineformset_factory(Client, Brand, form=BrandForm, can_delete=True, extra=1)
-    else:
+    if Brand.objects.filter(client=my_client):
         BrandFormSet = inlineformset_factory(Client, Brand, form=BrandForm, can_delete=True, extra=0)
-    try:
-        Payer.objects.get(client=my_client)
-    except Exception, e:
-        PayerFormSet = inlineformset_factory(Client, Payer, form=PayerForm, can_delete=True, extra=1)
     else:
+        BrandFormSet = inlineformset_factory(Client, Brand, form=BrandForm, can_delete=True, extra=1)
+    if Payer.objects.filter(client=my_client):
         PayerFormSet = inlineformset_factory(Client, Payer, form=PayerForm, can_delete=True, extra=0)
+    else:
+        PayerFormSet = inlineformset_factory(Client, Payer, form=PayerForm, can_delete=True, extra=1)
     formClient = ClientForm(request.POST or None, request.FILES or None, instance=my_client)
     formContactSet = ContactFormSet(request.POST or None, instance=my_client)
     formDetailsSet = DetailsFormSet(request.POST or None, instance=my_client)
