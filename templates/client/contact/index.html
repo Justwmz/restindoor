@@ -24,6 +24,18 @@
                                 {% endfor %}
                             </ul>
                         </div>
+                        <form action="{% url 'client-contact-index' %}" class="form-inline pull-right" role="form">
+                            <div class="form-group">
+                                <label class="sr-only" for="selectManager">Manager</label>
+                                <select class="form-control input-sm" name="manager" id="selectManager">
+                                    <option value="">Менеджер</option>
+                                    {% for manager in manager_list %}
+                                        <option {% ifequal manager_act manager.id %}selected{% endifequal %} value="{{ manager.id }}">{{ manager.last_name }} {{ manager.first_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-search"></span></button>
+                        </form>
                     </div>
                     <div class="panel-body" style="min-height: 413px;">
                         {% for message in messages %}
@@ -44,7 +56,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for contact in contacts %}
+                                {% for contact in contact_list %}
                                     <tr>
                                         {% if contact.client %}
                                             <td>{{ contact.client }}</td>
@@ -66,23 +78,23 @@
                 </div>
                 <div style="text-align: center;">
                     <ul class="pagination pagination-sm">
-                        {% if contacts.has_previous %}
-                            <li><a href="{% url 'client-contact-index' page=1 %}">&laquo;</a></li>
-                            <li><a href="{% url 'client-contact-index' page=contacts.previous_page_number %}">&lt;</a></li>
+                        {% if contact_list.has_previous %}
+                            <li><a href="{% url 'client-contact-index' page=1 %}?manager={{ manager_act }}">&laquo;</a></li>
+                            <li><a href="{% url 'client-contact-index' page=contact_list.previous_page_number %}?manager={{ manager_act }}">&lt;</a></li>
                         {% else %}
                             <li class="disabled"><span>&laquo;</span></li>
                             <li class="disabled"><span>&lt;</span></li>
                         {% endif %}
-                        {% for page in contacts.paginator.page_range %}
-                            {% if page == contacts.number %}
+                        {% for page in contact_list.paginator.page_range %}
+                            {% if page == contact_list.number %}
                                 <li class="active"><span>{{ page }}</span></li>
                             {% else %}
-                                <li><a href="{% url 'client-contact-index' page=page %}">{{ page }}</a></li>
+                                <li><a href="{% url 'client-contact-index' page=page %}?manager={{ manager_act }}">{{ page }}</a></li>
                             {% endif %}
                         {% endfor %}
-                        {% if contacts.has_next %}
-                            <li><a href="{% url 'client-contact-index' page=contacts.next_page_number %}">&gt;</a></li>
-                            <li><a href="{% url 'client-contact-index' page=contacts.paginator.num_pages %}">&raquo;</a></li>
+                        {% if contact_list.has_next %}
+                            <li><a href="{% url 'client-contact-index' page=contact_list.next_page_number %}?manager={{ manager_act }}">&gt;</a></li>
+                            <li><a href="{% url 'client-contact-index' page=contact_list.paginator.num_pages %}?manager={{ manager_act }}">&raquo;</a></li>
                         {% else %}
                             <li class="disabled"><span>&gt;</span></li>
                             <li class="disabled"><span>&raquo;</span></li>
@@ -91,7 +103,7 @@
                 </div>
             </div>
         </div>
-        {% for contact in contacts %}
+        {% for contact in contact_list %}
             {% include "client/contact/browse.html" %}
             {% include "client/contact/delete.html" %}
         {% endfor %}

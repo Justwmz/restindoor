@@ -39,7 +39,7 @@
                                 {% endfor %}
                             </ul>
                         </div>
-                        <form action="" class="form-inline pull-right" role="form">
+                        <form action="{% url 'client-index' %}" class="form-inline pull-right" role="form">
                             <div class="form-group">
                                 <label class="sr-only" for="selectManager">Manager</label>
                                 <select class="form-control input-sm" name="manager" id="selectManager">
@@ -125,8 +125,8 @@
                 <div style="text-align: center;">
                     <ul class="pagination pagination-sm">
                         {% if client_list.has_previous %}
-                            <li><a href="{% url 'client-index' page=1 %}">&laquo;</a></li>
-                            <li><a href="{% url 'client-index' page=client_list.previous_page_number %}">&lt;</a></li>
+                            <li><a href="{% url 'client-index' page=1 %}?manager={{ manager_act }}">&laquo;</a></li>
+                            <li><a href="{% url 'client-index' page=client_list.previous_page_number %}?manager={{ manager_act }}">&lt;</a></li>
                         {% else %}
                             <li class="disabled"><span>&laquo;</span></li>
                             <li class="disabled"><span>&lt;</span></li>
@@ -135,12 +135,12 @@
                             {% if page == client_list.number %}
                                 <li class="active"><span>{{ page }}</span></li>
                             {% else %}
-                                <li><a href="{% url 'client-index' page=page %}">{{ page }}</a></li>
+                                <li><a href="{% url 'client-index' page=page %}?manager={{ manager_act }}">{{ page }}</a></li>
                             {% endif %}
                         {% endfor %}
                         {% if client_list.has_next %}
-                            <li><a href="{% url 'client-index' page=client_list.next_page_number %}">&gt;</a></li>
-                            <li><a href="{% url 'client-index' page=client_list.paginator.num_pages %}">&raquo;</a></li>
+                            <li><a href="{% url 'client-index' page=client_list.next_page_number %}?manager={{ manager_act }}">&gt;</a></li>
+                            <li><a href="{% url 'client-index' page=client_list.paginator.num_pages %}?manager={{ manager_act }}">&raquo;</a></li>
                         {% else %}
                             <li class="disabled"><span>&gt;</span></li>
                             <li class="disabled"><span>&raquo;</span></li>

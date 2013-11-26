@@ -207,15 +207,23 @@ def deleteAgency(request, id):
 
 @login_required
 def indexContact(request, page=1):
-    clients = Client.objects.all()
-    if request.GET.get('client'):
-        client_act = int(request.GET['client'])
-        contact_list = Contact.objects.filter(client__id=client_act)
-    else:
-        contact_list = Contact.objects.all()
+    client_list = Client.objects.all()
+    manager_list = User.objects.filter(groups__name='Менеджеры')
 
-    paginator = Paginator(contact_list, 10)
-    contacts = paginator.page(page)
+#    if request.GET.get('client'):
+#        client_act = int(request.GET['client'])
+#        contact_list = Contact.objects.filter(client__id=client_act)
+#    else:
+#       contact_list = Contact.objects.all()
+
+    if request.GET.get('manager'):
+        manager_act = int(request.GET['manager'])
+        contact_list_tmp = Contact.objects.filter(client__username__id=manager_act)
+    else:
+        contact_list_tmp = Contact.objects.all()
+
+    paginator = Paginator(contact_list_tmp, 10)
+    contact_list = paginator.page(page)
 
     return render_to_response('client/contact/index.html', locals(), context_instance=RequestContext(request))
 
