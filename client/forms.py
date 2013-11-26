@@ -96,7 +96,7 @@ class AgencyForm(ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'branch': forms.Select(attrs={'class': 'form-control'}),
-            'site': forms.URLInput(attrs={'class': 'form-control'}),
+            'site': forms.TextInput(attrs={'class': 'form-control'}),
             'notes': forms.Textarea(attrs={'style': 'resize:none; height:80px;', 'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
             'payer_vat': forms.Select(attrs={'class': 'form-control'}),
