@@ -14,6 +14,12 @@
             {{ error }}
         </div><!--- .alert.alert-error -->
     {% endfor %}
+    {% if form.errors %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Ошибка!</strong> Исправьте ошибки в форме.
+        </div><!--- .alert.alert-error -->
+    {% endif %}
 {% endblock errors %}
 {% block rows %}
         {% for field in form.visible_fields %}
