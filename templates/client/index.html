@@ -92,16 +92,20 @@
                                 {% for client in client_list %}
                                     <tr{% for item in client.client_neg_res.all %}{% if forloop.last %}{% if item.next_cont_date == today %} class="danger"{% elif item.next_cont_date < next_week and item.next_cont_date > today %} class="warning"{% endif %}{% endif %}{% endfor %}>
                                         <td>
-                                            {% for item in client.client_neg_res.all %}
-                                                {% if forloop.last %}
-                                                    {% if item.next_cont_date == today %}
-                                                        <span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign"></span></span>
-                                                    {% elif item.next_cont_date < next_week and item.next_cont_date > today %}
-                                                        <span class="label label-warning"><span class="glyphicon glyphicon-time"></span></span>
+                                            {% if client.client_neg_res.all %}
+                                                {% for item in client.client_neg_res.all %}
+                                                    {% if forloop.last %}
+                                                        {% if item.next_cont_date == today %}
+                                                            <span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign"></span></span>
+                                                        {% elif item.next_cont_date < next_week and item.next_cont_date > today %}
+                                                            <span class="label label-warning"><span class="glyphicon glyphicon-time"></span></span>
+                                                        {% endif %}
+                                                        {{ client.name }}
                                                     {% endif %}
-                                                    {{ client.name }}
-                                                {% endif %}
-                                            {% endfor %}
+                                                {% endfor %}
+                                            {% else %}
+                                                {{ client.name }}
+                                            {% endif %}
                                         </td>
                                         <td>{% if client.branch %}{{ client.branch }}{% endif %}</td>
                                         <td>{{ client.status_verbose }}</td>
