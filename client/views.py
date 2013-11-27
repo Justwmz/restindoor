@@ -206,12 +206,6 @@ def indexContact(request, page=1):
     client_list = Client.objects.all()
     manager_list = User.objects.filter(groups__name='Менеджеры')
 
-#    if request.GET.get('client'):
-#        client_act = int(request.GET['client'])
-#        contact_list = Contact.objects.filter(client__id=client_act)
-#    else:
-#       contact_list = Contact.objects.all()
-
     if request.GET.get('manager'):
         manager_act = int(request.GET['manager'])
         contact_list_tmp = Contact.objects.filter(client__username__id=manager_act)
@@ -288,8 +282,11 @@ def deleteAdvertisingCampaign(request, id):
 
 
 @login_required
-def indexBranch(request):
-    branchs = Branch.objects.all()
+def indexBranch(request, page=1):
+    branch_list_tmp = Branch.objects.all()
+
+    paginator = Paginator(branch_list_tmp, 10)
+    branch_list = paginator.page(page)
 
     return render_to_response('client/branch/index.html', locals(), context_instance=RequestContext(request))
 

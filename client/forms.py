@@ -71,6 +71,7 @@ class BranchForm(ModelForm):
     class Meta:
         model = Branch
         widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
             'username': forms.HiddenInput(),
             'is_active': forms.HiddenInput(),
         }

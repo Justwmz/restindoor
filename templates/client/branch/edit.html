@@ -6,26 +6,26 @@
 {% endblock title %}
 
 {% block content %}
-    <div class="container" style="padding-top: 20px">
+    <div class="container">
         <div class="row">
-            <div class="span3">
-                <div class="well pull-left" style="margin: 5px; padding: 8px 0;">
-                    <ul class="nav nav-list">
-                        <li class="nav-header">{% if branch %}{{ branch.name }}{% else %}Новое отрасль{% endif %}</li>
-                        <li id="nav1" class="active"><a href="#">Общая информация</a></li>
-                        <li class="divider"></li>
-                        <div style="text-align:center;">
-                            <a href="{% url 'client-branch-index' %}" class="btn btn-small">Отменить</a>
-                            <button type="submit" class="btn btn-primary btn-small" form="cont_form">Сохранить</button>
-                        </div>
-                    </ul>
+            <div class="col-md-3">
+                <div class="well well-sm">
+                    <span class="text-muted"><strong>{% if branch %}{{ branch.name }}{% else %}Новое отрасль{% endif %}</strong></span>
+                </div>
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a href="#total" data-toggle="tab">Общая информация</a></li>
+                </ul>
+                <br />
+                <div style="text-align:center;">
+                    <a href="{% url 'client-branch-index' %}" class="btn btn-sm btn-default" role="button">Отменить</a>
+                    <button type="submit" class="btn btn-primary btn-sm" form="branch_form">Сохранить</button>
                 </div>
             </div>
-            <div class="span9">
-                <form action="" method="post" class="form-horizontal" id="cont_form">
+            <div class="col-md-9">
+                <form action="" method="post" class="form-horizontal" role="form" id="branch_form">
                     {% csrf_token %}
                     <h4>Общая информация</h4>
-                    {% form formBranch using "floppyforms/layouts/bootstrap.html" with style_div="margin-left:220px" style_label="width:200px"  %}
+                    {% form formBranch using "floppyforms/layouts/bootstrap.html" %}
                 </form>
             </div>
         </div>
