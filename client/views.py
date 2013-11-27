@@ -92,7 +92,10 @@ def editClient(request, id):
         return redirect('client-index')
     var = {'client': my_client, 'neg_results': neg_results, 'formClient': formClient, 'formContactSet': formContactSet, 'formDetailsSet': formDetailsSet, 'formNegotiationResultSet': formNegotiationResultSet, 'formBrandSet': formBrandSet, 'formPayerSet': formPayerSet}
 
-    return render_to_response('client/client/edit.html', var, context_instance=RequestContext(request))
+    if request.user != my_client.username:
+        return redirect('client-index')
+    else:
+        return render_to_response('client/client/edit.html', var, context_instance=RequestContext(request))
 
 
 @login_required
