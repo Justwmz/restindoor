@@ -134,3 +134,6 @@ HAYSTACK_CONNECTIONS = {
         'URL': 'http://127.0.0.1:8080/solr'
     },
 }
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+HAYSTACK_DEFAULT_OPERATOR = 'OR'
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
