@@ -1,0 +1,111 @@
+<div class="modal fade" id="myModal_{{ result.object.id }}_browse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ result.object.id }}_browse" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 id="myModalLabel_{{ result.object.id }}_browse">Просмотр "{{ result.object.name }}"</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width:220px">Общая информация</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Клиент</td>
+                            <td>{{ result.object.name }}</td>
+                        </tr>
+                        {% if result.object.adv_ag %}
+                            <tr>
+                                <td>Рекламное агенство</td>
+                                <td>{{ result.object.adv_ag }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if result.object.client_payer.all %}
+                            {% for item in result.object.client_payer.all %}
+                                <tr>
+                                    {% if forloop.first %}<td>Плательщик</td>{% else %}<td></td>{% endif %}
+                                    <td>{{ item }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                        {% if result.object.client_brand.all %}
+                            {% for item in result.object.client_brand.all %}
+                                <tr>
+                                    {% if forloop.first %}<td>Бренд</td>{% else %}<td></td>{% endif %}
+                                    <td>{{ item }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                        {% if result.object.branch %}
+                            <tr>
+                                <td>Отрасль</td>
+                                <td>{{ result.object.branch }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if result.object.site %}
+                            <tr>
+                                <td>Сайт</td>
+                                <td><a href="{{ result.object.site }}" target="_blank">{{ result.object.site }}</a></td>
+                            </tr>
+                        {% endif %}
+                        {% if result.object.notes %}
+                            <tr>
+                                <td>Примечания</td>
+                                <td>{{ result.object.notes }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <td>Статус</td>
+                            <td>{{ result.object.status_verbose }}</td>
+                        </tr>
+                        <tr>
+                            <th>Юридическая информация</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>Плательщик НДС</td>
+                            <td>{{ result.object.payer_vat_verbose }}</td>
+                        </tr>
+                        {% if result.object.client_neg_res.all %}
+                            <tr>
+                                <th>Результаты</th>
+                                <th></th>
+                            </tr>
+                            {% for item in result.object.client_neg_res.all %}
+                                {% if forloop.last %}
+                                    <tr>
+                                        <td>Результаты переговоров</td>
+                                        <td>{{ item.negot_res }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Дата последнего контакта</td>
+                                        <td>{{ item.last_cont_date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>План следующего контакта</td>
+                                        <td>{{ item.contact_plan }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Дата следующего контакта</td>
+                                        <td>{{ item.next_cont_date }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Закрыть</button>
+                {% if result.object in page.object_list %}
+                    <a href="{% url 'client-edit' result.object.id %}" role="button" class="btn btn-warning btn-sm">Редактировать</a>
+                    <a href="#myModal_{{ result.object.id }}_delete" role="button" class="btn btn-danger btn-sm" data-toggle="modal" data-dismiss="modal">Удалить</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,7 @@
 from django.conf.urls import patterns, include, url
+from haystack.forms import SearchForm
+from haystack.views import SearchView
+from client.forms import MySearchForm
 
 from django.contrib import admin
 admin.autodiscover()
@@ -10,6 +13,9 @@ urlpatterns = patterns('',
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page':'/login/'}),
     url(r'^chpass/$', 'index.views.chpass'),
     url(r'^$', 'index.views.index', name='index'),
+
+    #url(r'^search/', include('haystack.urls')),
+    url(r'^search/$', SearchView(form_class=MySearchForm), name='haystack_search'),
 
     url(r'^client/$', 'client.views.index', name='client-index'),
     url(r'^client/page(?P<page>\d+)/$', 'client.views.index', name='client-index'),

@@ -1,0 +1,17 @@
+<div class="modal fade" id="myModal_{{ result.object.id }}_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ result.object.id }}_delete" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 id="myModalLabel_{{ result.object.id }}_delete">Удалиение "{{ result.object.name }}"</h4>
+            </div>
+            <div class="modal-body">
+                <p>Вы уверены, что хотите удалить всю информацию о клиенте?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Отмена</button>
+                <a href="{% url 'client-delete' result.object.id %}" class="btn btn-danger btn-sm" role="button">Удалить</a>
+            </div>
+        </div>
+    </div>
+</div>

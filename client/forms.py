@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*- 
 from django.forms import ModelForm
 #from django import forms
 import floppyforms as forms
+from haystack.forms import SearchForm
 from restaurant.widgets import SelectWithPop, InlineInput
 from client.models import Contact, Client, AdvertisingCampaign, Branch, Details, NegotiationResult, Brand, Payer, AdvertisingAgency
 
@@ -126,3 +128,6 @@ class NegotiationResultForm(ModelForm):
             'username': forms.HiddenInput(),
             'is_active': forms.HiddenInput(),
         }
+
+class MySearchForm(SearchForm):
+    q = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control input-sm', 'placeholder': u'Поиск'}))
