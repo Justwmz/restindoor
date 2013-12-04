@@ -45,7 +45,7 @@
                                 <select class="form-control input-sm" name="manager" id="selectManager">
                                     <option value="0">Все менеджеры</option>
                                     {% for manager in manager_list %}
-                                        <option {% ifequal manager_act manager.id %}selected{% endifequal %} value="{{ manager.id }}">{{ manager.last_name }} {{ manager.first_name }}</option>
+                                        <option {% ifequal manager_act manager.id %}selected{% endifequal %} value="{{ manager.id }}">{{ manager.first_name|first }}. {{ manager.last_name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -116,7 +116,7 @@
                                                 {% endif %}
                                             {% endfor %}
                                         </td>
-                                        <td>{{ client.username.last_name }} {{ client.username.first_name }}</td>
+                                        <td>{{ client.username.first_name|first }}. {{ client.username.last_name }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal_{{ client.id }}_browse"><span class="glyphicon glyphicon-zoom-in"></span></button>
                                             <a href="{% url 'client-edit' client.id %}" class="btn btn-warning btn-xs{% if client not in my_client_list %} disabled{% endif %}" role="button"><span class="glyphicon glyphicon-edit"></span></a>
