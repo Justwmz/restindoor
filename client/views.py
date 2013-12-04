@@ -28,7 +28,7 @@ def index(request, page=1):
         client_list_tmp = Client.objects.filter(username=request.user)
     if request.GET.get('status'):
         status_act = request.GET['status']
-        if status_act == 0:
+        if status_act == '0':
             client_list_tmp = client_list_tmp.exclude(status=status_act)
         else:
             client_list_tmp = client_list_tmp.filter(status=status_act)
