@@ -83,7 +83,7 @@ class ClientForm(ModelForm):
         model = Client
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'adv_ag': forms.Select(attrs={'class': 'form-control'}),
+            'adv_ag': forms.TextInput(attrs={'class': 'form-control'}),
             'branch': forms.Select(attrs={'class': 'form-control'}),
             'site': forms.TextInput(attrs={'class': 'form-control'}),
             'notes': forms.Textarea(attrs={'style': 'resize:none; height:80px;', 'class': 'form-control'}),
