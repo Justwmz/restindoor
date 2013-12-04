@@ -19,9 +19,13 @@ def index(request, page=1):
 
     if request.GET.get('manager'):
         manager_act = int(request.GET['manager'])
-        client_list_tmp = Client.objects.filter(username__id=manager_act)
+        if manager_act == 0:
+            client_list_tmp = Client.objects.all()
+        else:
+            client_list_tmp = Client.objects.filter(username__id=manager_act)
     else:
-        client_list_tmp = Client.objects.all()
+        manager_act = request.user.id
+        client_list_tmp = Client.objects.filter(username=request.user)
 
     today = date.today()
     next_week = today + timedelta(7)

@@ -43,7 +43,7 @@
                             <div class="form-group">
                                 <label class="sr-only" for="selectManager">Manager</label>
                                 <select class="form-control input-sm" name="manager" id="selectManager">
-                                    <option value="">Менеджер</option>
+                                    <option value="0">Все менеджеры</option>
                                     {% for manager in manager_list %}
                                         <option {% ifequal manager_act manager.id %}selected{% endifequal %} value="{{ manager.id }}">{{ manager.last_name }} {{ manager.first_name }}</option>
                                     {% endfor %}
