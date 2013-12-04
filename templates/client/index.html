@@ -83,6 +83,7 @@
                                     <th>Клиент</th>
                                     <th>Отрасль</th>
                                     <th>Статус</th>
+                                    <th>Посл. контакт</th>
                                     <th>Ближ. контакт</th>
                                     <th>Менеджер</th>
                                     <th style="width: 90px;"><a href="{% url 'client-new' %}" class="btn btn-success btn-xs btn-block" role="button"><span class="glyphicon glyphicon-plus"></span></a></th>
@@ -112,7 +113,14 @@
                                         <td>
                                             {% for item in client.client_neg_res.all %}
                                                 {% if forloop.last %}
-                                                    {% if item.next_cont_date %}{{ item.next_cont_date }}{% endif %}
+                                                    {% if item.last_cont_date %}{{ item.last_cont_date|date:"d.m.Y" }} г.{% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            {% for item in client.client_neg_res.all %}
+                                                {% if forloop.last %}
+                                                    {% if item.next_cont_date %}{{ item.next_cont_date|date:"d.m.Y" }} г.{% endif %}
                                                 {% endif %}
                                             {% endfor %}
                                         </td>
