@@ -20,12 +20,24 @@ def index(request, page=1):
     if request.GET.get('manager'):
         manager_act = int(request.GET['manager'])
         if manager_act == 0:
-            client_list_tmp = Client.objects.all()
+            client_list_tmp = Client.objects.exclude(username__id=manager_act)
         else:
             client_list_tmp = Client.objects.filter(username__id=manager_act)
     else:
         manager_act = request.user.id
         client_list_tmp = Client.objects.filter(username=request.user)
+    if request.GET.get('status'):
+        status_act = request.GET['status']
+        if status_act == 0:
+            client_list_tmp = client_list_tmp.exclude(status=status_act)
+        else:
+            client_list_tmp = client_list_tmp.filter(status=status_act)
+    if request.GET.get('branch'):
+        branch_act = int(request.GET['branch'])
+        if branch_act == 0:
+            client_list_tmp = client_list_tmp.exclude(branch=branch_act)
+        else:
+            client_list_tmp = client_list_tmp.filter(branch=branch_act)
 
     today = date.today()
     next_week = today + timedelta(7)

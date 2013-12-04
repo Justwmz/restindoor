@@ -52,7 +52,7 @@
                             <div class="form-group">
                                 <label class="sr-only" for="selectStatus">Status</label>
                                 <select class="form-control input-sm" name="status" id="selectStatus">
-                                    <option value="">Статус</option>
+                                    <option value="0">Всте статусы</option>
                                     {% for status in status_list %}
                                         <option {% ifequal status_act status.0 %}selected{% endifequal %} value="{{ status.0 }}">{{ status.1 }}</option>
                                     {% endfor %}
@@ -61,7 +61,7 @@
                             <div class="form-group">
                                 <label class="sr-only" for="selectBranch">Branch</label>
                                 <select class="form-control input-sm" name="branch" id="selectBranch">
-                                    <option value="">Отрасль</option>
+                                    <option value="0">Все отрасли</option>
                                     {% for branch in branch_list %}
                                         <option {% ifequal branch_act branch.id %}selected{% endifequal %} value="{{ branch.id }}">{{ branch.name }}</option>
                                     {% endfor %}
@@ -131,8 +131,8 @@
                 <div style="text-align: center;">
                     <ul class="pagination pagination-sm">
                         {% if client_list.has_previous %}
-                            <li><a href="{% url 'client-index' page=1 %}?manager={{ manager_act }}">&laquo;</a></li>
-                            <li><a href="{% url 'client-index' page=client_list.previous_page_number %}?manager={{ manager_act }}">&lt;</a></li>
+                            <li><a href="{% url 'client-index' page=1 %}?manager={{ manager_act }}&status={{ status_act }}&branch={{ branch_act }}">&laquo;</a></li>
+                            <li><a href="{% url 'client-index' page=client_list.previous_page_number %}?manager={{ manager_act }}&status={{ status_act }}&branch={{ branch_act }}">&lt;</a></li>
                         {% else %}
                             <li class="disabled"><span>&laquo;</span></li>
                             <li class="disabled"><span>&lt;</span></li>
@@ -141,12 +141,12 @@
                             {% if page == client_list.number %}
                                 <li class="active"><span>{{ page }}</span></li>
                             {% else %}
-                                <li><a href="{% url 'client-index' page=page %}?manager={{ manager_act }}">{{ page }}</a></li>
+                                <li><a href="{% url 'client-index' page=page %}?manager={{ manager_act }}&status={{ status_act }}&branch={{ branch_act }}">{{ page }}</a></li>
                             {% endif %}
                         {% endfor %}
                         {% if client_list.has_next %}
-                            <li><a href="{% url 'client-index' page=client_list.next_page_number %}?manager={{ manager_act }}">&gt;</a></li>
-                            <li><a href="{% url 'client-index' page=client_list.paginator.num_pages %}?manager={{ manager_act }}">&raquo;</a></li>
+                            <li><a href="{% url 'client-index' page=client_list.next_page_number %}?manager={{ manager_act }}&status={{ status_act }}&branch={{ branch_act }}">&gt;</a></li>
+                            <li><a href="{% url 'client-index' page=client_list.paginator.num_pages %}?manager={{ manager_act }}&status={{ status_act }}&branch={{ branch_act }}">&raquo;</a></li>
                         {% else %}
                             <li class="disabled"><span>&gt;</span></li>
                             <li class="disabled"><span>&raquo;</span></li>
