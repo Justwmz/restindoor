@@ -341,6 +341,4 @@ def deleteBranch(request, id):
     branch.delete()
     error(request, 'Информация об отрасли успешно удалена.')
 
-    return redirect('branch-index')
-
-
+    return redirect('client-branch-index')
