@@ -2,9 +2,13 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 
 @login_required
 def index(request):
+    manager_group = Group.objects.get(name='Менеджеры').user_set.all()
+    director_group = Group.objects.get(name='Руководство').user_set.all()
+
     return render_to_response('index/index.html', locals(), context_instance=RequestContext(request))
 
 @login_required

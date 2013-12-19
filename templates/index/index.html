@@ -5,19 +5,17 @@
 {% endblock title %}
 
 {% block navbar %}
-    {% for group in user.groups.all %}
-        <!--<li class="active"><a href="{% url 'index' %}">Главная</a></li>-->
-        {% if group.name == 'Менеджеры' or group.name == 'Руководство' %}
-            <li><a href="{% url 'client-index' %}">Клиенты</a></li>
-        {% endif %}
-        {% if group.name == 'Контент-менеджеры' or group.name == 'Руководство' %}
-            <li><a href="{% url 'restaurant-index' %}">Рестораны</a></li>
-        {% endif %}
-        {% if group.name == 'Тех-отдел' or group.name == 'Руководство' %}
-            <li><a href="{% url 'tech-index' %}">Технический отдел</a></li>
-        {% endif %}
-        <!--<li><a href="{% url 'analytics-index' %}">Отчетность</a></li>-->
-    {% endfor %}
+    <!--<li class="active"><a href="{% url 'index' %}">Главная</a></li>-->
+    {% if user in director_group or user in manager_group %}
+        <li><a href="{% url 'client-index' %}">Клиенты</a></li>
+    {% endif %}
+    {% if user in director_group %}
+        <li><a href="{% url 'restaurant-index' %}">Рестораны</a></li>
+    {% endif %}
+    {% if user in director_group %}
+        <li><a href="{% url 'tech-index' %}">Технический отдел</a></li>
+    {% endif %}
+    <!--<li><a href="{% url 'analytics-index' %}">Отчетность</a></li>-->
 {% endblock navbar %}
 
 {% block content %}

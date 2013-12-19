@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.messages import error
 from django.utils.html import escape
 from django.forms.models import inlineformset_factory
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from restaurant.models import Restaurant, Contact, Restriction, Details
 from restaurant.forms import RestaurantForm, ContactForm, RestrictionForm, DetailsForm
 
@@ -14,6 +14,8 @@ from restaurant.forms import RestaurantForm, ContactForm, RestrictionForm, Detai
 @login_required
 def index(request):
     managers = User.objects.all()
+    manager_group = Group.objects.get(name='Менеджеры').user_set.all()
+    director_group = Group.objects.get(name='Руководство').user_set.all()
     if request.GET.get('manager'):
         manager_act = int(request.GET['manager'])
         restaurants = Restaurant.objects.filter(username__id=manager_act)
@@ -73,6 +75,8 @@ def deleteRestaurant(request, id):
 @login_required
 def indexContact(request):
     restaurants = Restaurant.objects.all()
+    manager_group = Group.objects.get(name='Менеджеры').user_set.all()
+    director_group = Group.objects.get(name='Руководство').user_set.all()
     if request.GET.get('restaurant'):
         restaurant_act = int(request.GET['restaurant'])
         contacts = Contact.objects.filter(restaurant__id=restaurant_act)

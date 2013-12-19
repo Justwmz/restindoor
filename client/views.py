@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages import error
 from django.forms.models import inlineformset_factory
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from client.models import STATUS, Client, Contact, AdvertisingCampaign, Branch, Details, NegotiationResult, Brand, Payer, AdvertisingAgency
 from client.forms import ClientForm, ContactForm, AdvertisingCampaignForm, BranchForm, DetailsForm, NegotiationResultForm, BrandForm, PayerForm, AgencyForm
@@ -16,6 +16,8 @@ def index(request, page=1):
     manager_list = User.objects.filter(groups__name='Менеджеры')
     branch_list = Branch.objects.all()
     status_list = STATUS
+    manager_group = Group.objects.get(name='Менеджеры').user_set.all()
+    director_group = Group.objects.get(name='Руководство').user_set.all()
 
     if request.GET.get('manager'):
         manager_act = int(request.GET['manager'])
@@ -128,6 +130,8 @@ def indexAgency(request, page=1):
     manager_list = User.objects.all()
     branch_list = Branch.objects.all()
     status_list = STATUS
+    manager_group = Group.objects.get(name='Менеджеры').user_set.all()
+    director_group = Group.objects.get(name='Руководство').user_set.all()
 
     if request.GET.get('manager'):
         manager_act = int(request.GET['manager'])
@@ -224,6 +228,8 @@ def deleteAgency(request, id):
 def indexContact(request, page=1):
     client_list = Client.objects.all()
     manager_list = User.objects.filter(groups__name='Менеджеры')
+    manager_group = Group.objects.get(name='Менеджеры').user_set.all()
+    director_group = Group.objects.get(name='Руководство').user_set.all()
 
     if request.GET.get('manager'):
         manager_act = int(request.GET['manager'])
@@ -303,6 +309,8 @@ def deleteAdvertisingCampaign(request, id):
 @login_required
 def indexBranch(request, page=1):
     branch_list_tmp = Branch.objects.all()
+    manager_group = Group.objects.get(name='Менеджеры').user_set.all()
+    director_group = Group.objects.get(name='Руководство').user_set.all()
 
     paginator = Paginator(branch_list_tmp, 10)
     branch_list = paginator.page(page)
