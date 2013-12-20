@@ -80,6 +80,7 @@ def newClient(request):
 
 @login_required
 def editClient(request, id):
+    director_group = Group.objects.get(name='Руководство').user_set.all()
     my_client = Client.objects.get(id=id)
     neg_results = NegotiationResult.objects.filter(client=my_client)
     ContactFormSet = inlineformset_factory(Client, Contact, form=ContactForm, can_delete=False, extra=1)
@@ -110,10 +111,10 @@ def editClient(request, id):
         return redirect('client-index')
     var = {'client': my_client, 'neg_results': neg_results, 'formClient': formClient, 'formContactSet': formContactSet, 'formDetailsSet': formDetailsSet, 'formNegotiationResultSet': formNegotiationResultSet, 'formBrandSet': formBrandSet, 'formPayerSet': formPayerSet}
 
-    if request.user != my_client.username:
-        return redirect('client-index')
-    else:
+    if request.user == my_client.username or request.user in director_group:
         return render_to_response('client/client/edit.html', var, context_instance=RequestContext(request))
+    else:
+        return redirect('client-index')
 
 
 @login_required
