@@ -28,7 +28,7 @@
                                 <span class="glyphicon glyphicon-home"></span> <b>Клиенты</b> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{% url 'agency-index' %}"><span class="glyphicon glyphicon-briefcase"></span> Рекламные агенства</a></li>
+                                <!--<li><a href="{% url 'agency-index' %}"><span class="glyphicon glyphicon-briefcase"></span> Рекламные агенства</a></li>-->
                                 <li><a href="{% url 'client-contact-index' %}"><span class="glyphicon glyphicon-user"></span> Контакты</a></li>
                                 {% for group in user.groups.all %}
                                     {% if group.name == 'Руководство' %}
