@@ -101,7 +101,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Закрыть</button>
-                {% if client in my_client_list %}
+                {% if client in my_client_list or user in director_group %}
                     <a href="{% url 'client-edit' client.id %}" role="button" class="btn btn-warning btn-sm">Редактировать</a>
                     <a href="#myModal_{{ client.id }}_delete" role="button" class="btn btn-danger btn-sm" data-toggle="modal" data-dismiss="modal">Удалить</a>
                 {% endif %}
