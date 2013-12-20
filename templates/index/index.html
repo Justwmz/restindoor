@@ -10,10 +10,10 @@
         <li><a href="{% url 'client-index' %}">Клиенты</a></li>
     {% endif %}
     {% if user in director_group %}
-        <li><a href="{% url 'restaurant-index' %}">Рестораны</a></li>
+        <!--<li><a href="{% url 'restaurant-index' %}">Рестораны</a></li>-->
     {% endif %}
     {% if user in director_group %}
-        <li><a href="{% url 'tech-index' %}">Технический отдел</a></li>
+        <!--<li><a href="{% url 'tech-index' %}">Технический отдел</a></li>-->
     {% endif %}
     <!--<li><a href="{% url 'analytics-index' %}">Отчетность</a></li>-->
 {% endblock navbar %}
