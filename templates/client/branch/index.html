@@ -62,8 +62,10 @@
                         {% for page in branch_list.paginator.page_range %}
                             {% if page == branch_list.number %}
                                 <li class="active"><span>{{ page }}</span></li>
-                            {% else %}
+                            {% elif page == branch_list.number|add:'1' or page == branch_list.number|add:'2' or page == branch_list.number|add:'3' or page == branch_list.number|add:'-1' or page == branch_list.number|add:'-2' or page == branch_list.number|add:'-3' %}
                                 <li><a href="{% url 'client-branch-index' page=page %}">{{ page }}</a></li>
+                            {% elif page == branch_list.number|add:'4' or page == branch_list.number|add:'-4' %}
+                                <li class="disabled"><span>...</span></li>
                             {% endif %}
                         {% endfor %}
                         {% if branch_list.has_next %}

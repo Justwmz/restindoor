@@ -88,8 +88,10 @@
                         {% for page in contact_list.paginator.page_range %}
                             {% if page == contact_list.number %}
                                 <li class="active"><span>{{ page }}</span></li>
-                            {% else %}
+                            {% elif page == contact_list.number|add:'1' or page == contact_list.number|add:'2' or page == contact_list.number|add:'3' or page == contact_list.number|add:'-1' or page == contact_list.number|add:'-2' or page == contact_list.number|add:'-3' %}
                                 <li><a href="{% url 'client-contact-index' page=page %}?manager={{ manager_act }}">{{ page }}</a></li>
+                            {% elif page == contact_list.number|add:'4' or page == contact_list.number|add:'-4' %}
+                                <li class="disabled"><span>...</span></li>
                             {% endif %}
                         {% endfor %}
                         {% if contact_list.has_next %}

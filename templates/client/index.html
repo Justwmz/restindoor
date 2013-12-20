@@ -146,8 +146,10 @@
                         {% for page in client_list.paginator.page_range %}
                             {% if page == client_list.number %}
                                 <li class="active"><span>{{ page }}</span></li>
-                            {% else %}
+                            {% elif page == client_list.number|add:'1' or page == client_list.number|add:'2' or page == client_list.number|add:'3' or page == client_list.number|add:'-1' or page == client_list.number|add:'-2' or page == client_list.number|add:'-3' %}
                                 <li><a href="{% url 'client-index' page=page %}?manager={{ manager_act }}&status={{ status_act }}&branch={{ branch_act }}">{{ page }}</a></li>
+                            {% elif page == client_list.number|add:'4' or page == client_list.number|add:'-4' %}
+                                <li class="disabled"><span>...</span></li>
                             {% endif %}
                         {% endfor %}
                         {% if client_list.has_next %}
