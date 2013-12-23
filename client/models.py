@@ -65,6 +65,9 @@ class Client(models.Model):
     username = models.ForeignKey(User, null=True, blank=True)
     is_active = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ['id']
+
     def __unicode__(self):
         return self.name
 

@@ -41,6 +41,20 @@ def index(request, page=1):
         else:
             client_list_tmp = client_list_tmp.filter(branch=branch_act)
 
+    client_list = []
+    for client in client_list_tmp:
+        try:
+            item = (client.client_neg_res.last().next_cont_date, client.id, client)
+        except AttributeError, e:
+            item = (date(2000, 1, 1), client.id, client)
+        else:
+            if not item[0]:
+                item = (date(2000, 1, 1), client.id, client)
+        client_list.append(item)
+
+    client_list.sort()
+    client_list_tmp = [client[2] for client in client_list]
+
     today = date.today()
     next_week = today + timedelta(7)
     my_client_list = Client.objects.filter(username=request.user)

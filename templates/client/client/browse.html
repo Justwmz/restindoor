@@ -75,26 +75,22 @@
                                 <th>Результаты</th>
                                 <th></th>
                             </tr>
-                            {% for item in client.client_neg_res.all %}
-                                {% if forloop.last %}
-                                    <tr>
-                                        <td>Результаты переговоров</td>
-                                        <td>{{ item.negot_res }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Дата последнего контакта</td>
-                                        <td>{{ item.last_cont_date }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>План следующего контакта</td>
-                                        <td>{{ item.contact_plan }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Дата следующего контакта</td>
-                                        <td>{{ item.next_cont_date }}</td>
-                                    </tr>
-                                {% endif %}
-                            {% endfor %}
+                            <tr>
+                                <td>Результаты переговоров</td>
+                                <td>{{ client.client_neg_res.last.negot_res }}</td>
+                            </tr>
+                            <tr>
+                                <td>Дата последнего контакта</td>
+                                <td>{{ client.client_neg_res.last.last_cont_date }}</td>
+                            </tr>
+                            <tr>
+                                <td>План следующего контакта</td>
+                                <td>{{ client.client_neg_res.last.contact_plan }}</td>
+                            </tr>
+                            <tr>
+                                <td>Дата следующего контакта</td>
+                                <td>{{ client.client_neg_res.last.next_cont_date }}</td>
+                            </tr>
                         {% endif %}
                     </tbody>
                 </table>

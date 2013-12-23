@@ -89,38 +89,26 @@
                             </thead>
                             <tbody>
                                 {% for client in client_list %}
-                                    <tr{% for item in client.client_neg_res.all %}{% if forloop.last %}{% if not item.next_cont_date or item.next_cont_date <= today %} class="danger"{% elif item.next_cont_date < next_week and item.next_cont_date > today %} class="warning"{% endif %}{% endif %}{% endfor %}>
+                                    <tr{% if not client.client_neg_res.last.next_cont_date or client.client_neg_res.last.next_cont_date <= today %} class="danger"{% elif client.client_neg_res.last.next_cont_date < next_week and client.client_neg_res.last.next_cont_date > today %} class="warning"{% endif %}>
                                         <td>
-                                            {% if client.client_neg_res.all %}
-                                                {% for item in client.client_neg_res.all %}
-                                                    {% if forloop.last %}
-                                                        {% if not item.next_cont_date or item.next_cont_date <= today %}
-                                                            <span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign"></span></span>
-                                                        {% elif item.next_cont_date < next_week and item.next_cont_date > today %}
-                                                            <span class="label label-warning"><span class="glyphicon glyphicon-time"></span></span>
-                                                        {% endif %}
-                                                        {{ client.name }}
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% else %}
-                                                {{ client.name }}
+                                            {% if not client.client_neg_res.last.next_cont_date or client.client_neg_res.last.next_cont_date <= today %}
+                                                <span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign"></span></span>
+                                            {% elif client.client_neg_res.last.next_cont_date < next_week and client.client_neg_res.last.next_cont_date > today %}
+                                                <span class="label label-warning"><span class="glyphicon glyphicon-time"></span></span>
                                             {% endif %}
+                                            {{ client.name }}
                                         </td>
                                         <td>{% if client.branch %}{{ client.branch }}{% endif %}</td>
                                         <td>{{ client.status_verbose }}</td>
                                         <td>
-                                            {% for item in client.client_neg_res.all %}
-                                                {% if forloop.last %}
-                                                    {% if item.last_cont_date %}{{ item.last_cont_date|date:"d.m.Y" }} г.{% endif %}
-                                                {% endif %}
-                                            {% endfor %}
+                                            {% if client.client_neg_res.last.last_cont_date %}
+                                                {{ client.client_neg_res.last.last_cont_date|date:"d.m.Y" }} г.
+                                            {% endif %}
                                         </td>
                                         <td>
-                                            {% for item in client.client_neg_res.all %}
-                                                {% if forloop.last %}
-                                                    {% if item.next_cont_date %}{{ item.next_cont_date|date:"d.m.Y" }} г.{% endif %}
-                                                {% endif %}
-                                            {% endfor %}
+                                            {% if client.client_neg_res.last.next_cont_date %}
+                                                {{ client.client_neg_res.last.next_cont_date|date:"d.m.Y" }} г.
+                                            {% endif %}
                                         </td>
                                         <td>{{ client.username.first_name|first }}. {{ client.username.last_name }}</td>
                                         <td>
