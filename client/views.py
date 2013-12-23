@@ -40,6 +40,7 @@ def index(request, page=1):
             client_list_tmp = client_list_tmp.exclude(branch=branch_act)
         else:
             client_list_tmp = client_list_tmp.filter(branch=branch_act)
+    client_list_tmp = client_list_tmp.filter(is_active=True)
 
     client_list = []
     for client in client_list_tmp:
@@ -133,8 +134,7 @@ def editClient(request, id):
 
 @login_required
 def deleteClient(request, id):
-    client = Client.objects.get(id=id)
-    client.delete()
+    client = Client.objects.filter(id=id).update(is_active=False)
     error(request, 'Информация о клиенте успешно удалена.')
 
     return redirect('client-index')
@@ -232,8 +232,7 @@ def editAgency(request, id):
 
 @login_required
 def deleteAgency(request, id):
-    agency = AdvertisingAgency.objects.get(id=id)
-    agency.delete()
+    agency = AdvertisingAgency.objects.filter(id=id).update(is_active=False)
     error(request, 'Информация о рекламном агенстве успешно удалена.')
 
     return redirect('agency-index')
@@ -241,7 +240,7 @@ def deleteAgency(request, id):
 
 @login_required
 def indexContact(request, page=1):
-    client_list = Client.objects.all()
+    client_list = Client.objects.filter(is_active=True)
     manager_list = User.objects.filter(groups__name='Менеджеры')
     manager_group = Group.objects.get(name='Менеджеры').user_set.all()
     director_group = Group.objects.get(name='Руководство').user_set.all()
