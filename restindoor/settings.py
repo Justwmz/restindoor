@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'dil%45r7f-e&l_!z_gt+ud!6p1@2z-ta@!fm_y*!$ojnnvt8*r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = True
 
@@ -124,7 +124,7 @@ LOGIN_REDIRECT_URL = '/'
 # Templates
 
 #TEMPLATE_DIRS = os.path.join(BASE_DIR, "templates")
-TEMPLATE_DIRS = ('/var/www/crm_b3/restindoor/templates/', )
+TEMPLATE_DIRS = ('/var/www/crm/restindoor/templates/', )
 
 
 # Search backend
