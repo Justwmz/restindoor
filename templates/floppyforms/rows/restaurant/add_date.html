@@ -1,0 +1,20 @@
+{% load floppyforms %}{% block row %}{% for field in fields %}
+<div class="form-group{% if field.errors %} error{% endif %}">
+    {% with classes=field.css_classes label=label|default:field.label help_text=help_text|default:field.help_text %}
+    {% block label %}{% if field|id %}<label class="control-label col-md-4" for="{{ field|id }}">{% endif %}{{ label }}{% if field.field.required %} <span class="required">*</span>{% endif %}{% if label|last not in ".:!?" %}:{% endif %}{% if field|id %}</label>{% endif %}{% endblock %}
+    {% block field %}
+        <div class="col-md-8 {{ classes }}">
+            <div class="input-group date form_datetime">
+                {% block widget %}{% formfield field %}{% endblock %}
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+            {% block errors %}{% include "floppyforms/errors.html" with errors=field.errors %}{% endblock %}
+            {% block help_text %}{% if field.help_text %}
+                <p class="help-block">{{ field.help_text }}</p>
+            {% endif %}{% endblock %}
+            {% block hidden_fields %}{% for field in hidden_fields %}{{ field.as_hidden }}{% endfor %}{% endblock %}
+        </div><!--- .controls -->
+    {% endblock %}
+    {% endwith %}
+</div><!--- .control-group{% if field.errors %}.error{% endif %} -->
+{% endfor %}{% endblock %}
