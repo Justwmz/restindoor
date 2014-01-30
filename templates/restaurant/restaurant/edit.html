@@ -13,28 +13,27 @@
 {% block content %}
     <div class="container" style="padding-top: 20px">
         <div class="row">
-            <div class="span3">
-                <div class="well pull-left" style="margin: 5px; padding: 8px 0;">
-                    <ul class="nav nav-list">
-                        <li class="nav-header">{% if restaurant %}{{ restaurant.name_rus }}{% else %}Новый ресторан{% endif %}</li>
-                        <li id="nav1" class="active"><a href="#">Общая информация</a></li>
-                        <li id="nav2"><a href="#">Информация о контакте</a></li>
-                        <li id="nav3"><a href="#">Организационная форма</a></li>
-                        <li id="nav4"><a href="#">Документация</a></li>
-                        <li id="nav5"><a href="#">Ограничения</a></li>
-                        <li id="nav6"><a href="#">Оборудование</a></li>
-                        <li id="nav7"><a href="#">Видеоролики</a></li>
-                        <li id="nav8"><a href="#">Реквизиты</a></li>
-                        <li id="nav9"><a href="#">Контакты</a></li>
-                        <li class="divider"></li>
-                        <div style="text-align:center;">
-                            <a href="{% url 'restaurant-index' %}" class="btn btn-small">Отменить</a>
-                            <button type="submit" class="btn btn-primary btn-small" form="grew_form">Сохранить</button>
-                        </div>
+            <div class="col-md-3">
+                <div class="well-sm pull-left" style="margin: 5px; padding: 8px 0;">
+                    <ul class="list-group">
+                        <label>{% if restaurant %}{{ restaurant.name_rus }}{% else %}Новый ресторан{% endif %}</label>
+                        <a href="#" class="list-group-item" id="nav1">Общая информация</a>
+                        <a href="#" class="list-group-item" id="nav2">Информация о контакте</a>
+                        <a href="#" class="list-group-item" id="nav3">Организационная форма</a>
+                        <a href="#" class="list-group-item" id="nav4">Документация</a>
+                        <a href="#" class="list-group-item" id="nav5">Ограничения</a>
+                        <a href="#" class="list-group-item" id="nav6">Оборудование</a>
+                        <a href="#" class="list-group-item" id="nav7">Видеоролики</a>
+                        <a href="#" class="list-group-item" id="nav8">Реквизиты</a>
+                        <a href="#" class="list-group-item" id="nav9">Контакты</a>
                     </ul>
+                        <div style="text-align:center;">
+                            <a href="{% url 'restaurant-index' %}" class="btn btn-danger btn-xm">Отменить</a>
+                            <button type="submit" class="btn btn-primary btn-xm" form="grew_form">Сохранить</button>
+                        </div>
                 </div>
             </div>
-            <div class="span9">
+            <div class="col-md-9">
                 <form enctype="multipart/form-data" action="" method="post" class="form-horizontal" id="grew_form">
                     {% csrf_token %}
                     {% form formRest using "floppyforms/layouts/restaurant.html" %}

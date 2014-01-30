@@ -124,7 +124,7 @@ LOGIN_REDIRECT_URL = '/'
 # Templates
 
 #TEMPLATE_DIRS = os.path.join(BASE_DIR, "templates")
-TEMPLATE_DIRS = ('/var/www/crm_b3/restindoor/templates/', )
+TEMPLATE_DIRS = ('/var/www/crm/restindoor/templates/', )
 
 
 # Search backend

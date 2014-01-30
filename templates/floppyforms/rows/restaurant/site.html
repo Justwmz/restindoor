@@ -3,7 +3,7 @@
     {% with classes=field.css_classes label=label|default:field.label help_text=help_text|default:field.help_text %}
     {% block label %}{% if field|id %}<label class="control-label col-md-4" for="{{ field|id }}">{% endif %}{{ label }}{% if field.field.required %} <span class="required">*</span>{% endif %}{% if label|last not in ".:!?" %}:{% endif %}{% if field|id %}</label>{% endif %}{% endblock %}
     {% block field %}
-        <div class="col-md-8 {{ classes }}">
+        <div class="col-md-4 {{ classes }}">
             <div class="input-group">
                 {% block widget %}{% formfield field %}{% endblock %}
                 <span class="input-group-addon"><a href="{{ field.value }}" target="_blank"><span class="glyphicon glyphicon-globe"></span></a></span>
