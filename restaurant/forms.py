@@ -9,6 +9,7 @@ class ContactForm(ModelForm):
     class Meta:
         model = Contact
         widgets = {
+            'restaurant': forms.Select(attrs={'style': 'width:247px', 'class': 'form-control'}),
             'name': forms.TextInput(attrs={'style': 'width:200px', 'maxlength': '150', 'class': 'form-control'}),
             'position': forms.Select(attrs={'style': 'width:247px', 'class': 'form-control'}),
             'characteristic': forms.Textarea(attrs={'style': 'resize:none; height:80px', 'class': 'form-control'}),
@@ -50,6 +51,7 @@ class RestrictionForm(ModelForm):
     class Meta:
         model = Restriction
         widgets = {
+            'name': forms.TextInput(attrs={'style': 'width:150px', 'maxlength': '50', 'class': 'form-control'}),            
             'username': forms.HiddenInput(),
             'is_active': forms.HiddenInput(),
         }

@@ -8,20 +8,19 @@
 {% block content %}
     <div class="container" style="padding-top: 20px">
         <div class="row">
-            <div class="span3">
-                <div class="well pull-left" style="margin: 5px; padding: 8px 0;">
-                    <ul class="nav nav-list">
-                        <li class="nav-header">{% if restriction %}{{ restriction.name }}{% else %}Новое ограничение{% endif %}</li>
-                        <li id="nav1" class="active"><a href="#">Общая информация</a></li>
-                        <li class="divider"></li>
-                        <div style="text-align:center;">
-                            <a href="{% url 'restriction-index' %}" class="btn btn-small">Отменить</a>
-                            <button type="submit" class="btn btn-primary btn-small" form="cont_form">Сохранить</button>
-                        </div>
+            <div class="col-md-3">
+                <div class="well-sm pull-left" style="margin: 5px; padding: 8px 0;">
+                    <ul class="list-group">
+                        <label>{% if restriction %}{{ restriction.name }}{% else %}Новое ограничение{% endif %}</label>
+                        <a href="#" id="nav1" class="list-group-item">Общая информация</a></li>
                     </ul>
+                        <div style="text-align:center;">
+                            <a href="{% url 'restriction-index' %}" class="btn btn-default">Отменить</a>
+                            <button type="submit" class="btn btn-primary" form="cont_form">Сохранить</button>
+                        </div>
                 </div>
             </div>
-            <div class="span9">
+            <div class="col-md-9">
                 <form action="" method="post" class="form-horizontal" id="cont_form">
                     {% csrf_token %}
                     <h4>Общая информация</h4>

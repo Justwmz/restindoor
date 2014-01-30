@@ -1,4 +1,6 @@
-<div class="modal hide fade" id="myModal_{{ restriction.id }}_browse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ restriction.id }}_browse" aria-hidden="true">
+<div class="modal fade" id="myModal_{{ restriction.id }}_browse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ restriction.id }}_browse" aria-hidden="true">
+<div class="modal-dialog">
+ <div class="modal-content">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3 id="myModalLabel_{{ restriction.id }}_browse">Просмотр "{{ restriction }}"</h3>
@@ -24,4 +26,6 @@
         <a href="{% url 'restriction-edit' restriction.id %}" class="btn btn-warning">Редактировать</a>
         <a href="#myModal_{{ restriction.id }}_delete" role="button" class="btn btn-danger" data-toggle="modal" data-dismiss="modal" aria-hidden="true">Удалить</a>
     </div>
+  </div>
+ </div>
 </div>
