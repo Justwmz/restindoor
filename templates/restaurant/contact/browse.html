@@ -1,4 +1,6 @@
-<div class="modal hide fade" id="myModal_{{ contact.id }}_browse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ contact.id }}_browse" aria-hidden="true">
+<div class="modal fade" id="myModal_{{ contact.id }}_browse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_{{ contact.id }}_browse" aria-hidden="true">
+<div class="modal-dialog">
+ <div class="modal-content">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3 id="myModalLabel_{{ contact.id }}_browse">Просмотр "{{ contact }}"</h3>
@@ -60,4 +62,6 @@
         <a href="{% url 'contact-edit' contact.id %}" class="btn btn-warning">Редактировать</a>
         <a href="#myModal_{{ contact.id }}_delete" role="button" class="btn btn-danger" data-toggle="modal" data-dismiss="modal" aria-hidden="true">Удалить</a>
     </div>
+  </div>
+ </div>
 </div>

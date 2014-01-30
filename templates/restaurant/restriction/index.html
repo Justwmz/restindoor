@@ -12,17 +12,16 @@
 {% block content %}
     <div class="container" style="padding-top: 20px">
         <div class="row">
-            <div class="span3">
-                <div class="well pull-left" style="min-width: 210px; margin: 5px; padding: 8px 0;">
-                    <ul class="nav nav-list">
-                        <li class="nav-header"></li>
-                        <li><a href="{% url 'restaurant-index' %}"><i class="icon-home"></i> Рестораны</a></li>
-                        <li><a href="{% url 'contact-index' %}"><i class="icon-user"></i> Контакты</a></li>
-                        <li class="active"><a href="#"><i class="icon-user"></i> Ограничения</a></li>
+            <div class="col-md-3">
+                <div class="well-sm pull-left" style="min-width: 210px; margin: 5px; padding: 8px 0;">
+                    <ul class="list-group">
+                        <a href="{% url 'restaurant-index' %}" class="list-group-item"><i class="glyphicon glyphicon-home"></i> Рестораны</a>
+                        <a href="{% url 'contact-index' %}" class="list-group-item"><i class="glyphicon glyphicon-user"></i> Контакты</a>
+                        <a href="#" class="list-group-item"><i class="glyphicon glyphicon-user"></i> Ограничения</a>
                     </ul>
                 </div>
             </div>
-            <div class="span9">
+            <div class="col-md-9">
                 {% for message in messages %}
                     <div class="alert alert-success">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -33,7 +32,7 @@
                     <thead>
                         <tr>
                             <th>Ограничения</th>
-                            <th style="width:92px"><a href="{% url 'restriction-new' %}" class="btn btn-success btn-mini" style="width:78px"><i class="icon-plus icon-white"></i></a></th>
+                            <th style="width:92px"><a href="{% url 'restriction-new' %}" class="btn btn-success btn-xs" style="width:78px"><i class="glyphicon glyphicon-plus"></i></a></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,9 +40,9 @@
                             <tr>
                                 <td>{{ restriction.name }}</td>
                                 <td>
-                                    <a href="#myModal_{{ restriction.id }}_browse" role="button" class="btn btn-info btn-mini" data-toggle="modal"><i class="icon-zoom-in icon-white"></i></a>
-                                    <a href="{% url 'restriction-edit' restriction.id %}" class="btn btn-warning btn-mini"><i class="icon-edit icon-white"></i></a>
-                                    <a href="#myModal_{{ restriction.id }}_delete" role="button" class="btn btn-danger btn-mini" data-toggle="modal"><i class="icon-remove icon-white"></i></a>
+                                    <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal_{{ restriction.id }}_browse"><span class="glyphicon glyphicon-zoom-in"></span></button>
+                                    <a href="{% url 'restriction-edit' restriction.id %}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal_{{ restriction.id }}_delete"><span class="glyphicon glyphicon-remove"></span></button>
                                 </td>
                             </tr>
                         {% endfor %}
